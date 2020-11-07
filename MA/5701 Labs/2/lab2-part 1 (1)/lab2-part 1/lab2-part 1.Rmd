@@ -1,0 +1,236 @@
+---
+title: "QDA Lab 2 - Inferential Statistics"
+output: html_notebook
+---
+
+```{r}
+#Loading the required library
+library(ggplot2)
+```
+
+
+
+In this lab we will be covering the following topics:
+
+ -  Probability distributions
+ -  confidence intervals
+
+# Probability functions
+
+There are four basic probability functions for each probability distribution in R. These begin with the same four prefixes: d, p, q or r followed by the root name of the probability that indentifies the specific distribution. For example for the **normal** distribution the name to use is **norm**.
+
+ - d is for *”density”* and the corresponding function returns the value from the probability density function (continuous) or probability mass function (discrete).
+ - p is for *”probability”* and the corresponding function returns a value from the cumulative distribution function.
+ - q is for *”quantile”* and the corresponding function returns a value from the inverse cumulative distribution function.
+ - r is for *”random"* and the corresponding function returns a value drawn randomly from the given distribution
+ 
+ 
+## The normal distribution
+ 
+When we need to work with different functions related to the normal distribution then the following syntax is used
+
+To obtain the **density** of the normal distribution:
+
+d+ name of the distribution (the value on the x axis)
+
+So for example if we wanted to know the value of y (from the y axis), from the normal distribution curve that corresponds to x=2 then we would use:
+
+```{r}
+dnorm(2)
+```
+
+ 
+ If we wanted the value of y, but using a normal distribution with different means and s.d these are optional arguments in the function:
+ 
+```{r}
+dnorm(11,10,0.5)
+```
+ 
+*pnorm* is the cumulative distribution function for the normal distribution. By definition $pnorm(x) = P(X \leq x)$ and is the area under the normal density curve to the left of x. 
+
+```{r}
+pnorm(2)
+```
+
+
+The value above shows pnorm(2), the area under the normal density curve to the left of $x = 2$. From this we can see that the probability that a standard normal random variable takes on a value less than or equal to 2 is 0.977
+
+*qnorm* is the quantile function of the standard normal distribution. If $qnorm(x)= k$ then k is the value such that $P(X \leq k) = x$. *qnorm* is the inverse function for *pnorm*. 
+
+```{r}
+qnorm(0.977)
+```
+
+
+From the chunk of code above  we have: qnorm(0.977) = qnorm(pnorm(2)) = 2.
+
+*rnorm* generates random values from a standard normal distribution. The required argument is a number specifying the number of normal variables to produce. 
+
+```{r}
+x<-rnorm(20)
+x1<-rnorm(2000)
+```
+
+
+The figure below illustrates rnorm(20) and rnorm(2000) the larger the number in the bracket the more "bell curved" the plot is.
+
+```{r}
+# use this space to graph x
+hist(x)
+hist(x1)
+```
+
+***
+
+# Examples using other distributions
+
+## Poisson Distribution
+
+```{r}
+
+x1=0:100
+y2<-dpois(x1,lambda=50)
+
+plot(x1,y2, type="h", main = "Poisson Distribution (Lambda=50)", ylab="Frequency", xlab="Count")
+```
+
+
+## Binomial Distribution
+
+```{r}
+y<-dbinom(x, size=10, prob = 0.5)
+
+plot(x,y,type='h',
+     main='Binomial Distribution (n=10, p=0.5)',
+     ylab='Probability',
+     xlab ='# heads',
+     lwd=3)
+```
+
+## Uniform Distribution
+
+```{r}
+xu<-runif(100000, min=1, max=2)
+xu<-as.data.frame(xu)
+ggplot(xu, aes(x=xu)) + geom_density() + theme_classic() +
+  labs(main="A Uniform Distribution", xlab="value", ylab="Density") + xlim(0,3)
+```
+
+
+## Exponential Distribution
+
+
+```{r}
+#exponential distribution
+
+xe<-rexp(10000, rate = 10)
+xe<-as.data.frame(xe)
+
+ggplot(xe, aes(x=xe)) + geom_density() + theme_classic() +
+  labs(main="An Exponential Distribution", xlab="value", ylab="Density") + xlim(0,3)
+```
+
+
+***
+
+# Confidence Intervals in R
+
+## Reading in from csv - use the skew data.csv
+
+```{r}
+data<-read.csv("data/skewdata.csv")
+```
+
+## Visualise the data
+
+```{r}
+summary(data)
+```
+
+This data contains only one variable. We can see its mean is 30.969.
+
+## How to run confidence intervals for this variable - Z and T at the 95% confidence level
+
+```{r}
+mean.values<-mean(data$values)
+sd.values<-sd(data$values)
+```
+
+In order to compute the confidence interval for a mean using Z we would apply this equation
+
+: $$  (\bar{x} -  Z \times \frac{s}{\sqrt{n}}, \bar{x} + Z \times \frac{s}{\sqrt{n}}) $$
+
+We have the value for $\bar{x}$ and s from the code chunk above.
+We can get the value of Z 0.95 from R 
+
+
+
+```{r}
+qnorm(0.975)
+```
+
+Recall 0.95 confidence for a two sided test will result in us looking for Z 0.975 on each side. The number is the same and it is 1.96
+
+Then we just need to combine this to compute the intervals
+
+```{r}
+ucl<-mean.values+qnorm(0.975)*sd.values/sqrt(30)
+lcl<-mean.values-qnorm(0.975)*sd.values/sqrt(30)
+
+```
+
+```{r}
+ucl
+lcl
+```
+
+# If we replace Z with T
+
+```{r}
+qt(0.975, 29)
+```
+
+```{r}
+uclt<-mean.values+qt(0.975,30)*sd.values/sqrt(30)
+lclt<-mean.values-qt(0.975,30)*sd.values/sqrt(30)
+```
+
+```{r}
+uclt
+lclt
+```
+
+The confidence levels are very similar to the ones obtained with Z.
+
+***
+# OPTIONAL
+## Confidence Intervals using Bootstrap
+
+```{r}
+data<-read.csv("data/skewdata.csv")
+
+plot(c(0,30), c(0,60), type = "n", xlab = "Sample Size", ylab = "Confidence Interval")
+for (k in seq(5,30,3)) {
+  a<-numeric(10000)
+  for (i in 1:10000){
+    a[i]<-mean(sample(data$values,k,replace=T))
+  }
+  points(c(k,k), quantile(a,c(.025,.975)), type="b", pch=21, bg="red")
+}
+# from page 62 Crawley
+```
+
+# computing confidence intervals for the data used in lecture 2
+
+The rivets strength data
+
+```{r}
+riv<-c(4.01, 4.28, 4.43, 4.04, 3.74, 4.43, 3.89, 4.73, 3.68, 4.55, 4.10, 3.77)
+
+```
+
+## add an example that includes:
+generating a series of binary values
+computing the confidence interval for the proportion
+
+ 

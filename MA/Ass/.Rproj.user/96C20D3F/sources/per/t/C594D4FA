@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1604504310437.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C594D4FA",
+    "lastKnownWriteTime" : 7092925459706552890,
+    "last_content_update" : 1604504310437,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "43ECE3DE",
+        "caption" : "CS5801.data",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=CS5801.data&cache_key=43ECE3DE",
+        "displayedObservations" : 968,
+        "environment" : "",
+        "object" : "CS5801.data",
+        "preview" : 0,
+        "totalObservations" : 968,
+        "variables" : 15
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,3 @@
+"0","xe = rexp(10, rate = 10)"
+"0","xe = as.data.frame(xe)"
+"0","ggplot(xe, aes(x=xe)) + geom_density() + theme_classic() + labs(main=""expo"", xlab=""value"", ylab=""density"") + xlim(0,3)"

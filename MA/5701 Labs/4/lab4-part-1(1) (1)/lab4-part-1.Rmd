@@ -1,0 +1,208 @@
+---
+title: "Lab 4 Part 1"
+author: "Isabel Sassoon"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+This lab will cover the following topics:
+
+ - Linear regression
+ - Interpreting the outputs and diagnostics
+ - transforming data and applying lm
+
+# Correlation
+
+To demonstrate how to compute correlation in R we will make use of the cars data set that is available in base R.
+
+```{r}
+head(cars)
+```
+As you have seen in the lecture this has two variables: speed of the car, and the distance it took to come to a halt.
+
+## How to compute correlation
+
+```{r}
+cor(cars$speed, cars$dist)
+```
+
+In order to visualize this data
+
+```{r}
+library(ggplot2)
+
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + theme_classic() +
+  ggtitle("Scatter Plot for speed vs distance")
+```
+
+It seems like this data is correlated. Lets test the correlation ratio.
+This will test an $H_0: r=0$ vs $H_1:r \ne 0$
+
+```{r}
+cor.test(cars$speed, cars$dist)
+```
+
+This results in a very small p-value, we reject the Null Hypothesis. These two variables are correlated.
+
+## Linear Regression
+
+We may now want to model the relationship between the stopping distance and the speed. As the speed is what you can control it makes sense that it is the explanatory variable.
+
+```{r}
+cars.lm<-lm(cars$dist~cars$speed, data=cars)
+cars.lm
+```
+
+This output gives us the minimum information: the intercept and the coefficient. From this we can see that:
+
+distance $= -17.6+ 3.9\times$ speed.
+
+To get more diagnostics we can use
+
+```{r}
+summary(cars.lm)
+```
+
+From the output above we learn that:
+ - There is a significant difference in the variances
+ - We also learn that 0.65 of the variance is explained by the model
+ - Both coefficients are significant.
+ 
+The relationship between the speed and the breaking distance is such that for every increase in speed of 1 - the breaking distance increases by 3.9324. 
+ 
+
+
+### OPTIONAL - it is also possible to have an ANOVA plot
+```{r}
+anova(cars.lm)
+```
+
+This gives us much more detail on how the model is doing.
+
+## Diagnsotic plots
+
+It is important to inspect the plots too:
+
+```{r}
+plot(cars.lm)
+```
+The residuals are acceptable but we can consider modeling this with the squared speed too.
+
+```{r}
+cars.lm2<-lm(cars$dist~cars$speed+ I(cars$speed^2))
+```
+
+How does our new model look?
+
+```{r}
+cars.lm2
+```
+
+
+```{r}
+summary(cars.lm2)
+```
+
+and we should also look at the plots
+
+```{r}
+plot(cars.lm2)
+```
+
+The residuals for this model are fine, and dont point to any violations of the assumptions.
+The $R^2$ value is slightly higher for this latter model, but it is a more complex model.
+
+
+# estimating distance for a new value of speed
+
+Either model can be used to get an estimate for a distance.
+
+What is the distance when the speed is 21?
+
+If we use the first simpler model:
+
+distance = -17.6+ 3.9 * speed
+
+```{r}
+dist.21<--17.6+ 3.9* 21
+dist.21
+```
+
+For the more complex model
+2.47014          0.91329          0.09996 
+
+```{r}
+dist2.21<-2.47+0.913*21+0.0996*21*21
+dist2.21
+```
+
+The models give similar yet differnt estimates for the distance.
+
+
+***
+
+## Linear Regression
+In another example for Linear Regression
+A drug is developed to reduce pulse rate. The independent variable x is the dosage of the drug in mg; the dependent variable y is the reduction in pulse rate in beats per minute.
+
+```{r}
+x<-c(0.50,0.75 ,1.00,1.25,1.50,1.75,2.00,2.25,2.50,2.75,3.00,3.25,3.50)
+y<-c(10,8,12,12,14,12,16,18,17,20,18,20,21)
+pulse<-as.data.frame(cbind(x,y))
+
+```
+
+Plot the data
+
+```{r}
+ggplot(pulse, aes(x=x, y=y)) + geom_point() + ggtitle("Plot of x vs y")
+```
+
+Run a linear regression
+
+```{r}
+lm(pulse$y~pulse$x, data =pulse)
+```
+
+From this we can see tjat the relationship between x and y is:
+
+$y=7.055+ 4.088 \times x$
+
+## Running the diagnostic plots
+
+```{r}
+plot(lm(y~x))
+```
+
+## Summary
+
+This below is another more detailed output
+
+```{r}
+summary(lm(y~x))
+```
+
+This model has a very high $r^2$ and the difference between the variances is significant. So the model is very effective at explaining the variation in our Y values. Both coefficients are also significant.
+
+## Predict - for a new x value compute the y predicted
+
+If we have a value for x, we can use the regression equation to find an **estimate** for y.
+
+$y=7.055+ 4.088 \times x$
+
+Let find an estimate for y when x=1.15
+
+```{r}
+y.est<-7.055+4.088*1.15
+y.est
+```
+
+# Transforming y?
+
+We may want to transform y and see if we get a better model.
+
+
+

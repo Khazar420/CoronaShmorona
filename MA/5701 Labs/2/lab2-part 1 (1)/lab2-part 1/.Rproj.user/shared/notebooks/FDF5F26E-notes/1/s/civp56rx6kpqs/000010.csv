@@ -1,0 +1,2 @@
+"0","plot(c(0,30),c(0,60),type=""n"",xlab=""Sample size"","
+"0","ylab=""Confidence interval"")"

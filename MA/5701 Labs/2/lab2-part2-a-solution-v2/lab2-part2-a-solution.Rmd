@@ -1,0 +1,10 @@
+```{r}
+sample = dbinom(0:1000, size = 1000, prob = 0.5)
+
+plot(sample)
+
+
+```
+
+
+let's go

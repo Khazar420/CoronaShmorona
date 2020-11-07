@@ -1,0 +1,7 @@
+"0","for (k in seq(5,30,3)){"
+"0","a=numeric(1000)"
+"0","for (i in 1:1000){"
+"0","a[i]=mean(sample(data$values,k,replace=T))"
+"0","}"
+"0","points(c(k,k),quantile(a,c(0.025,0.975)), type=""b"", pch=21, bg=""red"")"
+"0","}"

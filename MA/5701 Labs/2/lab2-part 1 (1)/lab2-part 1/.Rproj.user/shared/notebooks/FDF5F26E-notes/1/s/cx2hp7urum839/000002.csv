@@ -1,0 +1,7 @@
+"0","mean.values = mean(data$values)"
+"0","sd.values=sd(data$values)"
+"0","qnorm(0.975)"
+"1","[1]"
+"1"," 1.959964"
+"1","
+"

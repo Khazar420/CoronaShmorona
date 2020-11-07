@@ -1,0 +1,2 @@
+"0","data = skewdata"
+"0","hist(data$values)"

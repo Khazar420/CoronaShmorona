@@ -1,0 +1,15 @@
+```{r}
+
+#use bootsrap crawley p 62
+
+summary(CS5801.data)
+
+```
+
+
+
+```{r}
+
+length(table(CS5801.data$G))
+
+```

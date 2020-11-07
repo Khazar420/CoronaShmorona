@@ -1,0 +1,8 @@
+```{r}
+
+summary(BreastCancer_Wisconsin)
+
+plot(BreastCancer_Wisconsin)
+
+```
+

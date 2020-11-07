@@ -1,0 +1,126 @@
+---
+title: "Lab2"
+author: "Icicles"
+date: "5 November 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+
+n_samples <- 1000
+x_mean <- 5 
+x_sd <- 9
+x_normal <- rnorm(n_samples,mean(x_mean,sd=x_sd))  
+x_density <- density(x_normal)
+
+g1 = hist(x_normal)
+
+g2 = plot(x_density)
+
+
+
+
+```
+
+
+
+```{r}
+
+dnorm(x_mean, mean = x_mean, sd = x_sd)
+pnorm(2)
+pnorm(10)
+qnorm(0.001)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+
+x=1:20
+y=dbinom(x, size=10, prob=0.2)
+
+plot(x,y,type = 'h',
+     main = "boogaloo",
+     ylab = "heads",
+     xlab = "probability",
+     lwd=3)
+
+```
+```{r}
+
+xe = rexp(10, rate = 10)
+xe = as.data.frame(xe)
+
+ggplot(xe, aes(x=xe)) + geom_density() + theme_classic() + labs(main="expo", xlab="value", ylab="density") + xlim(0,3)
+
+```
+
+```{r}
+
+data = skewdata
+
+hist(data$values)
+summary(data)
+
+```
+
+
+```{r}
+
+mean.values = mean(data$values)
+sd.values=sd(data$values)
+
+qnorm(0.975)
+
+```
+
+```{r}
+
+ucl = mean.values+qnorm(0.975)*sd.values/sqrt(30)
+lcl = mean.values-qnorm(0.975)*sd.values/sqrt(30)
+#upper confidence limit and lower confidence limit
+ucl
+lcl
+
+```
+
+
+```{r}
+#bootstrap
+plot(c(0,30), c(0,60), type="n", xlab="sample", ylab="conf")
+for (k in seq(5,30,3)){
+a=numeric(1000)
+for (i in 1:1000){
+a[i]=mean(sample(data$values,k,replace=T))
+}
+points(c(k,k),quantile(a,c(0.025,0.975)), type="b", pch=21, bg="red")
+}
+#page 62 crawley
+
+```
+
+
+
+```{r}
+
+plot(c(0,30),c(0,60),type="n",xlab="Sample size",
+ylab="Confidence interval")
+for(k in seq(5,30,3)){
+a <- numeric(10000)
+for (i in 1:10000){
+a[i] <- mean(sample(data$values,k,replace=T))
+}
+points(c(k,k),quantile(a,c(.025,.975)),type="b",pch=21,bg="red")
+}
+```

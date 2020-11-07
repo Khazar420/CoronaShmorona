@@ -1,0 +1,7 @@
+"0","x=1:20"
+"0","y=dbinom(x, size=10, prob=0.2)"
+"0","plot(x,y,type = 'h',"
+"0","     main = ""boogaloo"","
+"0","     ylab = ""heads"","
+"0","     xlab = ""probability"","
+"0","     lwd=3)"

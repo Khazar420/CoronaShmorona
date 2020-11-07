@@ -1,0 +1,6 @@
+"0","n_samples <- 1000"
+"0","x_mean <- 5 "
+"0","x_sd <- 9"
+"0","x_normal <- rnorm(n_samples,mean(x_mean,sd=x_sd))  "
+"0","x_density <- density(x_normal)"
+"0","g1 = hist(x_normal)"

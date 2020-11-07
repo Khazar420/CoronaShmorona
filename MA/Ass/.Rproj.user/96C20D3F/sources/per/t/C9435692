@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1604620736499.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1925921461",
+    "id" : "C9435692",
+    "lastKnownWriteTime" : 1604621005,
+    "last_content_update" : 1604621005972,
+    "path" : "~/R/MA/Ass/First Draft.Rmd",
+    "project_path" : "First Draft.Rmd",
+    "properties" : {
+        "cursorPosition" : "2,26",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
