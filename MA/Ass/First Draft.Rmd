@@ -1,3 +1,12 @@
+Hypothesis testing?
+Compute a 95% confidence interval for the mean for one of the variable that appears to be normally
+distributed
+binomial distribution
+Poisson distribution
+normal distribution
+var.test is very important - allows to comparare variances
+t.test compares means
+
 ```{r}
 
 dim(CS5801.data)
@@ -24,6 +33,17 @@ Then I will separate out the data, and take out the two teams that I will exampl
 The third step will be to put all of the team data together, and see whether there is anything that is clear when adding them together.
 
 After these three steps are done, I will try to find and prove any correlants.
+The one main issue for the author personally is the numbe of variables. With 15 variables, there needs to be a way to plot everything in a near and tidy way without using too many graphs.
+This allows for better legibility, and also makes everything easier to manage without obfuscating anything.
+
+At each step, five things will be looked at and taken into consideration
+Classification
+Anomaly detection
+Quantifying - regression
+Cluttering - organising
+What next?
+
+This will be a regular cyclical process so as to ensure that by the end of things the right   question is asked appropriately.
 
 
 ```{r}

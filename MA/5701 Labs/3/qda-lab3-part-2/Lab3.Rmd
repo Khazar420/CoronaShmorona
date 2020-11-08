@@ -4,5 +4,22 @@ summary(BreastCancer_Wisconsin)
 
 plot(BreastCancer_Wisconsin)
 
+head(BreastCancer_Wisconsin)
+
+dim(BreastCancer_Wisconsin)
+
 ```
 
+
+
+```{r}
+
+D = BreastCancer_Wisconsin$diagnosis
+
+M = subset(BreastCancer_Wisconsin, BreastCancer_Wisconsin$diagnosis =="M")
+B = subset(BreastCancer_Wisconsin, BreastCancer_Wisconsin$diagnosis =="B")
+
+nrow(M)
+nrow(B)
+
+```
