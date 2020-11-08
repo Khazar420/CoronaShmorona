@@ -1,10 +1,166 @@
 ```{r}
 sample = dbinom(0:1000, size = 1000, prob = 0.5)
 
-plot(sample)
+pbinom(0.5, 1)
 
 
 ```
 
+The binomial distribution is a discrete probability distribution. It describes the outcome of n independent trials in an experiment. Each trial is assumed to have only two outcomes, either success or failure. If the probability of a successful trial is p, then the probability of having x successful outcomes in an experiment of n independent trials is as follows.
 
 let's go
+
+
+```{r}
+nsamples = 10000
+s_norm = 0
+s_std = 1
+y = rnorm(nsamples, s_norm, s_std)
+y2 = rbinom(nsamples, 1000, 0.5)
+
+plot(y)
+plot(y2)
+
+```
+Density, distribution function, quantile function and random generation for the Poisson distribution with parameter lambda.
+
+Usage
+dpois(x, lambda, log = FALSE)
+ppois(q, lambda, lower.tail = TRUE, log.p = FALSE)
+qpois(p, lambda, lower.tail = TRUE, log.p = FALSE)
+rpois(n, lambda)
+```{r}
+hist(y)
+hist(y2)
+
+```
+Density, distribution function, quantile function and random generation for the normal distribution with mean equal to mean and standard deviation equal to sd.
+
+Usage
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+rnorm(n, mean = 0, sd = 1)
+```{r}
+seq(0, 5, by=0.3)
+
+```
+
+seq(from, to)
+seq(from, to, by= )
+seq(from, to, length.out= )
+seq(along.with= )
+seq(from)
+seq(length.out= )
+
+
+```{r}
+c<-seq(60,150)
+d<-dnorm(c,mean = 105, sd=9)
+
+plot(c, dnorm(c,mean = 105, sd=9), type = "l")
+
+meang = 105
+stdg = 9
+
+```
+https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/plot
+
+
+```{r}
+
+plot(c, dnorm(c,mean = 105, sd=9), type = "l")
+abline(v=90, lty=2)
+abline(v=125, lty=3)
+
+```
+
+ggplot also does the below
+```{r}
+
+dnorm(meang, mean=meang, sd = stdg)
+pnorm(meang, mean=meang, sd = stdg)
+qnorm(0.1, mean = meang, sd = stdg)
+
+```
+
+
+part2
+```{r}
+mpg= auto_mpg
+
+summary(mpg)
+````
+
+part 2
+
+
+```{r}
+
+ggplot(mpg)+aes(y=acceleration, x=horsepower) + geom_point()
+
+````
+
+
+
+```{r}
+ggplot(data=mpg, aes(x=acceleration)) + geom_density() +
+theme_light() + ggtitle("Histogram of Acceletation")
+
+```
+
+```{r}
+
+plot(mpg$horsepower, mpg$acceleration, type="l")
+````
+
+Compute a 95% confidence interval for the mean for one of the variable that appears to be normally
+distributed
+
+```{r}
+
+qnorm(0.975)
+
+mean.acceleration<-mean(mpg$acceleration)
+sd.acceleration<-sd(mpg$acceleration)
+
+
+ucl<-mean.acceleration-qnorm(0.975)*sd.acceleration/sqrt(398)
+lcl<-mean.acceleration+qnorm(0.975)*sd.acceleration/sqrt(398)
+
+ucl
+
+lcl
+
+
+```
+ucl is  confidewnce limit
+lcl is lower confidence limite
+
+```{r}
+
+hist(mpg$acceleration)
+
+````
+      Compute a 95% confidence interval for the proportion of cars from the 80s?
+
+```{r}
+
+table(mpg$`model year`)
+sum(mpg$`model year`>75)
+
+prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
+
+vr<-prop.80*(1-prop.80)/nrow(mpg)
+prop.ucl<-prop.80+ qnorm(0.975)*sqrt(vr)
+prop.lcl<-prop.80- qnorm(0.975)*sqrt(vr)
+
+prop.lcl
+prop.ucl
+
+````
+
+
+ok
+
+      

@@ -1,0 +1,37 @@
+```{r}
+
+dim(CS5801.data)
+
+glimpse(BOSLAA)
+
+
+BOSLAA = subset(CS5801.data, teamID.x == "BOS" | teamID.x=="LAA")
+BOS = subset(CS5801.data, teamID.x == "BOS")
+LAA = subset(CS5801.data, teamID.x == "LAA")
+
+
+```
+
+Things to have
+ggplot
+dplyr
+
+
+The first thing that I will do is look at the data as a whole and try to see whenther there is anything that stands out such as unusual figures or trends between all of the teams.
+
+Then I will separate out the data, and take out the two teams that I will example, and see whether there is anything between them.
+
+The third step will be to put all of the team data together, and see whether there is anything that is clear when adding them together.
+
+After these three steps are done, I will try to find and prove any correlants.
+
+
+```{r}
+
+plot(BOSLAA$weight, BOSLAA$height, "l")
+
+```
+
+
+
+
