@@ -1,9 +1,20 @@
 Metadata
+assess the quality
+full impletmentation?
 
 
+```{r}
+
+summary(CS5801.data)
+summary(BOSLAA)
+summary(BOS)
+summary(LAA)
+
+```
 
 
 ----
+
 
 Hypothesis testing?
 Compute a 95% confidence interval for the mean for one of the variable that appears to be normally
@@ -12,16 +23,37 @@ binomial distribution
 Poisson distribution
 normal distribution
 var.test is very important - allows to comparare variances
-t.test compares means
+t.test compares means - welch
 ANOVA - Analysis of Variance 
 for example: 
 cars.lm<-lm(cars$dist~cars$speed, data=cars)
 summary(cars.lm)
 plot(cars.lm)
 also this?cars.lm2<-lm(cars$dist~cars$speed+ I(cars$speed^2))
+ANCOVA - ANOVA with covariance
+ancova.iq<-lm(iq$iq~iq$group+iq$age)
+summary(ancova.iq)
+plot(ancova.iq)
+
 	F test to compare two variances
  Welch t-test
  lcl and ucl in the boxplots
+ ggplot(data = iq, aes(x=group, y=age)) +geom_boxplot() + theme_classic()
+ ANOVA again summary(aov(iq$iq~iq$group))
+ Higher F-statistic is better
+ aggregate function - caltulating a specific propterty 
+ - aggregate(iq~group, data=iq, FUN="mean")
+ Connect several categories if similar enough, or indeed separate if too distinct
+ stem and leaf plot
+box plot
+scatter diagram
+histogram
+dotplot
+probablility plot
+Ehrenberg's two-variable-digits rule
+ transpose
+reorder rows or colluns
+ugly E numbers should be multiplied or divided by the appropriate order of magnitude in order to maek them readable
 
 ```{r}
 
@@ -40,6 +72,8 @@ LAA = subset(CS5801.data, teamID.x == "LAA")
 Things to have
 ggplot
 dplyr
+dbplyr
+foreign
 
 
 The first thing that I will do is look at the data as a whole and try to see whenther there is anything that stands out such as unusual figures or trends between all of the teams.

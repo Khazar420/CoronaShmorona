@@ -24,7 +24,7 @@ The research question is **"Is there a difference in mean IQ between the three g
 ```{r}
 # testing the iq data for lab
 
-iq= read.spss("data/iqdata2.sav", to.data.frame=TRUE)
+iq = read.spss("iqdata2.sav", to.data.frame=TRUE)
 ```
 
 # Exploring the data
@@ -47,7 +47,7 @@ ggplot(data=iq, aes(x=iq)) + geom_histogram(bins=10) +theme_classic()
 And more importantly we want to see if the mean for iq or age is different between the three groups.
  
 ```{r}
-ggplot(data = iq, aes(x=group, y=age)) +geom_boxplot() + theme_classic()
+ggplot(data = iq, aes(x=group, y=)) +geom_boxplot() + theme_classic()
 ```
 We can also look at the same plot for iq and group.
  

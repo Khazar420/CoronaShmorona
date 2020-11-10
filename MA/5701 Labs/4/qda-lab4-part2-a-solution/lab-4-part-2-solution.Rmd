@@ -15,7 +15,7 @@ library(ggplot2)
 # (1) Read in the data
 
 ```{r}
-birth<-read.csv("data/birthweight.csv", sep = ";")
+birth<-read.csv("birthweight.csv", sep = ";")
 ```
 
 # (2) Explore the data numerically and graphically
