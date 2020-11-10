@@ -20,6 +20,7 @@ To demonstrate how to compute correlation in R we will make use of the cars data
 
 ```{r}
 head(cars)
+summary(cars)
 ```
 As you have seen in the lecture this has two variables: speed of the car, and the distance it took to come to a halt.
 
@@ -203,6 +204,5 @@ y.est
 # Transforming y?
 
 We may want to transform y and see if we get a better model.
-
 
 

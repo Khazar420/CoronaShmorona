@@ -1,0 +1,241 @@
+---
+title: "QDA-Lab-5-Part-2"
+author: "Isabel Sassoon"
+date: "October 2020"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+# Loading the libraries used in the notebook
+
+```{r}
+library(ggplot2)
+```
+
+# (1) Data
+
+Loading the data into the notebook
+
+```{r}
+diet.df<-read.csv("Diet_r.csv")
+```
+
+# (2) Exploring the data
+
+Numerical summaries of all the attributes in the data
+
+```{r}
+summary(diet.df)
+```
+
+Notice that the data has not been "interpreted" as intended by the import. For example gender has two values and is binary (in this dataset) yet here it was treated as a number.
+
+Also note that there are 2 missing values for gender.
+
+The as.factor R function can help fix this:
+
+```{r}
+diet.df$gender<-as.factor(diet.df$gender)
+```
+
+Lets look at the Diet variable:
+
+```{r}
+table(diet.df$Diet)
+```
+
+This also is a categorical variable that has been imported as a number so lets fix this too
+
+```{r}
+diet.df$Diet<-as.factor(diet.df$Diet)
+```
+# Graphical exploration of the data
+
+Initially here are histograms for each variable in turn. This helps us see if there are any strage skews (lack of symmetry) in the data.
+
+```{r}
+ggplot(diet.df, aes(x=Age)) + geom_histogram(bins=10) + theme_bw()
+
+ggplot(diet.df, aes(x=pre.weight)) + geom_histogram(bins=10) + theme_bw()
+
+ggplot(diet.df, aes(x=weight6weeks)) + geom_histogram(bins=10) + theme_bw()
+
+
+```
+
+The histograms do not point to any problems in the data. The values for age and weight all seem plausible. There are no extreme values on either end, no negative values or any missing values.
+
+
+## Two way plots
+
+```{r}
+ggplot(diet.df, aes(x=Diet, y=pre.weight, fill=gender)) +geom_boxplot() + theme_bw() +
+  ggtitle("Distribution of Starting Weight by Diet and Gender")
+```
+
+Interestingly there is some missing data, but only for Gender. If we were planning to use Gender in our models we may want to remove the rows with these missing values. We may also scrutinize those rows of data, in case there are any anomalies in the whole row of data.
+
+# (3) Hypothsis testing that the mean weight before the diet is the same as after
+
+For this we can use the t-test to test the hypothesis $H_0$ mean weight before the diet is the same as the mean weight after the diet vs the $H_1$ the means are different.
+
+```{r}
+t.test(diet.df$pre.weight, diet.df$weight6weeks)
+```
+
+Looks like there is a significant difference before vs after.
+
+# (4) Compute the weight lost
+
+In order to model the effect of diet type on weight lost we need to compute the latter.
+
+```{r}
+diet.df$weight.lost<-diet.df$pre.weight-diet.df$weight6weeks
+```
+
+Lets see what this looks like:
+
+```{r}
+summary(diet.df$weight.lost)
+hist(diet.df$weight.lost)
+```
+From the hostogram is looks like most of the people in the sample have lost weight, as the bulk of the data points are above 0.
+
+But can this weight loss be explained by one specific diet?
+
+
+# (5) ANOVA
+
+Lets model the weight lost vs the diet used.
+
+
+```{r}
+summary(aov(diet.df$weight.lost~diet.df$Diet))
+```
+
+We can see that the F-value is significant, so there is a difference between the mean weight lost for each of the three diets.
+
+```{r}
+summary.lm(aov(diet.df$weight.lost~diet.df$Diet))
+```
+
+From this output we can see that although the F was significant our $r^2$ is low. The difference in the diets seem to be between Diets 1,2 and diet 3.
+
+```{r}
+plot(aov(diet.df$weight.lost~diet.df$Diet))
+```
+
+The plots for the residuals do not point to any issues. We see constant variance for the residuals plot (plot1) and normally distributed residuals in plot 2.
+
+Going back to the means for the different diets, lets compute them:
+
+```{r}
+aggregate(diet.df$weight.lost~diet.df$Diet, FUN="mean")
+```
+
+
+Seems like diet 3 causes higher weight loss, but the difference between diet 1 and 2 is much smaller - as we saw in the anova model summary.
+
+We can look at this also with a boxplot.
+
+```{r}
+ggplot(diet.df, aes(x=Diet, y=weight.lost)) + geom_boxplot() + theme_classic()
+```
+
+***
+
+### What to look for in an ANOVA analysis output?
+
+ - In the summary(aov()) check if the F statistic is significant. If it is significant then the means are different for the categorical variable values.
+ - In the summary.lm(aov()) check the direction and the significance of the estimates for the different levels of the categorical variables. Are they significant? Are they positive or negative? Also pay attention to the default category - which is represented by the intercept.
+ - In plot(aov()) check the first two plots. In the first plot "residuals vs fitted" we want constant variance - this means a straightish red line and the spread of points that is similar for all the x values. In the second plot "QQplot" we want to see the points (represented by round circles) to be as close to the straignt line as possible. Check if there are some suspicious outliers.
+
+***
+# other attributes may affect the weight loss
+
+Lets introduce Age, and in this case we want to do this we are going to apply an ANCOVA model because our target variable is numeric, and we have both numeric and categorical explanatory variables. An ANCOVA model uses the same lm syntax as the linear regression.
+
+```{r}
+model2<-lm(diet.df$weight.lost~diet.df$Diet+diet.df$Age)
+summary(model2)
+```
+
+This model's performance is not good at all, the F statistic is significant but the $r^2$ is still very low. Adding Age does not help us better model weight loss.
+
+## Explain the relation between the variables
+
+This model does not have a good $r^2$ but *how would we explain the realtion ebtween the dependent and the independent variables?*
+
+From the table summary(model2) we can learn that there is a weak negative relationship between age and weightloss. This is reflected in the value of the estimate for the effect of age  which is -0.006.
+We can also see that diet 2 has a negative effect on weight loss (-0.285) and diet 3 has a more positive effect on weightloss.
+
+
+
+```{r}
+plot(model2)
+```
+
+The plots for the residuals vs fitted and the QQ plot do not raise any concerns.
+
+### Perhaps the weight before the diet is a better predictor?
+Lets see, as the pre.weight is a numerical attribute. We are again using an ANCOVA model.
+
+```{r}
+model3<-lm(diet.df$weight.lost~diet.df$Diet+ diet.df$gender + diet.df$pre.weight)
+summary(model3)
+```
+
+This model is no better than our previous one. Low $r^2$ and not many estimates are significant. The only one seems to be the different between diet 3 and the rest.
+
+
+***
+# What to look out for in an ANCOVA output?
+An ANCOVA model is similar to a linear regression model
+
+ - In the summary(lm()) look at the $r^2$ which should be as close as 1 as possible, look at the F statistic which should be significant and finally look at the estimates for the coefficients and see which ones are significant.
+ - In the plot(lm()) look for equal variances in the residuals vs fitted plot (first plot) and
+ for the residuals to alogn along the straight line in the qqplot (the second plot).
+***
+
+# Joining categories
+
+Looking at weight loss we saw that the difference seemed to be more marked between Diet 3 and the other two. So lets join diet 1 and 2 together then model this instead.
+
+```{r}
+diet.df$diet.ind<-ifelse(diet.df$Diet=="3", "3", "1 or 2")
+table(diet.df$diet.ind)
+```
+
+```{r}
+model3<-aov(diet.df$weight.lost~diet.df$diet.ind)
+summary.lm(model3)
+```
+
+There are many other ways of proceeding with the analysis. One possible option is to check whether there are significant differences in the starting weights of the people allocated to the three diets, or their ages.
+
+If you chose to use the Gender as an explanatory variable, then you may want to exclude the rows of data that have NA. It is unlikely that we will be able to "guess" or impute the missing values for gender in a meaningful way.
+
+### Removing Missing values
+
+We can try to see if gender is a better explainer of weight loss, but before we do we should remove the missing values for gender, this means we will have a smaller data set to use.
+
+```{r}
+diet2.df<-subset(diet.df, !is.na(diet.df$gender))
+```
+
+We now removed the two rows with missing values for gender.
+
+```{r}
+model.gender.aov<-aov(diet2.df$weight.lost~diet2.df$gender)
+summary.lm(model.gender.aov)
+```
+
+Clearly this has not helped at all. 
+
+
+Overall the best model remains the one that uses either only the diet type only. 
+
+

@@ -1,0 +1,150 @@
+---
+title: "QDA Lab 5 Part 1"
+date: "October 2020"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This lab is going to show how to run ANOVA and ANCOVA in R. It also includes a comparison to using t-tests when the explanatory variable has two levels only.
+
+```{r}
+library(foreign)
+library(ggplot2)
+```
+
+# The data
+This data is taken from https://people.bath.ac.uk/pssiw/stats2/page16/page16.html
+and it contains the IQ scores from three groups of undergraduates of different disciplines as well as their age.
+(The data is in SPSS format and the foreign library can be used to read this data in, alternatively this data is available as an R data object)
+
+## The research question
+The research question is **"Is there a difference in mean IQ between the three groups of students?" **
+
+```{r}
+# testing the iq data for lab
+
+iq= read.spss("data/iqdata2.sav", to.data.frame=TRUE)
+```
+
+# Exploring the data
+This data has the IQ of students from three different courses and their age
+Firstly explore the data and visualise it:
+ 
+```{r}
+summary(iq)
+```
+ 
+
+We can see that we have 45 observations and for each one we have the iq, the age and the group the students are in.
+ 
+A good way to visualise the distributions is using histograms.
+ 
+```{r}
+ggplot(data=iq, aes(x=iq)) + geom_histogram(bins=10) +theme_classic()
+```
+ 
+And more importantly we want to see if the mean for iq or age is different between the three groups.
+ 
+```{r}
+ggplot(data = iq, aes(x=group, y=age)) +geom_boxplot() + theme_classic()
+```
+We can also look at the same plot for iq and group.
+ 
+```{r}
+ggplot(data = iq, aes(x=group, y=iq)) +geom_boxplot() + theme_classic()
+
+```
+
+# ANOVA model
+
+Lets build an ANOVA model for the iq with group as the explanatory variable or factor.
+ 
+```{r}
+summary(aov(iq$iq~iq$group))
+```
+ 
+This shows us that with a ratio of F=20.02 the probability that this (or a result more extreme than this) would arise by change alone if the means were the same is extremely small.
+ 
+This confirms that the groups have different means.
+ 
+Lets check the diagnostic plots:
+ 
+```{r}
+plot(aov(iq$iq~iq$group))
+```
+ 
+The diagnostics for this model do not point to major issues, but there are some outliers (9, 12) that can be considered for further investigation.
+ 
+We also want to consider the size and direction of the effects that each group have on the dependent variable (iq)
+ 
+```{r}
+summary.lm(aov(iq$iq~iq$group))
+```
+ 
+This output can help us understand what effect each level of group has on the estimate for mean iq. The intercept also corresponds to the physics group (first one in the data file). The coefficients show the difference in the other groups.
+In this case the Maths students do not have a significant difference in mean IQ when compared to the physics students, however the chemistry students' mean IQ is significantly different (12.4 higher).
+ 
+```{r}
+aggregate(iq~group, data=iq, FUN="mean")
+```
+ 
+If we simply look at the mean for each group (above) it can be seen that the mean for the physics students is the same as the intercept. And adding the coefficients from the summary.lm table to the physics students means gives us the two other means.
+ 
+ 
+## We may want to consider joining two categories
+ 
+If we treat Physics and Maths students as one group:
+ 
+```{r}
+iq$two.groups<-ifelse(iq$group=="Chemistry student", "Chemistry", "Maths+Physics")
+```
+ 
+Lets see what this new attribute looks like:
+
+```{r}
+table(iq$two.groups)
+```
+
+If we forgot about ANOVA and wanted to test the hypothesis $H_0$ mean(chemistry IQ) = mean (maths+physics IQ) vs $H_1$ Chemistry IQ is Higher.
+
+We can do this with a t-test, proceeded by a variance test
+
+```{r}
+var.test(iq$iq~iq$two.groups)
+```
+
+ Now we can run a t test
+ 
+```{r}
+t.test(iq$iq~iq$two.groups)
+```
+
+This confirms that the difference is significant as the p-value of this t-test is very small.
+
+Now lets do the same using ANOVA
+
+```{r}
+summary.lm(aov(iq$iq~iq$two.groups))
+```
+
+This has also found a significant difference , and the coefficient estimates show us that the mean iq for maths+physics is 12.367 less than that for Chemistry.
+ 
+ 
+***
+
+# ANCOVA
+Using the same data set lets move to ANCOVA, where we also introduce another covariate (explanatory variable) that is continuous - in this case we will use age.
+
+```{r}
+ancova.iq<-lm(iq$iq~iq$group+iq$age)
+summary(ancova.iq)
+```
+
+```{r}
+plot(ancova.iq)
+```
+We can see from the results of the model that age is not a significant coefficient, and the $r^2$ is less than 50%. This does not seems like a model that is more useful than the ANOVA using only the group as the explanatory variable.
+
+
+ 

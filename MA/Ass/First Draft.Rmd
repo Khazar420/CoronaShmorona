@@ -1,3 +1,10 @@
+Metadata
+
+
+
+
+----
+
 Hypothesis testing?
 Compute a 95% confidence interval for the mean for one of the variable that appears to be normally
 distributed
@@ -6,6 +13,15 @@ Poisson distribution
 normal distribution
 var.test is very important - allows to comparare variances
 t.test compares means
+ANOVA - Analysis of Variance 
+for example: 
+cars.lm<-lm(cars$dist~cars$speed, data=cars)
+summary(cars.lm)
+plot(cars.lm)
+also this?cars.lm2<-lm(cars$dist~cars$speed+ I(cars$speed^2))
+	F test to compare two variances
+ Welch t-test
+ lcl and ucl in the boxplots
 
 ```{r}
 

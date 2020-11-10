@@ -63,7 +63,7 @@ Conclusion - fail to reject $H:0$ as the test statistic is smaller than the crit
 (a) Read in the data set breastCancer\_Wissonsin.csv
  
 ```{r}
-breast.cancer <- read.csv("data/BreastCancer_Wisconsin.csv")
+breast.cancer <- BreastCancer_Wisconsin
 ```
  
 (b) Explore the data and the variables
@@ -81,7 +81,7 @@ ggplot(data = breast.cancer, aes(x=radius.mean, y=radius.max)) + geom_point() + 
 Also look at plots between continuous and discrete, for example:
 
 ```{r}
-ggplot(data=breast.cancer, aes(x=diagnosis, y=radius.max)) + geom_boxplot() + theme_classic()
+ggplot(data=breast.cancer, aes(x=diagnosis, y=radius.max)) + geom_boxplot() + ggtitle("Boxplot of Radius Mean by Diagnosis") + theme_classic()
 ```
 
 There appears to be a difference between the maximum radius between Beningn and Malignant Tumors. Benign ones have a smaller median value, and a smaller variance.
