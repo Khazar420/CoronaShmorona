@@ -1,0 +1,164 @@
+---
+title: "Lab 6 Part 1"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(xtable)
+library(mgcv)
+library(tree)
+
+```
+
+This covers multiple regression and focuses on approaches to model selection.
+
+We are using a data set (seen in the lecture) on air pollution studies.
+
+**How is ozone concentration related to wind speed, air temperature, and the intensity of solar radiation?**
+
+In this case we have a *numerical dependent variable and all the explanatory variables are also numeric*.
+
+```{r}
+ozone.pollution<-read.csv("data/ozone.data.csv")
+```
+
+Lets explore the data:
+
+```{r}
+summary(ozone.pollution)
+```
+
+There are no missing values, extreme values, or strange patterns in the summaries.
+
+We can explore the data graphically:
+
+```{r}
+pairs(ozone.pollution, panel = panel.smooth)
+plot(ozone.pollution)
+```
+
+
+The response variable, ozone concentration is shown on the y-axis of the bottom row of these panels. There appears to be a strong negative relationship with wind speed, a positive correlation with temperature and an unclear relationship with radiation.
+
+***
+
+## OPTIONAL
+One way to start a multiple regression problem is using a non-parametric smoother in a GAM.
+```{r}
+ozone.gam<-gam(ozone.pollution$ozone~s(ozone.pollution$rad)+s(ozone.pollution$temp)+s(ozone.pollution$wind))
+summary(ozone.gam)
+plot(ozone.gam)
+```
+
+This is useful as it can highlight some evident curvature in the relationships between the target and explanatory variables. 
+
+
+Another optional approach to see if there are interactions, is using a regression tree.
+
+```{r}
+ozone.tree<-tree(ozone.pollution$ozone~., data = ozone.pollution)
+plot(ozone.tree)
+text(ozone.tree)
+```
+
+This can tell us about the structure of the data, and the top factors affecting the value of our dependent variable.
+
+In this case it shows that temperature is the most important factor affecting ozone concentration (expressed as longer tree branches, which represent greater deviance).
+Wind speed is important at both high and low temperature.
+Radiation shows an interesting effect, although subtle where at low temperatures radiation matters at relatively low wind speeds. Whereas at high temperatures radiation matters at low wind speeds.
+
+END OF OPTIONAL SECTION
+***
+
+From the plots of the data (and confirmed by the GAM and Tree - if using) there is reason to assume that some polynomial relation is possible. Therefore our **most complicated model** will include some quadratic terms and interactions.
+
+```{r}
+m1.lm<-lm(ozone~temp*wind*rad+I(temp^2)+ I(wind^2)+ I(rad^2), data=ozone.pollution )
+summary(m1.lm)
+```
+
+This model has a significant F score, a great $r^2$ and some coefficients (but not all) are significant.
+
+The three way interaction is clearly not significant so we can start to simplify by removing it.
+
+```{r}
+m2.lm<-lm(ozone~temp*wind*rad+I(temp^2)+ I(wind^2)+ I(rad^2)-temp:wind:rad, data=ozone.pollution)
+summary(m2.lm)
+```
+
+We will now remove the least significant two way interaction
+
+```{r}
+m3.lm<-update(m2.lm,~.-wind:rad)
+summary(m3.lm)
+```
+
+And now we remove the wind and temperature interaction
+
+```{r}
+m4.lm<-update(m3.lm, ~.-temp:wind)
+summary(m4.lm)
+```
+
+Lets keep the marginally significant interaction between temp and rad, but leave out all the others. Also the least significant coefficient was the one for $rad^2$ so we remove it from our next model.
+
+We can use the **update* function to stop too much typing!
+
+```{r}
+m5.lm<-update(m4.lm, ~.-I(rad^2))
+summary(m5.lm)
+```
+
+Now we find that temp:rad is not significant so we will remove it from the next model
+
+```{r}
+m6.lm<-update(m5.lm, ~.-temp:rad)
+summary(m6.lm)
+```
+
+This is looking promising, as all the coefficients are significant we don't need to remove any. But we should check the residuals
+
+```{r}
+plot(m6.lm)
+```
+
+We can see in the first plot that the spread of the residuals is greater for higher values on the x-axis. This is called heteroscedasticity. 
+There is also a S shape emerging in the qq-plot.
+
+In order to adjust for this a transformation of the dependent variable can help. In this case a log transformation. This is ok to use as long as there are no zeros in the dependent variable. 
+
+Now once the dependent variable is transformed, the whole structure and linearity of the relationships changes. We will start from the beginning, but we can use the step function as a shortcut.
+
+So firstly we go back to the full model or most complicated model, but with the transformed dependent variable:
+
+```{r}
+#log transform
+m7.lm<-lm(log(ozone)~temp*wind*rad+I(temp^2)+ I(wind^2)+ I(rad^2),data=ozone.pollution)
+summary(m7.lm)
+```
+
+
+Then use the step function to get to our *minimal adequate model*
+
+```{r}
+m8.lm<-step(m7.lm)
+summary(m8.lm)
+```
+
+The step function creates a long output so what we are looking for is the last part, which proposes the *minimal adequate model* where the step wise process stops.
+
+This model is:
+
+$$log(ozone)=0.77 + 0.041 \times temp - 0.22 \times wind +0.0075 \times rad + 0.0074 \times wind^2 -0.000147 \times rad^2  $$
+
+and check its residuals are obtained using:
+
+```{r}
+plot(m8.lm)
+```
+
+Which are looking much better!

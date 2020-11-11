@@ -66,13 +66,18 @@ hit.ind
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
 Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI.
-Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located.
+Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have.
 
 # 2. Exploratory Data Analysis (EDA)
 
 ## 2.1 EDA plan
 
 *Outline a suitable plan to explore, describe and visualise your data. (5 marks)*  
+
+i will undergo a process including two cyclces which I will switch between at each stage of the data analysis. Most people will use a similar process. This one is inspired by Peng and Matsui's method in their book, the Art of Data Science. They call them apicycles.
+The first cycle will be to look at the data, develop assumptions, and then see whether they match.
+The second cycle will be ask the questions relevant to these assumptions, see what models might be appropriate, build them, interpret the results, and then report them.
+
 
 
 ## 2.2 EDA and summary of results  

@@ -18,7 +18,24 @@ summary(LAA)
 
 Hypothesis testing?
 Compute a 95% confidence interval for the mean for one of the variable that appears to be normally
-distributed
+6 ways to see  normal distribution:
+Histogram - my_data.hist()
+Box Plot - my_data.plot(kind = 'box')
+QQ Plot - pylab.show()
+Kolmogorov Smirnov test - from scipy.stats import kstest, norm
+my_data = norm.rvs(size=1000)
+ks_statistic, p_value = kstest(my_data, 'norm')
+print(ks_statistic, p_value)
+Lilliefors test - from scipy.stats import norm
+from statsmodels.stats.diagnostic import lilliefors
+my_data = norm.rvs(size=500)
+lilliefors(my_data)
+Shapiro Wilk test - from scipy.stats import norm
+from statsmodels.stats import shapiro
+my_data = norm.rvs(size=500)
+shapiro(my_data)
+
+distributed 
 binomial distribution
 Poisson distribution
 normal distribution
@@ -55,6 +72,15 @@ Ehrenberg's two-variable-digits rule
 reorder rows or colluns
 ugly E numbers should be multiplied or divided by the appropriate order of magnitude in order to maek them readable
 
+pairs(ozone.pollution, panel = panel.smooth)
+plot(ozone.pollution)
+Pairs apperas the same as plot, except this one gives a nice red trend line
+GAM - generalized additive model - loads of rally cool ways to show data
+ozone.gam<-gam(ozone.pollution$ozone~s(ozone.pollution$rad)+s(ozone.pollution$temp)+s(ozone.pollution$wind))
+summary(ozone.gam)
+plot(ozone.gam)
+tree - this is very good when doing dependent variables
+
 ```{r}
 
 dim(CS5801.data)
@@ -74,6 +100,10 @@ ggplot
 dplyr
 dbplyr
 foreign
+ggpubr
+xtable
+mgcv
+tree
 
 
 The first thing that I will do is look at the data as a whole and try to see whenther there is anything that stands out such as unusual figures or trends between all of the teams.
