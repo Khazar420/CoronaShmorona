@@ -1,3 +1,11 @@
+Cleaning data:
+is.na(filename)
+finds missing values
+str(surveyDF)
+structure
+mean, median, quartile
+
+
 Metadata
 assess the quality
 full impletmentation?
@@ -47,6 +55,10 @@ cars.lm<-lm(cars$dist~cars$speed, data=cars)
 summary(cars.lm)
 plot(cars.lm)
 also this?cars.lm2<-lm(cars$dist~cars$speed+ I(cars$speed^2))
+with more variables:
+m1.lm<-lm(ozone~temp*wind*rad+I(temp^2)+ I(wind^2)+ I(rad^2), data=ozone.pollution )
+summary(m1.lm)
+If you do ANOVA with lots of variables, just get rid of the onces with low P values
 ANCOVA - ANOVA with covariance
 ancova.iq<-lm(iq$iq~iq$group+iq$age)
 summary(ancova.iq)
@@ -67,6 +79,7 @@ scatter diagram
 histogram
 dotplot
 probablility plot
+table
 Ehrenberg's two-variable-digits rule
  transpose
 reorder rows or colluns
@@ -80,6 +93,11 @@ ozone.gam<-gam(ozone.pollution$ozone~s(ozone.pollution$rad)+s(ozone.pollution$te
 summary(ozone.gam)
 plot(ozone.gam)
 tree - this is very good when doing dependent variables
+m8.lm<-step(m7.lm)
+summary(m8.lm)
+Step creates the minimal adaptive model
+AIC (lowerbetter) is like the opposite of R^2 (higherbetter)
+AICpenalises for having too many paremetres. It lists models and gives the best at the bottom
 
 ```{r}
 
@@ -127,11 +145,54 @@ This will be a regular cyclical process so as to ensure that by the end of thing
 
 
 ```{r}
+#this needs to be adapted to the data
+# Using the summary() function on the numeric variables
+summary(surveyDF$StatsKnowl)
+summary(surveyDF$ProgKnowl)
 
-plot(BOSLAA$weight, BOSLAA$height, "l")
+# And easier to visualise
+# I superimpose the a probability density plot over the histogram
+
+hist(surveyDF$StatsKnowl, 
+     main="Histogram of Perceived Statistical Knowledge", 
+     xlab="Score (1 = low, 10 = high)", 
+     col="darkgray",
+     xlim=c(1,10),
+     breaks=1:10,
+     prob = TRUE
+     )
+lines(density(surveyDF$StatsKnowl), col = "red")  
+
+hist(surveyDF$ProgKnowl, 
+     main="Histogram of Perceived Programming Knowledge", 
+     xlab="Score (1 = low, 10 = high)", 
+     col="darkgray",
+     xlim=c(1,10),
+     breaks=1:10,
+     prob = TRUE
+     )
+lines(density(surveyDF$ProgKnowl), col = "red")  
+# Alternatively we can use boxplots
+boxplot(surveyDF$StatsKnowl, surveyDF$ProgKnowl)
+
+# Use the table() function to produce tables of frequency counts
+table(surveyDF$MSc)
+table(surveyDF$StudyMode)
+table(surveyDF$Background)
 
 ```
 
+**Exercise**: Is there any relationship between `Background` [UG course] and choice of MSc?
+relatiohsips between stuff
 
+```{r}
+# This is an example of a 2-d table of frequencies.
+table(surveyDF$Background, surveyDF$MSc)
+
+# and if we want marginal totals wrap table() with the addmargins() function
+addmargins(table(surveyDF$Background, surveyDF$MSc)) 
+
+# and if you want proportions then wrap with prop.table()
+prop.table(table(surveyDF$Background, surveyDF$MSc))
 
 

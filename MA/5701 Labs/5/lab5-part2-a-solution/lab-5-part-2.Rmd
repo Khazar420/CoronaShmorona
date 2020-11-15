@@ -125,7 +125,7 @@ summary.lm(aov(diet.df$weight.lost~diet.df$Diet))
 From this output we can see that although the F was significant our $r^2$ is low. The difference in the diets seem to be between Diets 1,2 and diet 3.
 
 ```{r}
-plot(aov(diet.df$weight.lost~diet.df$Diet))
+plot(aov(diet.df$weight.lost~diet.df$Diet))1q
 ```
 
 The plots for the residuals do not point to any issues. We see constant variance for the residuals plot (plot1) and normally distributed residuals in plot 2.

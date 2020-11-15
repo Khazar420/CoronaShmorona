@@ -66,7 +66,7 @@ hit.ind
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
 Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI.
-Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have.
+Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important.
 
 # 2. Exploratory Data Analysis (EDA)
 
