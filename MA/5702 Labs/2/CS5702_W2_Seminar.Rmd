@@ -66,7 +66,7 @@ package.check <- lapply(
   }
 )
 
-install_github("joachim-gassen/tidycovid19")
+install_github("https://github.com/joachim-gassen/tidycovid19.git")
 library(tidycovid19)
 ```
 
