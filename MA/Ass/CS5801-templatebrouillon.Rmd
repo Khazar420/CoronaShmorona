@@ -19,6 +19,16 @@ version: 1.0
 # Add code here to load any required libraries with `library()`.  
 # We suggest you use `install.package()` for any required packages externally to this document 
 # since installation only need be done once.
+
+install.package(ggplot)
+install.package(dplyr)
+install.package(dbplyr)
+install.package(foreign)
+install.package(ggpubr)
+install.package(xtable)
+install.package(mgcv)
+install.package(tree)
+install.package(validate)
 ```
 
 
@@ -34,6 +44,21 @@ version: 1.0
 # Feel free to change it including the data frame name.
 # 
 # my.2teams.df <- subset(analysis.data, teamID.x=="???" | teamID.x=="???")
+# Only the two teams need to be separated at this stage, but I also decivded to have subsets including only one team each. The reason is that 
+
+BOSLAA = subset(CS5801.data, teamID.x == "BOS" | teamID.x=="LAA")
+BOS = subset(CS5801.data, teamID.x == "BOS")
+LAA = subset(CS5801.data, teamID.x == "LAA")
+
+League = CS5801.data
+
+summary(League)
+summary(BOSLAA)
+summary(BOS)
+summary(LAA)
+
+
+
 ```
 
 
@@ -42,6 +67,7 @@ version: 1.0
 *Provide a description of a comprehensive plan to assess the quality of the data, and document your findings.  Include all variables/columns (5 marks) from the data set and provide a full implementation (5 marks).  NB even if no data quality issues are identified you should still check and report.*
 
 In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One is a negative number of games, runs, or length of career, for example.
+What I will do is use
 
 It contains 15 variables. They are as follows:
 platerID
@@ -67,6 +93,13 @@ str(surveyDF)
 structure
 mean, median, quartile
 
+
+```{r}
+
+
+```
+
+
 ## 1.3 Data cleaning  
  
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
@@ -75,9 +108,26 @@ Before using any software, it is clear that some values make no sense. For examp
 Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important.
 
 
+```{r}
+
+
+```
+
+Here validation is good, but I need to make one that works, becuase it can let me check if there are any controntations, fails, warnings, or erros
+```{r}
+checkleague <- check_that(League, 968 >= teamID.x)
+checkleague
+```
+
+
 # 2. Exploratory Data Analysis (EDA)
 
 I will do a usmary and histogram of each variable
+
+```{r}
+
+
+```
 
 ## 2.1 EDA plan
 
@@ -87,17 +137,28 @@ i will undergo a process including two cyclces which I will switch between at ea
 The first cycle will be to look at the data, develop assumptions, and then see whether they match.
 The second cycle will be ask the questions relevant to these assumptions, see what models might be appropriate, build them, interpret the results, and then report them.
 
+```{r}
 
+
+```
 
 ## 2.2 EDA and summary of results  
 
 *Undertake and summarise the findings of your data exploration, particularly with respect to the research questions.  Use appropriate summary statistics (uni- and multi-variate) and visualisations. (10 marks)*
 
+```{r}
+
+
+```
 
 ## 2.3 Additional insights and issues
 
 *Highlight potential further issues or insights uncovered in 2.2.  This might include follow up to findings from your initial EDA.  We accept that the boundary between 2.2 and 2.3 is somewhat arbitrary so use your judgement and maximise good structure and readability. (5 marks)*
 
+```{r}
+
+
+```
 
 # 3. Modelling
 
@@ -107,16 +168,35 @@ The second cycle will be ask the questions relevant to these assumptions, see wh
 *NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.*  
 
 I want to see the correlates between each variable and player salary. Then, within that, see wether any of those items move win or against one another. Such as career length and age. or runs and bats. This is to see whether I am correct to assume that these elements might be connected.
-ANOVA and ANCOVA will be useful for finding a lot of information in one go
+ANOVA and ANCOVA will be useful for finding a lot of information in one go.
+Another thing is that I will go one by one and remove the weakest correlants.
+
+```{r}
+
+
+```
 
 ## 3.2 Critique model using relevant diagnostics
 
 *Offer an interpretation of the model characteristics, goodness of fit and graphical diagnostics (5 marks) for the model built in 3.1. Explain any potential weaknesses (5 marks).*
 
+In order to test this model, I will want to see what happens with other teams. How accurate is it then?
+Do I have overfitting?
+
+```{r}
+
+
+```
+
 
 ## 3.3 Suggest improvements to your model
 
 *Based on the findings in 3.2 articulates possible alternative approaches to address them (5 marks).*
+
+```{r}
+
+
+```
 
 
 # 4. Extension work
@@ -126,7 +206,12 @@ ANOVA and ANCOVA will be useful for finding a lot of information in one go
 *Given this second research question (i.e., involving the binary target attribute) provide a plan of analysis based on relevant EDA for this attribute (10 marks). The model is described, explained and critiqued (10 marks).*
 *NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.* 
 
-This will be done on four levels. The whole set, two teams, and then each of the two teams.
+This will be done on four levels. The whole set, two teams, and then each of the two teams. This iwll be very similar to how the model for player salary was developed.
+
+```{r}
+
+
+```
 
 # References  
 

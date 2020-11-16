@@ -196,3 +196,32 @@ addmargins(table(surveyDF$Background, surveyDF$MSc))
 prop.table(table(surveyDF$Background, surveyDF$MSc))
 
 
+
+'''
+
+```
+
+##Data quality
+
+```{r}
+defectDF <- read.csv(fname, header = TRUE, fileEncoding = 'UTF-8-BOM')
+```
+
+
+## Check Data Quality
+
+We can look for referential integrity problems, i.e., validity is determined in the context of more than one variable.
+
+```{r}
+checkResults <- check_that(defectDF, NUMBER_OF_LINES >= LOC_BLANK + LOC_COMMENTS + 
+    LOC_TOTAL)
+checkResults
+
+```
+after that, I can take that, make a dataframe, an then create a subset with the problems to look at them - see week 3 5702
+```{r}
+# Take the output from check_that() and turn it into a dataframe f
+# or easier manipulation
+checkResultsDF <- as.data.frame(checkResults)
+problems <- subset(checkResultsDF, value==FALSE)
+```
