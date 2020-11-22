@@ -37,13 +37,34 @@ Remember, you are encouraged to explore and experiment.  Change something and se
 Let's recap some of the more *useful* R functions you will have already come across.  
 
 **Exercise 4.1:**  Suppose we want to get a quick overview of a data frame suggest three different functions that we could use.  Try them out with the built-in data set `mtcars`.
+```{r}
+summary(mtcars)
+head(mtcars)
+dim(mtcars)
+```
 
 **Exercise 4.2:** What are the dimensions (rows x columns) of your data frame?  
+32x11
 
-**Exercise 4.3:** What are the median values for the numeric values in your data frame?  
+**Exercise 4.3:** What are the median values for the numeric values in your data frame? 
+```{r}
+median(mtcars$mpg)
+median(mtcars$cyl)
+median(mtcars$disp)
+median(mtcars$hp)
+median(mtcars$drat)
+median(mtcars$wt)
+median(mtcars$qsec)
+median(mtcars$vs)
+median(mtcars$am)
+median(mtcars$gear)
+median(mtcars$carb)
+```
 
 **Exercise 4.4:** Report on some measures of dispersion (variability) for your numeric values e.g., interquartile range, range and standard deviation (sd) and variance (var) which is simply  $$sd^2$$.  You will see `summary()` provides some information.  You can google or use the help facility in RStudio.  HINT: `sd()` is another built-in function along with `var()`.   What other functions might you use?  You might also check out Tukey's 5 number summary (minimum, lower-hinge, median, upper-hinge, maximum) `fivenum()`.  This is a more robust description than just a mean and standard deviation.
-
+```{r}
+fivenum(mtcars$mpg)
+```
 **Exercise 4.5:** If applying a summary statistic function to each column one at a time is tedious and we want more flexibility than using the defaults of `summary()` then one option is the (**s**implified) list **apply** function `sapply()`.  Remember a data frame is a list of vectors (columns or variables).  The 
 
 ```{r}

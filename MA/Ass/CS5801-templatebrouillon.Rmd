@@ -20,15 +20,29 @@ version: 1.0
 # We suggest you use `install.package()` for any required packages externally to this document 
 # since installation only need be done once.
 
-install.package(ggplot)
-install.package(dplyr)
-install.package(dbplyr)
-install.package(foreign)
-install.package(ggpubr)
-install.package(xtable)
-install.package(mgcv)
-install.package(tree)
-install.package(validate)
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("dbplyr")
+install.packages("foreign")
+install.packages("ggpubr")
+install.packages("xtable")
+install.packages("mgcv")
+install.packages("tree")
+install.packages("validate")
+```
+Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate
+Then load the libraries below
+```{r}
+
+library(ggplot2)
+library(dplyr)
+library(dbplyr)
+library(foreign)
+library(ggpubr)
+library(xtable)
+library(mgcv)
+library(tree)
+library(validate)
 ```
 
 
@@ -86,24 +100,63 @@ bats
 age
 hit.ind
 
+
+```{r}
+
+structure(CS5801.data)
+glimpse(CS5801.data)
+```
+
 I will also check this way:
 is.na(filename)
 finds missing values
 str(surveyDF)
 structure
+glimpse
 mean, median, quartile
 
 
-```{r}
-
-
-```
 
 
 ## 1.3 Data cleaning  
  
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
+I will rename some collumns, so that I can better understand what I am loking at at a glance. This will help better understand the data as well. While renaming, I can also separate it by team
+
+
+```{r}
+
+
+
+LeagueGames = League$G
+BOSLAAGames = BOSLAA$G
+BOSGames = BOS$G
+LAAGames = LAA$G
+
+LeagueRuns = League$R
+BOSLAARuns = BOSLAA$R
+BOSRuns = BOS$R
+LAARuns = LAA$R
+
+League
+BOSLAA
+BOS
+LAA
+
+#these names will late rbe added
+#Runs = R
+#Hits = H
+#AtBat = AB
+#RunsBatted = RBI
+#LeagueHit= hist.ind
+
+median(LeagueGames)
+median(BOSLAAGames)
+median(BOSGames)
+median(LAAGames)
+
+```
 Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI.
 Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important.
 
