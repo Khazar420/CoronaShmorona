@@ -49,10 +49,14 @@ str(dataQualEg1.DF)
 ```
 
 
-## Get an overview of the data
+## Get an overview of the data    1``````
 
 **Exercise 7.2:** How many observations/cases are there?  Use an R function to find out.
+```{R}
+nrow(dataQualEg1.DF)
 
+    
+```
 
 We can 'eyeball' the data with `View()` but it's hard to see everything even if there are only two variables.  
 
@@ -62,10 +66,14 @@ summary(dataQualEg1.DF)
 
 
 **Exercise 7.3:**  The spread of ages looks problematic.  Why?
-
+The oldest person is 123 years old. That is unlikey.
+Also there are some people under 14 who are married. This could be an error, it could also reflect my own bias.    
 
 Also let's look at the levels/ categories for `married` since `summary()` is less informative for a character vector.
-
+```{R}
+table(dataQualEg1.DF$married)
+table(dataQualEg1.DF$age)
+```
 
 **Exercise 7.4:**  What is a simple function to examine `married`?  Do you see any problems?
 
@@ -84,8 +92,17 @@ val.check1 <- check_that(dataQualEg1.DF, age > 0, age > 115, married == "Y" | ma
 barplot(val.check1)
 ```
 
+
 **Exercise 7.5:** What is the problem with our validation rules?  Correct the error.  
 
+```{r}
+## Data quality checking
+
+val.check1 <- check_that(dataQualEg1.DF, age > 16, age < 115, married == "Y" | married == "N")
+
+# Produce a bar chart of the quality rule failures
+barplot(val.check1)
+```         
 
 **Exercise 7.6** What other rules are missing?  Can you think of any referential integrity checks?  
 
@@ -93,15 +110,17 @@ barplot(val.check1)
 
 ```{r}
 dataQualEg1.DF$married[dataQualEg1.DF$married == "n"] <- "N"
+dataQualEg1.DF$married[dataQualEg1.DF$married == "Y"] <- "Y "
 table(dataQualEg1.DF$married)
 ```
 
 **Exercise 7.7**
 
 Complete the cleaning of `married`.  HINT what other levels are redundant for married`?  What will you do for ages in excess of 115?
-
-
-
+```{r}
+dataQualEg1.DF$married[dataQualEg1.DF$married == "Y"] <- "Y "
+table(dataQualEg1.DF$married)
+```
 ## 2. Exercise answers{#W7A}
 
 

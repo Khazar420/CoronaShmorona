@@ -122,27 +122,78 @@ mean, median, quartile
  
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
-I will rename some collumns, so that I can better understand what I am loking at at a glance. This will help better understand the data as well. While renaming, I can also separate it by team
+I will rename some collumns, so that I can better understand what I am loking at at a glance. This will help better understand the data as well. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on.
 
 
 ```{r}
 
 
-
+#1
 LeagueGames = League$G
 BOSLAAGames = BOSLAA$G
 BOSGames = BOS$G
 LAAGames = LAA$G
-
+#2
 LeagueRuns = League$R
 BOSLAARuns = BOSLAA$R
 BOSRuns = BOS$R
 LAARuns = LAA$R
+#3
+LeagueHits = League$H
+BOSLAAHits = BOSLAA$H
+BOSHits = BOS$H
+LAAHits = LAA$H
+#4
+LeagueAtBat = League$AB
+BOSLAAAtBat = BOSLAA$AB
+BOSAtBat = BOS$AB
+LAAAtBat = LAA$AB
+#5
+LeagueRunsBatted = League$RBI
+BOSLAARunsBatted = BOSLAA$RBI
+BOSRunsBatted = BOS$RBI
+LAARunsBatted = LAA$RBI
+#6
+LeagueWeight = League$weight
+BOSLAAWeight = BOSLAA$weight
+BOSWeight = BOS$weight
+LAAWeight = LAA$weight
+#7
+LeagueHeight = League$height
+BOSLAAHeight = BOSLAA$height
+BOSHeight = BOS$height
+LAAHeight = LAA$height
+#8
+LeagueSalary = League$salary
+BOSLAASalary = BOSLAA$salary
+BOSSalary = BOS$salary
+LAASalary = LAA$salary
+#9
+LeagueBirth = League$birthDate
+BOSLAABirth = BOSLAA$birthDate
+BOSBirth = BOS$birthDate
+LAABirth = LAA$birthDate
+#10
+LeagueCareer = League$career.length
+BOSLAACareer = BOSLAA$career.length
+BOSCareer = BOS$career.length
+LAACareer = LAA$career.length
+#11
+LeagueBats = League$bats
+BOSLAABats = BOSLAA$bats
+BOSBats = BOS$bats
+LAABats = LAA$bats
+#12
+LeagueAge = League$age
+BOSLAAAge = BOSLAA$age
+BOSAge = BOS$age
+LAAAge = LAA$age
+#13
+LeagueSeasonHit = League$hit.ind
+BOSLAASeasonHit = BOSLAA$hit.ind
+BOSSeasonHit = BOS$hit.ind
+LAASeasonHit = LAA$hit.ind
 
-League
-BOSLAA
-BOS
-LAA
 
 #these names will late rbe added
 #Runs = R
@@ -157,8 +208,18 @@ median(BOSGames)
 median(LAAGames)
 
 ```
-Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI.
-Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important.
+Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. check_that is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole.  
+
+```{r}
+## Data quality checking for the whole league
+
+LeagueCheck <- check_that(League, LeagueAge > 0,  LeagueRuns >= 0, LeagueGames >= 0, LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B" )
+              
+# Produce a bar chart of the quality rule failures
+barplot(LeagueCheck)
+```
+
+Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important. 
 
 
 ```{r}
@@ -172,7 +233,7 @@ checkleague <- check_that(League, 968 >= teamID.x)
 checkleague
 ```
 
-
+        
 # 2. Exploratory Data Analysis (EDA)
 
 I will do a usmary and histogram of each variable
@@ -245,7 +306,7 @@ Do I have overfitting?
 ## 3.3 Suggest improvements to your model
 
 *Based on the findings in 3.2 articulates possible alternative approaches to address them (5 marks).*
-
+The easiest and most obvious way to improve the model would be to have even more data to compare to. This will allow one to track chenges over time. Player salary could behave differently according to the player profile over time. Some players would have high salaries over a short period, while others could have high salaries over a long period.
 ```{r}
 
 

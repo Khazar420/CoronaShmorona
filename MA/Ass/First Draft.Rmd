@@ -4,7 +4,7 @@ finds missing values
 str(surveyDF)
 structure
 mean, median, quartile
-
+(minimum, lower-hinge, median, upper-hinge, maximum) `fivenum()
 
 Metadata
 assess the quality
@@ -206,9 +206,19 @@ prop.table(table(surveyDF$Background, surveyDF$MSc))
 ```{r}
 defectDF <- read.csv(fname, header = TRUE, fileEncoding = 'UTF-8-BOM')
 ```
-
+    
 
 ## Check Data Quality
+
+```{r}
+## Data quality checking
+
+val.check1 <- check_that(dataQualEg1.DF, age > 0, age > 115, married == "Y" | married == "N")
+
+# Produce a bar chart of the quality rule failures
+barplot(val.check1)
+```
+ANOTHER VERSION HERE:   
 
 We can look for referential integrity problems, i.e., validity is determined in the context of more than one variable.
 
