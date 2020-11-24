@@ -124,6 +124,22 @@ mean, median, quartile
 
 I will rename some collumns, so that I can better understand what I am loking at at a glance. This will help better understand the data as well. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on.
 
+It contains 15 variables. They are as follows:
+platerID
+teamID.x
+R - Runs
+G - Games
+H - Hits
+AB - AtBat
+RBI - RunsBatted
+weight 
+height
+salary
+birthDate - Birth
+career.length - Career
+bats
+age
+hit.ind - SeasonHit
 
 ```{r}
 
@@ -213,11 +229,66 @@ Before using any software, it is clear that some values make no sense. For examp
 ```{r}
 ## Data quality checking for the whole league
 
-LeagueCheck <- check_that(League, LeagueAge > 0,  LeagueRuns >= 0, LeagueGames >= 0, LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B" )
+summary(League)
+
+LeagueCheck <- check_that(League, 
+                          LeagueRuns>= 0,
+                          LeagueGames>= 0,
+                          LeagueHits >= 0,
+                          LeagueAtBat >= 0,
+                          LeagueRunsBatted >= 0,
+                          LeagueWeight > 0,
+                          LeagueHeight > 0,
+                          LeagueSalary > 0,
+                          LeagueBirth > 0,
+                          LeagueCareer >= 0,
+                          LeagueAge > 0,  
+                          LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B" )
               
 # Produce a bar chart of the quality rule failures
 barplot(LeagueCheck)
+
+
 ```
+I see very quickly that there are four values which do not make sense. This is because they are negative, and in this case any negative values are a physical impossiblity. These four are:
+LeagueCareer
+LeagueRunsBatted
+LeagueGames
+LeagueRuns
+These foud have at least one entry which is negative.
+
+Now I need to see whether they are present in either team:
+
+```{r}
+
+summary(BOSLAA)
+
+BOSLAACheck <- check_that(BOSLAA, 
+                          BOSLAACareer>= 0,
+                          BOSLAARunsBatted>= 0,
+                          BOSLAAGames >= 0,
+                          BOSLAARuns >= 0)
+              
+# Produce a bar chart of the quality rule failures
+barplot(BOSLAACheck)
+
+```
+Here I see that there is one negative RBI.
+
+```{r}
+LAACheck <- check_that(LAA, 
+                          LAARunsBatted>= 0)
+
+barplot(LAACheck)
+
+BOSCheck <- check_that(BOS, 
+
+                          BOSRunsBatted>= 0)
+barplot(BOSCheck)
+```
+The problem is in Boston. This error could ave various causes.
+
+I can now comfortably look at the data, knowing that I need to watch out for this single negative RBI value. HOpefully the reason for its being will be revealed.
 
 Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important. 
 
@@ -227,11 +298,6 @@ Here ANOVA is very useful. The reason is that it, at a glance, will allow me to 
 
 ```
 
-Here validation is good, but I need to make one that works, becuase it can let me check if there are any controntations, fails, warnings, or erros
-```{r}
-checkleague <- check_that(League, 968 >= teamID.x)
-checkleague
-```
 
         
 # 2. Exploratory Data Analysis (EDA)
@@ -239,7 +305,9 @@ checkleague
 I will do a usmary and histogram of each variable
 
 ```{r}
+summary(BOSLAA)
 
+hist(BOSLAARuns)
 
 ```
 
@@ -247,9 +315,12 @@ I will do a usmary and histogram of each variable
 
 *Outline a suitable plan to explore, describe and visualise your data. (5 marks)*  
 
-i will undergo a process including two cyclces which I will switch between at each stage of the data analysis. Most people will use a similar process. This one is inspired by Peng and Matsui's method in their book, the Art of Data Science. They call them apicycles.
+i will undergo a process including two cyclces which I will switch between at each stage of the data analysis. Most people will use a similar process. This one is inspired by Peng and Matsui's method in their book, the Art of Data Science. They call them epicycles.
 The first cycle will be to look at the data, develop assumptions, and then see whether they match.
 The second cycle will be ask the questions relevant to these assumptions, see what models might be appropriate, build them, interpret the results, and then report them.
+
+The first epicycle was more or less done in the data cleaning stage. Now I need to build some models.  I will start with some histograms and bar graphs for all data. Not only this, but means and medians where applicable. I will try to see if any are skewed, and use a Poisson method to measure this.
+I will then look at the new data again
 
 ```{r}
 
@@ -259,6 +330,13 @@ The second cycle will be ask the questions relevant to these assumptions, see wh
 ## 2.2 EDA and summary of results  
 
 *Undertake and summarise the findings of your data exploration, particularly with respect to the research questions.  Use appropriate summary statistics (uni- and multi-variate) and visualisations. (10 marks)*
+
+I will do a usmary and histogram of each variable
+
+```{r}
+hist(BOSCareer)
+
+```
 
 ```{r}
 
