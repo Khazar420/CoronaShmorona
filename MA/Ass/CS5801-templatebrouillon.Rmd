@@ -226,6 +226,7 @@ median(LAAGames)
 ```
 Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. check_that is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole.  
 
+
 ```{r}
 ## Data quality checking for the whole league
 
@@ -295,6 +296,7 @@ Here ANOVA is very useful. The reason is that it, at a glance, will allow me to 
 
 ```{r}
 
+LeagueSeasonHit
 
 ```
 
@@ -319,11 +321,17 @@ i will undergo a process including two cyclces which I will switch between at ea
 The first cycle will be to look at the data, develop assumptions, and then see whether they match.
 The second cycle will be ask the questions relevant to these assumptions, see what models might be appropriate, build them, interpret the results, and then report them.
 
-The first epicycle was more or less done in the data cleaning stage. Now I need to build some models.  I will start with some histograms and bar graphs for all data. Not only this, but means and medians where applicable. I will try to see if any are skewed, and use a Poisson method to measure this.
+The first epicycle was more or less done in the data cleaning stage. Now I need to build some models.  I will start with some histograms and bar graphs for all data, as well as box plots. Not only this, but means and medians where applicable. I will try to see if any are skewed, and use a Poisson method to measure this.
 I will then look at the new data again
+
+For example, a boc plot will  be useful for the season hit statistic in particular.
+##the code below does not work as it should I want two parts. the first being 0, the other being 1. It works for bats, however. Perhaps they need to be changed from intergers to characters?
+What I learn here is that batting and salary seem to be related somehow.
 
 ```{r}
 
+ggplot(League, aes(x=LeagueBats, y=LeagueSalary)) + geom_boxplot()
+```
 
 ```
 

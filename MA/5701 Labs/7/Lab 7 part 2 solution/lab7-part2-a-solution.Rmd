@@ -1,0 +1,214 @@
+---
+title: "Lab 7 part 2 - a solution"
+date: "November 2020"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+This worksheet is to practice week 7. Below is a solution.
+
+```{r}
+library(ggplot2)
+```
+
+
+1. Load the titanic data set (smaller set)
+
+```{r}
+titanic<-titanic_analysis
+```
+
+
+
+Explore the data
+
+```{r}
+summary(titanic)
+```
+
+The dependent variable is: survived
+
+Check that it is correctly read in, looking at the output of the summary function we can see it has not been correctly interpreted by R. (It would also be possible to check using str(titanic))
+In order to fix this it can be changed into a factor:
+
+```{r}
+titanic$Survived<-as.factor(titanic$Survived)
+```
+
+Note that there are 177 rows where the Age is not known. 
+
+It is also valuable to check the data visually
+
+Lets start with Age and Fare
+
+```{r}
+ggplot(titanic, aes(x=Age)) + geom_histogram(bins=20) +ggtitle("Histogram for Age of Passenger")
+ggplot(titanic, aes(x=Fare)) + geom_histogram(bins=20) +ggtitle("Histogram for Fare Passenger")
+ggplot(titanic, aes(x=Fare, y=Age)) + geom_point() +ggtitle("Scatter plot of Age and Fare")
+
+```
+
+From the the plots so far we can see that Age and Fare seem acceptable in ranges. We are not requiring distributional assumptions. And we can also see that there is no correlation (evident) between Age and Fare.
+
+Now lets look at the Age and the Fare vs the Survival
+
+```{r}
+ggplot(titanic, aes(x=Survived, y=Age)) + geom_boxplot()
+```
+There is no difference in the median ages (from the plot) between survivors and perished.
+
+```{r}
+ggplot(titanic, aes(x=Survived, y=Fare)) + geom_boxplot()
+```
+Now, outliers aside, there is a difference in the median Fare and their survival status...
+
+
+
+3. Explore the data and suggest a model using Age, Gender and fare.
+As the dependent variable is binary, this is where we can use Logistic Regression.
+
+
+```{r}
+titanic.glm<-glm(titanic$Survived~titanic$Age+titanic$Sex+titanic$Fare, family = "binomial")
+summary(titanic.glm)
+```
+
+From this we can see that the Fare and the gender are significant but not Age.
+
+```{r}
+exp(coef(titanic.glm))
+```
+
+The odds ratios show us that being Male lowers survival chances, with every increase in fare there is an increase in survival odds and with every increase in year (Age) there is a decrease in survival odds.
+
+Lets simplify the model - we can do this manually or using step. Note that you may get different models...
+
+```{r}
+titanic2.glm<-glm(titanic$Survived~titanic$Sex+titanic$Fare, family = "binomial")
+summary(titanic2.glm)
+```
+
+Now there is a dilemma....use the more complex model (but with a variable that has missing data) or a simpler model with a higher AIC?
+
+I am going to use the simpler model, as it will be easier to explain and all the coefficients are significants.
+
+4. What are the odds ratios for survival
+
+```{r}
+exp(coef(titanic2.glm))
+```
+
+```{r}
+exp(cbind(OR=coef(titanic2.glm), confint(titanic2.glm)))
+```
+
+We can see that being male lowers your chances of surviving, where as the more expensive your ticket the higher the changes of surviving.
+
+***
+OPTIONAL
+
+Lets start with a model with interactions. I am using a tree to explore the structure.
+
+```{r}
+library(tree)
+titanic.tree<-tree(titanic$Survived~titanic$Age+titanic$Sex+titanic$Fare)
+plot(titanic.tree)
+text(titanic.tree)
+```
+This tree structure points to potential interaction between fare and age. But as we have few explanatory variables to begin with lets put all the iteractions in.
+
+
+```{r}
+titanic.i.glm<-glm(titanic$Survived~titanic$Age*titanic$Sex*titanic$Fare, family = "binomial")
+summary(titanic.i.glm)
+```
+
+The Deviance improvement from the simple model is not too great. 
+I would propose the first or second model.
+
+
+***
+
+5. Load the full Titanic data
+
+```{r}
+titanic.all<-read.csv("data/titanic-all-cols.csv")
+```
+
+
+Exploring the new variables added
+
+```{r}
+summary(titanic.all)
+```
+
+make sure the variables are defined appropriately
+
+```{r}
+titanic.all$Survived<-as.factor(titanic.all$Survived)
+titanic.all$Pclass<-titanic.all$Pclass
+```
+
+
+Use plots to explore
+
+```{r}
+ggplot(titanic.all, aes(x=Fare)) + geom_histogram(bins=20) +ggtitle("Histogram for Fare")
+```
+
+We can also look at the relation between the categorical explanatory variables and the dependent variable.
+For example:
+
+```{r}
+table(titanic.all$Survived, titanic.all$Pclass)
+```
+
+We can see that there are more survivors (1) relatively in 1st class compared to others. This will be useful as an explanatory variable.
+
+
+Now we can start with a model (a large one to begin with)
+
+
+```{r}
+titanic.all.glm<-glm(titanic.all$Survived~titanic.all$Pclass+titanic.all$Sex+ titanic.all$Age +
+                       titanic.all$SibSp+ titanic.all$Parch + titanic.all$Fare + titanic.all$Embarked,family = "binomial")
+summary(titanic.all.glm)
+```
+
+Lets use a step function to simplify this time...
+
+```{r}
+step(titanic.all.glm)
+```
+
+The model is suggests is
+
+```{r}
+titanic.step.glm<-glm(titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp, family = "binomial")
+summary(titanic.step.glm)
+```
+
+From these coefficients estimates we can see that:
+ - the higher the travel class the lower the logit for survival
+  - Males have lower survival chances
+  - the higher the number of siblings or spouses also point to lower survival chances
+  - Age also makes a difference, the higher the lower the survival chances
+  
+```{r}
+exp(coef(titanic.step.glm))
+```
+
+The odds ratio (obviously) paint the same picture.
+Survival odds are smaller for higher travel class, Male, Age and the higher the number of siblings or spouses.
+
+Other approaches:
+- Dont use Age as it is missing
+- Treat Travel class as a category (losing the ordinal relation between 1,2,3)
+ - Add the interactions to the minimal adequate model
+ - Use Tree to see what variables are important to differentiating between survival and not, and see if there are interactions.
+ 
+ 
