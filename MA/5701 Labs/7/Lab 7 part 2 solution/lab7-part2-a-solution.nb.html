@@ -1825,15 +1825,15 @@ summary {
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeSh0aXRhbmljKVxuYGBgIn0= -->
 <pre class="r"><code>summary(titanic)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBQYXNzZW5nZXJJZCAgICBTdXJ2aXZlZCAgICAgU2V4ICAgICAgICAgICAgICAgICBBZ2UgICAgICAgICAgICAgRmFyZSAgICAgICBcbiBNaW4uICAgOiAgMS4wICAgMDo1NDkgICAgTGVuZ3RoOjg5MSAgICAgICAgIE1pbi4gICA6IDAuNDIgICBNaW4uICAgOiAgMC4wMCAgXG4gMXN0IFF1LjoyMjMuNSAgIDE6MzQyICAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIwLjEyICAgMXN0IFF1LjogIDcuOTEgIFxuIE1lZGlhbiA6NDQ2LjAgICAgICAgICAgICBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDoyOC4wMCAgIE1lZGlhbiA6IDE0LjQ1ICBcbiBNZWFuICAgOjQ0Ni4wICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6MjkuNzAgICBNZWFuICAgOiAzMi4yMCAgXG4gM3JkIFF1Ljo2NjguNSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjM4LjAwICAgM3JkIFF1LjogMzEuMDAgIFxuIE1heC4gICA6ODkxLjAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo4MC4wMCAgIE1heC4gICA6NTEyLjMzICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5BJ3MgICA6MTc3ICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>  PassengerId    Survived     Sex                 Age             Fare       
- Min.   :  1.0   0:549    Length:891         Min.   : 0.42   Min.   :  0.00  
- 1st Qu.:223.5   1:342    Class :character   1st Qu.:20.12   1st Qu.:  7.91  
- Median :446.0            Mode  :character   Median :28.00   Median : 14.45  
- Mean   :446.0                               Mean   :29.70   Mean   : 32.20  
- 3rd Qu.:668.5                               3rd Qu.:38.00   3rd Qu.: 31.00  
- Max.   :891.0                               Max.   :80.00   Max.   :512.33  
-                                             NA's   :177                     </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICBQYXNzZW5nZXJJZCAgICAgICBTdXJ2aXZlZCAgICAgICAgICBTZXggICAgICAgICAgICAgICAgIEFnZSAgICAgICAgICAgICBGYXJlICAgICAgIFxuIE1pbi4gICA6ICAxLjAgICBNaW4uICAgOjAuMDAwMCAgIExlbmd0aDo4OTEgICAgICAgICBNaW4uICAgOiAwLjQyICAgTWluLiAgIDogIDAuMDAgIFxuIDFzdCBRdS46MjIzLjUgICAxc3QgUXUuOjAuMDAwMCAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIwLjEyICAgMXN0IFF1LjogIDcuOTEgIFxuIE1lZGlhbiA6NDQ2LjAgICBNZWRpYW4gOjAuMDAwMCAgIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjI4LjAwICAgTWVkaWFuIDogMTQuNDUgIFxuIE1lYW4gICA6NDQ2LjAgICBNZWFuICAgOjAuMzgzOCAgICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjI5LjcwICAgTWVhbiAgIDogMzIuMjAgIFxuIDNyZCBRdS46NjY4LjUgICAzcmQgUXUuOjEuMDAwMCAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjM4LjAwICAgM3JkIFF1LjogMzEuMDAgIFxuIE1heC4gICA6ODkxLjAgICBNYXguICAgOjEuMDAwMCAgICAgICAgICAgICAgICAgICAgICBNYXguICAgOjgwLjAwICAgTWF4LiAgIDo1MTIuMzMgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSdzICAgOjE3NyAgICAgICAgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code>  PassengerId       Survived          Sex                 Age             Fare       
+ Min.   :  1.0   Min.   :0.0000   Length:891         Min.   : 0.42   Min.   :  0.00  
+ 1st Qu.:223.5   1st Qu.:0.0000   Class :character   1st Qu.:20.12   1st Qu.:  7.91  
+ Median :446.0   Median :0.0000   Mode  :character   Median :28.00   Median : 14.45  
+ Mean   :446.0   Mean   :0.3838                      Mean   :29.70   Mean   : 32.20  
+ 3rd Qu.:668.5   3rd Qu.:1.0000                      3rd Qu.:38.00   3rd Qu.: 31.00  
+ Max.   :891.0   Max.   :1.0000                      Max.   :80.00   Max.   :512.33  
+                                                     NA's   :177                     </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1954,6 +1954,32 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <pre class="r"><code>titanic2.glm&lt;-glm(titanic$Survived~titanic$Sex+titanic$Fare, family = &quot;binomial&quot;)
 summary(titanic2.glm)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSB0aXRhbmljJFN1cnZpdmVkIH4gdGl0YW5pYyRTZXggKyB0aXRhbmljJEZhcmUsIFxuICAgIGZhbWlseSA9IFwiYmlub21pYWxcIilcblxuRGV2aWFuY2UgUmVzaWR1YWxzOiBcbiAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggIFxuLTIuMjA4MiAgLTAuNjIwOCAgLTAuNTgyNCAgIDAuODEyNiAgIDEuOTY1OCAgXG5cbkNvZWZmaWNpZW50czpcbiAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB6IHZhbHVlIFByKD58enwpICAgIFxuKEludGVyY2VwdCkgICAgICAwLjY0NzEwMCAgIDAuMTQ4NTAyICAgNC4zNTggMS4zMmUtMDUgKioqXG50aXRhbmljJFNleG1hbGUgLTIuNDIyNzYwICAgMC4xNzA1MTUgLTE0LjIwOCAgPCAyZS0xNiAqKipcbnRpdGFuaWMkRmFyZSAgICAgMC4wMTEyMTQgICAwLjAwMjI5NSAgIDQuODg2IDEuMDNlLTA2ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbihEaXNwZXJzaW9uIHBhcmFtZXRlciBmb3IgYmlub21pYWwgZmFtaWx5IHRha2VuIHRvIGJlIDEpXG5cbiAgICBOdWxsIGRldmlhbmNlOiAxMTg2LjY2ICBvbiA4OTAgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuUmVzaWR1YWwgZGV2aWFuY2U6ICA4ODQuMzEgIG9uIDg4OCAgZGVncmVlcyBvZiBmcmVlZG9tXG5BSUM6IDg5MC4zMVxuXG5OdW1iZXIgb2YgRmlzaGVyIFNjb3JpbmcgaXRlcmF0aW9uczogNVxuIn0= -->
+<pre><code>
+Call:
+glm(formula = titanic$Survived ~ titanic$Sex + titanic$Fare, 
+    family = &quot;binomial&quot;)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2082  -0.6208  -0.5824   0.8126   1.9658  
+
+Coefficients:
+                 Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)      0.647100   0.148502   4.358 1.32e-05 ***
+titanic$Sexmale -2.422760   0.170515 -14.208  &lt; 2e-16 ***
+titanic$Fare     0.011214   0.002295   4.886 1.03e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1186.66  on 890  degrees of freedom
+Residual deviance:  884.31  on 888  degrees of freedom
+AIC: 890.31
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now there is a dilemma….use the more complex model (but with a variable that has missing data) or a simpler model with a higher AIC?</p>
@@ -1966,6 +1992,10 @@ summary(titanic2.glm)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNvZWYodGl0YW5pYzIuZ2xtKSlcbmBgYCJ9 -->
 <pre class="r"><code>exp(coef(titanic2.glm))</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIChJbnRlcmNlcHQpIHRpdGFuaWMkU2V4bWFsZSAgICB0aXRhbmljJEZhcmUgXG4gICAgIDEuOTA5OTk0MTkgICAgICAwLjA4ODY3NjUyICAgICAgMS4wMTEyNzcxOSBcbiJ9 -->
+<pre><code>    (Intercept) titanic$Sexmale    titanic$Fare 
+     1.90999419      0.08867652      1.01127719 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1973,6 +2003,15 @@ summary(titanic2.glm)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNiaW5kKE9SPWNvZWYodGl0YW5pYzIuZ2xtKSwgY29uZmludCh0aXRhbmljMi5nbG0pKSlcbmBgYCJ9 -->
 <pre class="r"><code>exp(cbind(OR=coef(titanic2.glm), confint(titanic2.glm)))</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FpdGluZyBmb3IgcHJvZmlsaW5nIHRvIGJlIGRvbmUuLi5cbiJ9 -->
+<pre><code>Waiting for profiling to be done...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICAgICAgICAgT1IgICAgICAyLjUgJSAgICA5Ny41ICVcbihJbnRlcmNlcHQpICAgICAxLjkwOTk5NDE5IDEuNDMxNDY1OTUgMi41NjM5NzM3XG50aXRhbmljJFNleG1hbGUgMC4wODg2NzY1MiAwLjA2MzE3MDg1IDAuMTIzMzEzN1xudGl0YW5pYyRGYXJlICAgIDEuMDExMjc3MTkgMS4wMDY5OTQyNSAxLjAxNjA5MDRcbiJ9 -->
+<pre><code>                        OR      2.5 %    97.5 %
+(Intercept)     1.90999419 1.43146595 2.5639737
+titanic$Sexmale 0.08867652 0.06317085 0.1233137
+titanic$Fare    1.01127719 1.00699425 1.0160904</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>We can see that being male lowers your chances of surviving, where as the more expensive your ticket the higher the changes of surviving.</p>
@@ -1981,12 +2020,27 @@ summary(titanic2.glm)</code></pre>
 <p>Lets start with a model with interactions. I am using a tree to explore the structure.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0cmVlKVxudGl0YW5pYy50cmVlPC10cmVlKHRpdGFuaWMkU3Vydml2ZWR+dGl0YW5pYyRBZ2UrdGl0YW5pYyRTZXgrdGl0YW5pYyRGYXJlKVxucGxvdCh0aXRhbmljLnRyZWUpXG50ZXh0KHRpdGFuaWMudHJlZSlcbmBgYCJ9 -->
-<pre class="r"><code>library(tree)
-titanic.tree&lt;-tree(titanic$Survived~titanic$Age+titanic$Sex+titanic$Fare)
-plot(titanic.tree)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0cmVlKVxuYGBgIn0= -->
+<pre class="r"><code>library(tree)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSCRdHJlZZIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjAuM1JlZ2lzdGVyZWQgUzMgbWV0aG9kIG92ZXJ3cml0dGVuIGJ5ICd0cmVlJzpcbiAgbWV0aG9kICAgICBmcm9tXG4gIHByaW50LnRyZWUgY2xpIFxuIn0= -->
+<pre><code>package 㤼㸱tree㤼㸲 was built under R version 4.0.3Registered S3 method overwritten by 'tree':
+  method     from
+  print.tree cli </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGl0YW5pYy50cmVlPC10cmVlKHRpdGFuaWMkU3Vydml2ZWR+dGl0YW5pYyRBZ2UrdGl0YW5pYyRTZXgrdGl0YW5pYyRGYXJlKVxuYGBgIn0= -->
+<pre class="r"><code>titanic.tree&lt;-tree(titanic$Survived~titanic$Age+titanic$Sex+titanic$Fare)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTkFzIGludHJvZHVjZWQgYnkgY29lcmNpb25cbiJ9 -->
+<pre><code>NAs introduced by coercion</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdCh0aXRhbmljLnRyZWUpXG50ZXh0KHRpdGFuaWMudHJlZSlcbmBgYCJ9 -->
+<pre class="r"><code>plot(titanic.tree)
 text(titanic.tree)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MzIuNjMyOSwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjcwMH0= -->
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAAGwCAMAAAB8TkaXAAAAaVBMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6Ojo6kNtmAABmADpmOpBmZjpmtrZmtv+QOgCQZgCQkGaQvJCQ2/+2ZgC2tma225C2/7a2///bkDrb25Db/7bb////tmb/25D//7b//9v///8VsUuBAAAACXBIWXMAAA7DAAAOwwHHb6hkAAATi0lEQVR4nO2dC3vithZFHZLMFCctuXPjduImhvD/f2T1tCUDLXhiax+fvb52eCl4W2chZBOU6kiIUKrSAQiZCuUlYqG8RCyUl4iF8hKxUF4iFspLxEJ5iVgoLxEL5SViobxELJSXiIXyErFQXiIWykvEQnmJWCgvEQvlJWKhvEQslJeIhfISsVBeIhbKS8RCeYlYKC8RC+UlYqG8RCyUl4iF8hKxUF4iFspLxEJ5iVgoLxEL5SViobxELJR3Mofnj9IRlEN5c7rd8VDv3OUJ7oGepqqqbbi0nPmBy+y/v7mtVdXda/qc9/b10A7P5tt9voRtkQzKmxH9zD09R7P5+fz34y4Kd+tmNlbKzpjbJfZ2lX2u1t7r7fXtPl/MPW31cPNm1g7lzbha3v3jzkwbrLgT5DUDrpfSjdy9lIfayvv58hDvDe329jVybJ3vJIHypuwfq+r+vd65yw83I9hZqf6o7RVvtH1Tfwjy2p9J5I3tn35Y6drxe/3hyQ+yXbXtzknZ3v8vkze283TZBIMcKe8I62f83wlk38MPtX3bvnt1d/o7tof6/n0s79A+vvvvHwd72yoZOr28317jVYu52YymDcdE3oYj7xjKm5HK6wZKOzoaV/08oQ7XLXZwdm/4vbx5e98wymdmBNmU1d3vx9I4otpJhH+u5DBukLfjEdsJlDcjG3mPzqNww/xjL/1bfWjrpgVNerJhaO+dDM2Tn/KckbeN82c7xMYhu5e34/HaKZQ3I5PXTFo3fz2O5P3WzzztAZtxa5g2ZO277Aza2ZE3mza4G/a5splwlJfj7jkob0Yqr7NoP5Y3GXmfP6xxvbx5ezOghpO5gTNz3lTTNsqejcddfJDunoHyZqTy+rf20bQhznmNXEZeq1gv70n7XN7hbENsOz5Vlo68XTrytrd9AqIGypth3YyO+kG02mbyunMBny8P7mzDe/1wzEfeob1p+P/vb82F81vd2Q8pLsx503MWJIHy5jTuPK+7/GjtUX8TTpFFecN5Xv+RrTsjm855h/a+4aXTW/10wJ1X8Kd2++dqhhPErl2YUfA87xjKO5n//MWc8bSBfDGUdz4o78wAy1sRBEpr8C8AZwOOdh2rGHmRqwCcDTjadVDemQHOBhztOijvzABnA452HZR3ZoCzAUe7Dso7M8DZgKNdB+WdGeBswNGug/LODHA24GjXQXlnBjgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRFIFcBOBtwNEUgVwE4G3A0RSBXATgbcDRF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" /></p>
+<!-- rnb-plot-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>This tree structure points to potential interaction between fare and age. But as we have few explanatory variables to begin with lets put all the iteractions in.</p>
@@ -1996,6 +2050,38 @@ text(titanic.tree)</code></pre>
 <pre class="r"><code>titanic.i.glm&lt;-glm(titanic$Survived~titanic$Age*titanic$Sex*titanic$Fare, family = &quot;binomial&quot;)
 summary(titanic.i.glm)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSB0aXRhbmljJFN1cnZpdmVkIH4gdGl0YW5pYyRBZ2UgKiB0aXRhbmljJFNleCAqIFxuICAgIHRpdGFuaWMkRmFyZSwgZmFtaWx5ID0gXCJiaW5vbWlhbFwiKVxuXG5EZXZpYW5jZSBSZXNpZHVhbHM6IFxuICAgIE1pbiAgICAgICAxUSAgIE1lZGlhbiAgICAgICAzUSAgICAgIE1heCAgXG4tMi44MjgzICAtMC42Nzk1ICAtMC41NTY3ICAgMC44Mjc5ICAgMi4zMDQzICBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgeiB2YWx1ZSBQcig+fHp8KSAgICBcbihJbnRlcmNlcHQpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEuMTIzMTQ2NyAgMC40NjcxNTI5ICAgMi40MDQgMC4wMTYyMDYgKiAgXG50aXRhbmljJEFnZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjAzMjE1MTYgIDAuMDE4MDA3MiAgLTEuNzg1IDAuMDc0MTgzIC4gIFxudGl0YW5pYyRTZXhtYWxlICAgICAgICAgICAgICAgICAgICAgICAgICAtMi4wMDc3Mjg4ICAwLjU4MzU4NjQgIC0zLjQ0MCAwLjAwMDU4MSAqKipcbnRpdGFuaWMkRmFyZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMDE1MjU0NiAgMC4wMTI5MjY3ICAtMS4xODAgMC4yMzc5NjggICAgXG50aXRhbmljJEFnZTp0aXRhbmljJFNleG1hbGUgICAgICAgICAgICAgICAwLjAwNjcyOTggIDAuMDIxMjMxNCAgIDAuMzE3IDAuNzUxMjYzICAgIFxudGl0YW5pYyRBZ2U6dGl0YW5pYyRGYXJlICAgICAgICAgICAgICAgICAgMC4wMDE1NzY3ICAwLjAwMDU3NzEgICAyLjczMiAwLjAwNjI5NSAqKiBcbnRpdGFuaWMkU2V4bWFsZTp0aXRhbmljJEZhcmUgICAgICAgICAgICAgIDAuMDIzNDUzOCAgMC4wMTQ1OTUyICAgMS42MDcgMC4xMDgwNjUgICAgXG50aXRhbmljJEFnZTp0aXRhbmljJFNleG1hbGU6dGl0YW5pYyRGYXJlIC0wLjAwMTUzOTAgIDAuMDAwNjA3MCAgLTIuNTM2IDAuMDExMjI0ICogIFxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbihEaXNwZXJzaW9uIHBhcmFtZXRlciBmb3IgYmlub21pYWwgZmFtaWx5IHRha2VuIHRvIGJlIDEpXG5cbiAgICBOdWxsIGRldmlhbmNlOiA5NjQuNTIgIG9uIDcxMyAgZGVncmVlcyBvZiBmcmVlZG9tXG5SZXNpZHVhbCBkZXZpYW5jZTogNjk1LjMyICBvbiA3MDYgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoMTc3IG9ic2VydmF0aW9ucyBkZWxldGVkIGR1ZSB0byBtaXNzaW5nbmVzcylcbkFJQzogNzExLjMyXG5cbk51bWJlciBvZiBGaXNoZXIgU2NvcmluZyBpdGVyYXRpb25zOiA3XG4ifQ== -->
+<pre><code>
+Call:
+glm(formula = titanic$Survived ~ titanic$Age * titanic$Sex * 
+    titanic$Fare, family = &quot;binomial&quot;)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.8283  -0.6795  -0.5567   0.8279   2.3043  
+
+Coefficients:
+                                           Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                               1.1231467  0.4671529   2.404 0.016206 *  
+titanic$Age                              -0.0321516  0.0180072  -1.785 0.074183 .  
+titanic$Sexmale                          -2.0077288  0.5835864  -3.440 0.000581 ***
+titanic$Fare                             -0.0152546  0.0129267  -1.180 0.237968    
+titanic$Age:titanic$Sexmale               0.0067298  0.0212314   0.317 0.751263    
+titanic$Age:titanic$Fare                  0.0015767  0.0005771   2.732 0.006295 ** 
+titanic$Sexmale:titanic$Fare              0.0234538  0.0145952   1.607 0.108065    
+titanic$Age:titanic$Sexmale:titanic$Fare -0.0015390  0.0006070  -2.536 0.011224 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 964.52  on 713  degrees of freedom
+Residual deviance: 695.32  on 706  degrees of freedom
+  (177 observations deleted due to missingness)
+AIC: 711.32
+
+Number of Fisher Scoring iterations: 7</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The Deviance improvement from the simple model is not too great. I would propose the first or second model.</p>
@@ -2005,8 +2091,8 @@ summary(titanic.i.glm)</code></pre>
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGl0YW5pYy5hbGw8LXJlYWQuY3N2KFwiZGF0YS90aXRhbmljLWFsbC1jb2xzLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>titanic.all&lt;-read.csv(&quot;data/titanic-all-cols.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGl0YW5pYy5hbGw8LXRpdGFuaWNfYWxsX2NvbHNcbmBgYCJ9 -->
+<pre class="r"><code>titanic.all&lt;-titanic_all_cols</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2016,6 +2102,9 @@ summary(titanic.i.glm)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeSh0aXRhbmljLmFsbClcbmBgYCJ9 -->
 <pre class="r"><code>summary(titanic.all)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gc3VtbWFyeSh0aXRhbmljLmFsbCkgOiBvYmplY3QgJ3RpdGFuaWMuYWxsJyBub3QgZm91bmRcbiJ9 -->
+<pre><code>Error in summary(titanic.all) : object 'titanic.all' not found</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>make sure the variables are defined appropriately</p>
@@ -2033,6 +2122,9 @@ titanic.all$Pclass&lt;-titanic.all$Pclass</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpdGFuaWMuYWxsLCBhZXMoeD1GYXJlKSkgKyBnZW9tX2hpc3RvZ3JhbShiaW5zPTIwKSArZ2d0aXRsZShcIkhpc3RvZ3JhbSBmb3IgRmFyZVwiKVxuYGBgIn0= -->
 <pre class="r"><code>ggplot(titanic.all, aes(x=Fare)) + geom_histogram(bins=20) +ggtitle(&quot;Histogram for Fare&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MzIuNjMyOSwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjcwMH0= -->
+<p><img src="data:image/png;base64,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" /></p>
+<!-- rnb-plot-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>We can also look at the relation between the categorical explanatory variables and the dependent variable. For example:</p>
@@ -2041,6 +2133,12 @@ titanic.all$Pclass&lt;-titanic.all$Pclass</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUodGl0YW5pYy5hbGwkU3Vydml2ZWQsIHRpdGFuaWMuYWxsJFBjbGFzcylcbmBgYCJ9 -->
 <pre class="r"><code>table(titanic.all$Survived, titanic.all$Pclass)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgXG4gICAgICAxICAgMiAgIDNcbiAgMCAgODAgIDk3IDM3MlxuICAxIDEzNiAgODcgMTE5XG4ifQ== -->
+<pre><code>   
+      1   2   3
+  0  80  97 372
+  1 136  87 119</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>We can see that there are more survivors (1) relatively in 1st class compared to others. This will be useful as an explanatory variable.</p>
@@ -2052,6 +2150,40 @@ titanic.all$Pclass&lt;-titanic.all$Pclass</code></pre>
                        titanic.all$SibSp+ titanic.all$Parch + titanic.all$Fare + titanic.all$Embarked,family = &quot;binomial&quot;)
 summary(titanic.all.glm)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSB0aXRhbmljLmFsbCRTdXJ2aXZlZCB+IHRpdGFuaWMuYWxsJFBjbGFzcyArIHRpdGFuaWMuYWxsJFNleCArIFxuICAgIHRpdGFuaWMuYWxsJEFnZSArIHRpdGFuaWMuYWxsJFNpYlNwICsgdGl0YW5pYy5hbGwkUGFyY2ggKyBcbiAgICB0aXRhbmljLmFsbCRGYXJlICsgdGl0YW5pYy5hbGwkRW1iYXJrZWQsIGZhbWlseSA9IFwiYmlub21pYWxcIilcblxuRGV2aWFuY2UgUmVzaWR1YWxzOiBcbiAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggIFxuLTIuNzIzMyAgLTAuNjQ0NyAgLTAuMzc5OSAgIDAuNjMyNiAgIDIuNDQ1NyAgXG5cbkNvZWZmaWNpZW50czpcbiAgICAgICAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB6IHZhbHVlIFByKD58enwpICAgIFxuKEludGVyY2VwdCkgICAgICAgICAgICA1LjYzNzQwNyAgIDAuNjM0NTUwICAgOC44ODQgIDwgMmUtMTYgKioqXG50aXRhbmljLmFsbCRQY2xhc3MgICAgLTEuMTk5MjUxICAgMC4xNjQ2MTkgIC03LjI4NSAzLjIyZS0xMyAqKipcbnRpdGFuaWMuYWxsJFNleG1hbGUgICAtMi42Mzg0NzYgICAwLjIyMjI1NiAtMTEuODcxICA8IDJlLTE2ICoqKlxudGl0YW5pYy5hbGwkQWdlICAgICAgIC0wLjA0MzM1MCAgIDAuMDA4MjMyICAtNS4yNjYgMS4zOWUtMDcgKioqXG50aXRhbmljLmFsbCRTaWJTcCAgICAgLTAuMzYzMjA4ICAgMC4xMjkwMTcgIC0yLjgxNSAgMC4wMDQ4NyAqKiBcbnRpdGFuaWMuYWxsJFBhcmNoICAgICAtMC4wNjAyNzAgICAwLjEyMzkwMCAgLTAuNDg2ICAwLjYyNjY2ICAgIFxudGl0YW5pYy5hbGwkRmFyZSAgICAgICAwLjAwMTQzMiAgIDAuMDAyNTMxICAgMC41NjYgIDAuNTcxNjUgICAgXG50aXRhbmljLmFsbCRFbWJhcmtlZFEgLTAuODIzNTQ1ICAgMC42MDAyMjkgIC0xLjM3MiAgMC4xNzAwNSAgICBcbnRpdGFuaWMuYWxsJEVtYmFya2VkUyAtMC40MDEyMTMgICAwLjI3MDI4MyAgLTEuNDg0ICAwLjEzNzcwICAgIFxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbihEaXNwZXJzaW9uIHBhcmFtZXRlciBmb3IgYmlub21pYWwgZmFtaWx5IHRha2VuIHRvIGJlIDEpXG5cbiAgICBOdWxsIGRldmlhbmNlOiA5NjAuOTAgIG9uIDcxMSAgZGVncmVlcyBvZiBmcmVlZG9tXG5SZXNpZHVhbCBkZXZpYW5jZTogNjMyLjM0ICBvbiA3MDMgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuICAoMTc5IG9ic2VydmF0aW9ucyBkZWxldGVkIGR1ZSB0byBtaXNzaW5nbmVzcylcbkFJQzogNjUwLjM0XG5cbk51bWJlciBvZiBGaXNoZXIgU2NvcmluZyBpdGVyYXRpb25zOiA1XG4ifQ== -->
+<pre><code>
+Call:
+glm(formula = titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp + titanic.all$Parch + 
+    titanic.all$Fare + titanic.all$Embarked, family = &quot;binomial&quot;)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.7233  -0.6447  -0.3799   0.6326   2.4457  
+
+Coefficients:
+                       Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)            5.637407   0.634550   8.884  &lt; 2e-16 ***
+titanic.all$Pclass    -1.199251   0.164619  -7.285 3.22e-13 ***
+titanic.all$Sexmale   -2.638476   0.222256 -11.871  &lt; 2e-16 ***
+titanic.all$Age       -0.043350   0.008232  -5.266 1.39e-07 ***
+titanic.all$SibSp     -0.363208   0.129017  -2.815  0.00487 ** 
+titanic.all$Parch     -0.060270   0.123900  -0.486  0.62666    
+titanic.all$Fare       0.001432   0.002531   0.566  0.57165    
+titanic.all$EmbarkedQ -0.823545   0.600229  -1.372  0.17005    
+titanic.all$EmbarkedS -0.401213   0.270283  -1.484  0.13770    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 960.90  on 711  degrees of freedom
+Residual deviance: 632.34  on 703  degrees of freedom
+  (179 observations deleted due to missingness)
+AIC: 650.34
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Lets use a step function to simplify this time…</p>
@@ -2060,6 +2192,52 @@ summary(titanic.all.glm)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RlcCh0aXRhbmljLmFsbC5nbG0pXG5gYGAifQ== -->
 <pre class="r"><code>step(titanic.all.glm)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiU3RhcnQ6ICBBSUM9NjUwLjM0XG50aXRhbmljLmFsbCRTdXJ2aXZlZCB+IHRpdGFuaWMuYWxsJFBjbGFzcyArIHRpdGFuaWMuYWxsJFNleCArIFxuICAgIHRpdGFuaWMuYWxsJEFnZSArIHRpdGFuaWMuYWxsJFNpYlNwICsgdGl0YW5pYy5hbGwkUGFyY2ggKyBcbiAgICB0aXRhbmljLmFsbCRGYXJlICsgdGl0YW5pYy5hbGwkRW1iYXJrZWRcblxuICAgICAgICAgICAgICAgICAgICAgICBEZiBEZXZpYW5jZSAgICBBSUNcbi0gdGl0YW5pYy5hbGwkUGFyY2ggICAgIDEgICA2MzIuNTggNjQ4LjU4XG4tIHRpdGFuaWMuYWxsJEZhcmUgICAgICAxICAgNjMyLjY4IDY0OC42OFxuLSB0aXRhbmljLmFsbCRFbWJhcmtlZCAgMiAgIDYzNS4zMCA2NDkuMzBcbjxub25lPiAgICAgICAgICAgICAgICAgICAgICA2MzIuMzQgNjUwLjM0XG4tIHRpdGFuaWMuYWxsJFNpYlNwICAgICAxICAgNjQwLjkxIDY1Ni45MVxuLSB0aXRhbmljLmFsbCRBZ2UgICAgICAgMSAgIDY2Mi43NSA2NzguNzVcbi0gdGl0YW5pYy5hbGwkUGNsYXNzICAgIDEgICA2ODYuNjQgNzAyLjY0XG4tIHRpdGFuaWMuYWxsJFNleCAgICAgICAxICAgODA4LjQyIDgyNC40MlxuXG5TdGVwOiAgQUlDPTY0OC41OFxudGl0YW5pYy5hbGwkU3Vydml2ZWQgfiB0aXRhbmljLmFsbCRQY2xhc3MgKyB0aXRhbmljLmFsbCRTZXggKyBcbiAgICB0aXRhbmljLmFsbCRBZ2UgKyB0aXRhbmljLmFsbCRTaWJTcCArIHRpdGFuaWMuYWxsJEZhcmUgKyBcbiAgICB0aXRhbmljLmFsbCRFbWJhcmtlZFxuXG4gICAgICAgICAgICAgICAgICAgICAgIERmIERldmlhbmNlICAgIEFJQ1xuLSB0aXRhbmljLmFsbCRGYXJlICAgICAgMSAgIDYzMi44MiA2NDYuODJcbi0gdGl0YW5pYy5hbGwkRW1iYXJrZWQgIDIgICA2MzUuNTQgNjQ3LjU0XG48bm9uZT4gICAgICAgICAgICAgICAgICAgICAgNjMyLjU4IDY0OC41OFxuLSB0aXRhbmljLmFsbCRTaWJTcCAgICAgMSAgIDY0Mi43MyA2NTYuNzNcbi0gdGl0YW5pYy5hbGwkQWdlICAgICAgIDEgICA2NjIuOTYgNjc2Ljk2XG4tIHRpdGFuaWMuYWxsJFBjbGFzcyAgICAxICAgNjg5Ljk3IDcwMy45N1xuLSB0aXRhbmljLmFsbCRTZXggICAgICAgMSAgIDgxMy43NCA4MjcuNzRcblxuU3RlcDogIEFJQz02NDYuODJcbnRpdGFuaWMuYWxsJFN1cnZpdmVkIH4gdGl0YW5pYy5hbGwkUGNsYXNzICsgdGl0YW5pYy5hbGwkU2V4ICsgXG4gICAgdGl0YW5pYy5hbGwkQWdlICsgdGl0YW5pYy5hbGwkU2liU3AgKyB0aXRhbmljLmFsbCRFbWJhcmtlZFxuXG4gICAgICAgICAgICAgICAgICAgICAgIERmIERldmlhbmNlICAgIEFJQ1xuLSB0aXRhbmljLmFsbCRFbWJhcmtlZCAgMiAgIDYzNi4xOCA2NDYuMThcbjxub25lPiAgICAgICAgICAgICAgICAgICAgICA2MzIuODIgNjQ2LjgyXG4tIHRpdGFuaWMuYWxsJFNpYlNwICAgICAxICAgNjQyLjc1IDY1NC43NVxuLSB0aXRhbmljLmFsbCRBZ2UgICAgICAgMSAgIDY2My42OCA2NzUuNjhcbi0gdGl0YW5pYy5hbGwkUGNsYXNzICAgIDEgICA3MTkuMjEgNzMxLjIxXG4tIHRpdGFuaWMuYWxsJFNleCAgICAgICAxICAgODE2LjAzIDgyOC4wM1xuIn0= -->
+<pre><code>Start:  AIC=650.34
+titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp + titanic.all$Parch + 
+    titanic.all$Fare + titanic.all$Embarked
+
+                       Df Deviance    AIC
+- titanic.all$Parch     1   632.58 648.58
+- titanic.all$Fare      1   632.68 648.68
+- titanic.all$Embarked  2   635.30 649.30
+&lt;none&gt;                      632.34 650.34
+- titanic.all$SibSp     1   640.91 656.91
+- titanic.all$Age       1   662.75 678.75
+- titanic.all$Pclass    1   686.64 702.64
+- titanic.all$Sex       1   808.42 824.42
+
+Step:  AIC=648.58
+titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp + titanic.all$Fare + 
+    titanic.all$Embarked
+
+                       Df Deviance    AIC
+- titanic.all$Fare      1   632.82 646.82
+- titanic.all$Embarked  2   635.54 647.54
+&lt;none&gt;                      632.58 648.58
+- titanic.all$SibSp     1   642.73 656.73
+- titanic.all$Age       1   662.96 676.96
+- titanic.all$Pclass    1   689.97 703.97
+- titanic.all$Sex       1   813.74 827.74
+
+Step:  AIC=646.82
+titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp + titanic.all$Embarked
+
+                       Df Deviance    AIC
+- titanic.all$Embarked  2   636.18 646.18
+&lt;none&gt;                      632.82 646.82
+- titanic.all$SibSp     1   642.75 654.75
+- titanic.all$Age       1   663.68 675.68
+- titanic.all$Pclass    1   719.21 731.21
+- titanic.all$Sex       1   816.03 828.03</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gc3RlcCh0aXRhbmljLmFsbC5nbG0pIDogXG4gIG51bWJlciBvZiByb3dzIGluIHVzZSBoYXMgY2hhbmdlZDogcmVtb3ZlIG1pc3NpbmcgdmFsdWVzP1xuIn0= -->
+<pre><code>Error in step(titanic.all.glm) : 
+  number of rows in use has changed: remove missing values?</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The model is suggests is</p>
@@ -2070,6 +2248,35 @@ summary(titanic.all.glm)</code></pre>
     titanic.all$Age + titanic.all$SibSp, family = &quot;binomial&quot;)
 summary(titanic.step.glm)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSB0aXRhbmljLmFsbCRTdXJ2aXZlZCB+IHRpdGFuaWMuYWxsJFBjbGFzcyArIHRpdGFuaWMuYWxsJFNleCArIFxuICAgIHRpdGFuaWMuYWxsJEFnZSArIHRpdGFuaWMuYWxsJFNpYlNwLCBmYW1pbHkgPSBcImJpbm9taWFsXCIpXG5cbkRldmlhbmNlIFJlc2lkdWFsczogXG4gICAgTWluICAgICAgIDFRICAgTWVkaWFuICAgICAgIDNRICAgICAgTWF4ICBcbi0yLjc3MTQgIC0wLjY0NDUgIC0wLjM4MzYgICAwLjYyNzYgICAyLjQ1ODUgIFxuXG5Db2VmZmljaWVudHM6XG4gICAgICAgICAgICAgICAgICAgICBFc3RpbWF0ZSBTdGQuIEVycm9yIHogdmFsdWUgUHIoPnx6fCkgICAgXG4oSW50ZXJjZXB0KSAgICAgICAgICA1LjYwMDg0NiAgIDAuNTQzNDQxICAxMC4zMDYgIDwgMmUtMTYgKioqXG50aXRhbmljLmFsbCRQY2xhc3MgIC0xLjMxNzM5OCAgIDAuMTQwOTAwICAtOS4zNTAgIDwgMmUtMTYgKioqXG50aXRhbmljLmFsbCRTZXhtYWxlIC0yLjYyMzQ4MyAgIDAuMjE0NTI0IC0xMi4yMjkgIDwgMmUtMTYgKioqXG50aXRhbmljLmFsbCRBZ2UgICAgIC0wLjA0NDM4NSAgIDAuMDA4MTU1ICAtNS40NDIgNS4yNmUtMDggKioqXG50aXRhbmljLmFsbCRTaWJTcCAgIC0wLjM3NjExOSAgIDAuMTIxMDgwICAtMy4xMDYgIDAuMDAxODkgKiogXG4tLS1cblNpZ25pZi4gY29kZXM6ICAwIOKAmCoqKuKAmSAwLjAwMSDigJgqKuKAmSAwLjAxIOKAmCrigJkgMC4wNSDigJgu4oCZIDAuMSDigJgg4oCZIDFcblxuKERpc3BlcnNpb24gcGFyYW1ldGVyIGZvciBiaW5vbWlhbCBmYW1pbHkgdGFrZW4gdG8gYmUgMSlcblxuICAgIE51bGwgZGV2aWFuY2U6IDk2NC41MiAgb24gNzEzICBkZWdyZWVzIG9mIGZyZWVkb21cblJlc2lkdWFsIGRldmlhbmNlOiA2MzYuNzIgIG9uIDcwOSAgZGVncmVlcyBvZiBmcmVlZG9tXG4gICgxNzcgb2JzZXJ2YXRpb25zIGRlbGV0ZWQgZHVlIHRvIG1pc3NpbmduZXNzKVxuQUlDOiA2NDYuNzJcblxuTnVtYmVyIG9mIEZpc2hlciBTY29yaW5nIGl0ZXJhdGlvbnM6IDVcbiJ9 -->
+<pre><code>
+Call:
+glm(formula = titanic.all$Survived ~ titanic.all$Pclass + titanic.all$Sex + 
+    titanic.all$Age + titanic.all$SibSp, family = &quot;binomial&quot;)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.7714  -0.6445  -0.3836   0.6276   2.4585  
+
+Coefficients:
+                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)          5.600846   0.543441  10.306  &lt; 2e-16 ***
+titanic.all$Pclass  -1.317398   0.140900  -9.350  &lt; 2e-16 ***
+titanic.all$Sexmale -2.623483   0.214524 -12.229  &lt; 2e-16 ***
+titanic.all$Age     -0.044385   0.008155  -5.442 5.26e-08 ***
+titanic.all$SibSp   -0.376119   0.121080  -3.106  0.00189 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 964.52  on 713  degrees of freedom
+Residual deviance: 636.72  on 709  degrees of freedom
+  (177 observations deleted due to missingness)
+AIC: 646.72
+
+Number of Fisher Scoring iterations: 5</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>From these coefficients estimates we can see that: - the higher the travel class the lower the logit for survival - Males have lower survival chances - the higher the number of siblings or spouses also point to lower survival chances - Age also makes a difference, the higher the lower the survival chances</p>
@@ -2078,13 +2285,19 @@ summary(titanic.step.glm)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNvZWYodGl0YW5pYy5zdGVwLmdsbSkpXG5gYGAifQ== -->
 <pre class="r"><code>exp(coef(titanic.step.glm))</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAoSW50ZXJjZXB0KSAgdGl0YW5pYy5hbGwkUGNsYXNzIHRpdGFuaWMuYWxsJFNleG1hbGUgICAgIHRpdGFuaWMuYWxsJEFnZSBcbiAgICAgICAgMjcwLjY1NTMyOTkgICAgICAgICAgIDAuMjY3ODMxMyAgICAgICAgICAgMC4wNzI1NDk3ICAgICAgICAgICAwLjk1NjU4NTkgXG4gIHRpdGFuaWMuYWxsJFNpYlNwIFxuICAgICAgICAgIDAuNjg2NTIwNSBcbiJ9 -->
+<pre><code>        (Intercept)  titanic.all$Pclass titanic.all$Sexmale     titanic.all$Age 
+        270.6553299           0.2678313           0.0725497           0.9565859 
+  titanic.all$SibSp 
+          0.6865205 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The odds ratio (obviously) paint the same picture. Survival odds are smaller for higher travel class, Male, Age and the higher the number of siblings or spouses.</p>
 <p>Other approaches: - Dont use Age as it is missing - Treat Travel class as a category (losing the ordinal relation between 1,2,3) - Add the interactions to the minimal adequate model - Use Tree to see what variables are important to differentiating between survival and not, and see if there are interactions.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhYiA3IHBhcnQgMiAtIGEgc29sdXRpb24iDQpkYXRlOiAiTm92ZW1iZXIgMjAyMCINCm91dHB1dDoNCiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0DQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBkZl9wcmludDogcGFnZWQNCi0tLQ0KDQpUaGlzIHdvcmtzaGVldCBpcyB0byBwcmFjdGljZSB3ZWVrIDcuIEJlbG93IGlzIGEgc29sdXRpb24uDQoNCmBgYHtyfQ0KbGlicmFyeShnZ3Bsb3QyKQ0KYGBgDQoNCg0KMS4gTG9hZCB0aGUgdGl0YW5pYyBkYXRhIHNldCAoc21hbGxlciBzZXQpDQoNCmBgYHtyfQ0KdGl0YW5pYzwtdGl0YW5pY19hbmFseXNpcw0KYGBgDQoNCg0KDQpFeHBsb3JlIHRoZSBkYXRhDQoNCmBgYHtyfQ0Kc3VtbWFyeSh0aXRhbmljKQ0KYGBgDQoNClRoZSBkZXBlbmRlbnQgdmFyaWFibGUgaXM6IHN1cnZpdmVkDQoNCkNoZWNrIHRoYXQgaXQgaXMgY29ycmVjdGx5IHJlYWQgaW4sIGxvb2tpbmcgYXQgdGhlIG91dHB1dCBvZiB0aGUgc3VtbWFyeSBmdW5jdGlvbiB3ZSBjYW4gc2VlIGl0IGhhcyBub3QgYmVlbiBjb3JyZWN0bHkgaW50ZXJwcmV0ZWQgYnkgUi4gKEl0IHdvdWxkIGFsc28gYmUgcG9zc2libGUgdG8gY2hlY2sgdXNpbmcgc3RyKHRpdGFuaWMpKQ0KSW4gb3JkZXIgdG8gZml4IHRoaXMgaXQgY2FuIGJlIGNoYW5nZWQgaW50byBhIGZhY3RvcjoNCg0KYGBge3J9DQp0aXRhbmljJFN1cnZpdmVkPC1hcy5mYWN0b3IodGl0YW5pYyRTdXJ2aXZlZCkNCmBgYA0KDQpOb3RlIHRoYXQgdGhlcmUgYXJlIDE3NyByb3dzIHdoZXJlIHRoZSBBZ2UgaXMgbm90IGtub3duLiANCg0KSXQgaXMgYWxzbyB2YWx1YWJsZSB0byBjaGVjayB0aGUgZGF0YSB2aXN1YWxseQ0KDQpMZXRzIHN0YXJ0IHdpdGggQWdlIGFuZCBGYXJlDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PUFnZSkpICsgZ2VvbV9oaXN0b2dyYW0oYmlucz0yMCkgK2dndGl0bGUoIkhpc3RvZ3JhbSBmb3IgQWdlIG9mIFBhc3NlbmdlciIpDQpnZ3Bsb3QodGl0YW5pYywgYWVzKHg9RmFyZSkpICsgZ2VvbV9oaXN0b2dyYW0oYmlucz0yMCkgK2dndGl0bGUoIkhpc3RvZ3JhbSBmb3IgRmFyZSBQYXNzZW5nZXIiKQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PUZhcmUsIHk9QWdlKSkgKyBnZW9tX3BvaW50KCkgK2dndGl0bGUoIlNjYXR0ZXIgcGxvdCBvZiBBZ2UgYW5kIEZhcmUiKQ0KDQpgYGANCg0KRnJvbSB0aGUgdGhlIHBsb3RzIHNvIGZhciB3ZSBjYW4gc2VlIHRoYXQgQWdlIGFuZCBGYXJlIHNlZW0gYWNjZXB0YWJsZSBpbiByYW5nZXMuIFdlIGFyZSBub3QgcmVxdWlyaW5nIGRpc3RyaWJ1dGlvbmFsIGFzc3VtcHRpb25zLiBBbmQgd2UgY2FuIGFsc28gc2VlIHRoYXQgdGhlcmUgaXMgbm8gY29ycmVsYXRpb24gKGV2aWRlbnQpIGJldHdlZW4gQWdlIGFuZCBGYXJlLg0KDQpOb3cgbGV0cyBsb29rIGF0IHRoZSBBZ2UgYW5kIHRoZSBGYXJlIHZzIHRoZSBTdXJ2aXZhbA0KDQpgYGB7cn0NCmdncGxvdCh0aXRhbmljLCBhZXMoeD1TdXJ2aXZlZCwgeT1BZ2UpKSArIGdlb21fYm94cGxvdCgpDQpgYGANClRoZXJlIGlzIG5vIGRpZmZlcmVuY2UgaW4gdGhlIG1lZGlhbiBhZ2VzIChmcm9tIHRoZSBwbG90KSBiZXR3ZWVuIHN1cnZpdm9ycyBhbmQgcGVyaXNoZWQuDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PVN1cnZpdmVkLCB5PUZhcmUpKSArIGdlb21fYm94cGxvdCgpDQpgYGANCk5vdywgb3V0bGllcnMgYXNpZGUsIHRoZXJlIGlzIGEgZGlmZmVyZW5jZSBpbiB0aGUgbWVkaWFuIEZhcmUgYW5kIHRoZWlyIHN1cnZpdmFsIHN0YXR1cy4uLg0KDQoNCg0KMy4gRXhwbG9yZSB0aGUgZGF0YSBhbmQgc3VnZ2VzdCBhIG1vZGVsIHVzaW5nIEFnZSwgR2VuZGVyIGFuZCBmYXJlLg0KQXMgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyBiaW5hcnksIHRoaXMgaXMgd2hlcmUgd2UgY2FuIHVzZSBMb2dpc3RpYyBSZWdyZXNzaW9uLg0KDQoNCmBgYHtyfQ0KdGl0YW5pYy5nbG08LWdsbSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkQWdlK3RpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSwgZmFtaWx5ID0gImJpbm9taWFsIikNCnN1bW1hcnkodGl0YW5pYy5nbG0pDQpgYGANCg0KRnJvbSB0aGlzIHdlIGNhbiBzZWUgdGhhdCB0aGUgRmFyZSBhbmQgdGhlIGdlbmRlciBhcmUgc2lnbmlmaWNhbnQgYnV0IG5vdCBBZ2UuDQoNCmBgYHtyfQ0KZXhwKGNvZWYodGl0YW5pYy5nbG0pKQ0KYGBgDQoNClRoZSBvZGRzIHJhdGlvcyBzaG93IHVzIHRoYXQgYmVpbmcgTWFsZSBsb3dlcnMgc3Vydml2YWwgY2hhbmNlcywgd2l0aCBldmVyeSBpbmNyZWFzZSBpbiBmYXJlIHRoZXJlIGlzIGFuIGluY3JlYXNlIGluIHN1cnZpdmFsIG9kZHMgYW5kIHdpdGggZXZlcnkgaW5jcmVhc2UgaW4geWVhciAoQWdlKSB0aGVyZSBpcyBhIGRlY3JlYXNlIGluIHN1cnZpdmFsIG9kZHMuDQoNCkxldHMgc2ltcGxpZnkgdGhlIG1vZGVsIC0gd2UgY2FuIGRvIHRoaXMgbWFudWFsbHkgb3IgdXNpbmcgc3RlcC4gTm90ZSB0aGF0IHlvdSBtYXkgZ2V0IGRpZmZlcmVudCBtb2RlbHMuLi4NCg0KYGBge3J9DQp0aXRhbmljMi5nbG08LWdsbSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSwgZmFtaWx5ID0gImJpbm9taWFsIikNCnN1bW1hcnkodGl0YW5pYzIuZ2xtKQ0KYGBgDQoNCk5vdyB0aGVyZSBpcyBhIGRpbGVtbWEuLi4udXNlIHRoZSBtb3JlIGNvbXBsZXggbW9kZWwgKGJ1dCB3aXRoIGEgdmFyaWFibGUgdGhhdCBoYXMgbWlzc2luZyBkYXRhKSBvciBhIHNpbXBsZXIgbW9kZWwgd2l0aCBhIGhpZ2hlciBBSUM/DQoNCkkgYW0gZ29pbmcgdG8gdXNlIHRoZSBzaW1wbGVyIG1vZGVsLCBhcyBpdCB3aWxsIGJlIGVhc2llciB0byBleHBsYWluIGFuZCBhbGwgdGhlIGNvZWZmaWNpZW50cyBhcmUgc2lnbmlmaWNhbnRzLg0KDQo0LiBXaGF0IGFyZSB0aGUgb2RkcyByYXRpb3MgZm9yIHN1cnZpdmFsDQoNCmBgYHtyfQ0KZXhwKGNvZWYodGl0YW5pYzIuZ2xtKSkNCmBgYA0KDQpgYGB7cn0NCmV4cChjYmluZChPUj1jb2VmKHRpdGFuaWMyLmdsbSksIGNvbmZpbnQodGl0YW5pYzIuZ2xtKSkpDQpgYGANCg0KV2UgY2FuIHNlZSB0aGF0IGJlaW5nIG1hbGUgbG93ZXJzIHlvdXIgY2hhbmNlcyBvZiBzdXJ2aXZpbmcsIHdoZXJlIGFzIHRoZSBtb3JlIGV4cGVuc2l2ZSB5b3VyIHRpY2tldCB0aGUgaGlnaGVyIHRoZSBjaGFuZ2VzIG9mIHN1cnZpdmluZy4NCg0KKioqDQpPUFRJT05BTA0KDQpMZXRzIHN0YXJ0IHdpdGggYSBtb2RlbCB3aXRoIGludGVyYWN0aW9ucy4gSSBhbSB1c2luZyBhIHRyZWUgdG8gZXhwbG9yZSB0aGUgc3RydWN0dXJlLg0KDQpgYGB7cn0NCmxpYnJhcnkodHJlZSkNCnRpdGFuaWMudHJlZTwtdHJlZSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkQWdlK3RpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSkNCnBsb3QodGl0YW5pYy50cmVlKQ0KdGV4dCh0aXRhbmljLnRyZWUpDQpgYGANClRoaXMgdHJlZSBzdHJ1Y3R1cmUgcG9pbnRzIHRvIHBvdGVudGlhbCBpbnRlcmFjdGlvbiBiZXR3ZWVuIGZhcmUgYW5kIGFnZS4gQnV0IGFzIHdlIGhhdmUgZmV3IGV4cGxhbmF0b3J5IHZhcmlhYmxlcyB0byBiZWdpbiB3aXRoIGxldHMgcHV0IGFsbCB0aGUgaXRlcmFjdGlvbnMgaW4uDQoNCg0KYGBge3J9DQp0aXRhbmljLmkuZ2xtPC1nbG0odGl0YW5pYyRTdXJ2aXZlZH50aXRhbmljJEFnZSp0aXRhbmljJFNleCp0aXRhbmljJEZhcmUsIGZhbWlseSA9ICJiaW5vbWlhbCIpDQpzdW1tYXJ5KHRpdGFuaWMuaS5nbG0pDQpgYGANCg0KVGhlIERldmlhbmNlIGltcHJvdmVtZW50IGZyb20gdGhlIHNpbXBsZSBtb2RlbCBpcyBub3QgdG9vIGdyZWF0LiANCkkgd291bGQgcHJvcG9zZSB0aGUgZmlyc3Qgb3Igc2Vjb25kIG1vZGVsLg0KDQoNCioqKg0KDQo1LiBMb2FkIHRoZSBmdWxsIFRpdGFuaWMgZGF0YQ0KDQpgYGB7cn0NCnRpdGFuaWMuYWxsPC1yZWFkLmNzdigiZGF0YS90aXRhbmljLWFsbC1jb2xzLmNzdiIpDQpgYGANCg0KDQpFeHBsb3JpbmcgdGhlIG5ldyB2YXJpYWJsZXMgYWRkZWQNCg0KYGBge3J9DQpzdW1tYXJ5KHRpdGFuaWMuYWxsKQ0KYGBgDQoNCm1ha2Ugc3VyZSB0aGUgdmFyaWFibGVzIGFyZSBkZWZpbmVkIGFwcHJvcHJpYXRlbHkNCg0KYGBge3J9DQp0aXRhbmljLmFsbCRTdXJ2aXZlZDwtYXMuZmFjdG9yKHRpdGFuaWMuYWxsJFN1cnZpdmVkKQ0KdGl0YW5pYy5hbGwkUGNsYXNzPC10aXRhbmljLmFsbCRQY2xhc3MNCmBgYA0KDQoNClVzZSBwbG90cyB0byBleHBsb3JlDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMuYWxsLCBhZXMoeD1GYXJlKSkgKyBnZW9tX2hpc3RvZ3JhbShiaW5zPTIwKSArZ2d0aXRsZSgiSGlzdG9ncmFtIGZvciBGYXJlIikNCmBgYA0KDQpXZSBjYW4gYWxzbyBsb29rIGF0IHRoZSByZWxhdGlvbiBiZXR3ZWVuIHRoZSBjYXRlZ29yaWNhbCBleHBsYW5hdG9yeSB2YXJpYWJsZXMgYW5kIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUuDQpGb3IgZXhhbXBsZToNCg0KYGBge3J9DQp0YWJsZSh0aXRhbmljLmFsbCRTdXJ2aXZlZCwgdGl0YW5pYy5hbGwkUGNsYXNzKQ0KYGBgDQoNCldlIGNhbiBzZWUgdGhhdCB0aGVyZSBhcmUgbW9yZSBzdXJ2aXZvcnMgKDEpIHJlbGF0aXZlbHkgaW4gMXN0IGNsYXNzIGNvbXBhcmVkIHRvIG90aGVycy4gVGhpcyB3aWxsIGJlIHVzZWZ1bCBhcyBhbiBleHBsYW5hdG9yeSB2YXJpYWJsZS4NCg0KDQpOb3cgd2UgY2FuIHN0YXJ0IHdpdGggYSBtb2RlbCAoYSBsYXJnZSBvbmUgdG8gYmVnaW4gd2l0aCkNCg0KDQpgYGB7cn0NCnRpdGFuaWMuYWxsLmdsbTwtZ2xtKHRpdGFuaWMuYWxsJFN1cnZpdmVkfnRpdGFuaWMuYWxsJFBjbGFzcyt0aXRhbmljLmFsbCRTZXgrIHRpdGFuaWMuYWxsJEFnZSArDQogICAgICAgICAgICAgICAgICAgICAgIHRpdGFuaWMuYWxsJFNpYlNwKyB0aXRhbmljLmFsbCRQYXJjaCArIHRpdGFuaWMuYWxsJEZhcmUgKyB0aXRhbmljLmFsbCRFbWJhcmtlZCxmYW1pbHkgPSAiYmlub21pYWwiKQ0Kc3VtbWFyeSh0aXRhbmljLmFsbC5nbG0pDQpgYGANCg0KTGV0cyB1c2UgYSBzdGVwIGZ1bmN0aW9uIHRvIHNpbXBsaWZ5IHRoaXMgdGltZS4uLg0KDQpgYGB7cn0NCnN0ZXAodGl0YW5pYy5hbGwuZ2xtKQ0KYGBgDQoNClRoZSBtb2RlbCBpcyBzdWdnZXN0cyBpcw0KDQpgYGB7cn0NCnRpdGFuaWMuc3RlcC5nbG08LWdsbSh0aXRhbmljLmFsbCRTdXJ2aXZlZCB+IHRpdGFuaWMuYWxsJFBjbGFzcyArIHRpdGFuaWMuYWxsJFNleCArIA0KICAgIHRpdGFuaWMuYWxsJEFnZSArIHRpdGFuaWMuYWxsJFNpYlNwLCBmYW1pbHkgPSAiYmlub21pYWwiKQ0Kc3VtbWFyeSh0aXRhbmljLnN0ZXAuZ2xtKQ0KYGBgDQoNCkZyb20gdGhlc2UgY29lZmZpY2llbnRzIGVzdGltYXRlcyB3ZSBjYW4gc2VlIHRoYXQ6DQogLSB0aGUgaGlnaGVyIHRoZSB0cmF2ZWwgY2xhc3MgdGhlIGxvd2VyIHRoZSBsb2dpdCBmb3Igc3Vydml2YWwNCiAgLSBNYWxlcyBoYXZlIGxvd2VyIHN1cnZpdmFsIGNoYW5jZXMNCiAgLSB0aGUgaGlnaGVyIHRoZSBudW1iZXIgb2Ygc2libGluZ3Mgb3Igc3BvdXNlcyBhbHNvIHBvaW50IHRvIGxvd2VyIHN1cnZpdmFsIGNoYW5jZXMNCiAgLSBBZ2UgYWxzbyBtYWtlcyBhIGRpZmZlcmVuY2UsIHRoZSBoaWdoZXIgdGhlIGxvd2VyIHRoZSBzdXJ2aXZhbCBjaGFuY2VzDQogIA0KYGBge3J9DQpleHAoY29lZih0aXRhbmljLnN0ZXAuZ2xtKSkNCmBgYA0KDQpUaGUgb2RkcyByYXRpbyAob2J2aW91c2x5KSBwYWludCB0aGUgc2FtZSBwaWN0dXJlLg0KU3Vydml2YWwgb2RkcyBhcmUgc21hbGxlciBmb3IgaGlnaGVyIHRyYXZlbCBjbGFzcywgTWFsZSwgQWdlIGFuZCB0aGUgaGlnaGVyIHRoZSBudW1iZXIgb2Ygc2libGluZ3Mgb3Igc3BvdXNlcy4NCg0KT3RoZXIgYXBwcm9hY2hlczoNCi0gRG9udCB1c2UgQWdlIGFzIGl0IGlzIG1pc3NpbmcNCi0gVHJlYXQgVHJhdmVsIGNsYXNzIGFzIGEgY2F0ZWdvcnkgKGxvc2luZyB0aGUgb3JkaW5hbCByZWxhdGlvbiBiZXR3ZWVuIDEsMiwzKQ0KIC0gQWRkIHRoZSBpbnRlcmFjdGlvbnMgdG8gdGhlIG1pbmltYWwgYWRlcXVhdGUgbW9kZWwNCiAtIFVzZSBUcmVlIHRvIHNlZSB3aGF0IHZhcmlhYmxlcyBhcmUgaW1wb3J0YW50IHRvIGRpZmZlcmVudGlhdGluZyBiZXR3ZWVuIHN1cnZpdmFsIGFuZCBub3QsIGFuZCBzZWUgaWYgdGhlcmUgYXJlIGludGVyYWN0aW9ucy4NCiANCiA=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhYiA3IHBhcnQgMiAtIGEgc29sdXRpb24iDQpkYXRlOiAiTm92ZW1iZXIgMjAyMCINCm91dHB1dDoNCiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0DQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBkZl9wcmludDogcGFnZWQNCi0tLQ0KDQpUaGlzIHdvcmtzaGVldCBpcyB0byBwcmFjdGljZSB3ZWVrIDcuIEJlbG93IGlzIGEgc29sdXRpb24uDQoNCmBgYHtyfQ0KbGlicmFyeShnZ3Bsb3QyKQ0KYGBgDQoNCg0KMS4gTG9hZCB0aGUgdGl0YW5pYyBkYXRhIHNldCAoc21hbGxlciBzZXQpDQoNCmBgYHtyfQ0KdGl0YW5pYzwtdGl0YW5pY19hbmFseXNpcw0KYGBgDQoNCg0KDQpFeHBsb3JlIHRoZSBkYXRhDQoNCmBgYHtyfQ0Kc3VtbWFyeSh0aXRhbmljKQ0KYGBgDQoNClRoZSBkZXBlbmRlbnQgdmFyaWFibGUgaXM6IHN1cnZpdmVkDQoNCkNoZWNrIHRoYXQgaXQgaXMgY29ycmVjdGx5IHJlYWQgaW4sIGxvb2tpbmcgYXQgdGhlIG91dHB1dCBvZiB0aGUgc3VtbWFyeSBmdW5jdGlvbiB3ZSBjYW4gc2VlIGl0IGhhcyBub3QgYmVlbiBjb3JyZWN0bHkgaW50ZXJwcmV0ZWQgYnkgUi4gKEl0IHdvdWxkIGFsc28gYmUgcG9zc2libGUgdG8gY2hlY2sgdXNpbmcgc3RyKHRpdGFuaWMpKQ0KSW4gb3JkZXIgdG8gZml4IHRoaXMgaXQgY2FuIGJlIGNoYW5nZWQgaW50byBhIGZhY3RvcjoNCg0KYGBge3J9DQp0aXRhbmljJFN1cnZpdmVkPC1hcy5mYWN0b3IodGl0YW5pYyRTdXJ2aXZlZCkNCmBgYA0KDQpOb3RlIHRoYXQgdGhlcmUgYXJlIDE3NyByb3dzIHdoZXJlIHRoZSBBZ2UgaXMgbm90IGtub3duLiANCg0KSXQgaXMgYWxzbyB2YWx1YWJsZSB0byBjaGVjayB0aGUgZGF0YSB2aXN1YWxseQ0KDQpMZXRzIHN0YXJ0IHdpdGggQWdlIGFuZCBGYXJlDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PUFnZSkpICsgZ2VvbV9oaXN0b2dyYW0oYmlucz0yMCkgK2dndGl0bGUoIkhpc3RvZ3JhbSBmb3IgQWdlIG9mIFBhc3NlbmdlciIpDQpnZ3Bsb3QodGl0YW5pYywgYWVzKHg9RmFyZSkpICsgZ2VvbV9oaXN0b2dyYW0oYmlucz0yMCkgK2dndGl0bGUoIkhpc3RvZ3JhbSBmb3IgRmFyZSBQYXNzZW5nZXIiKQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PUZhcmUsIHk9QWdlKSkgKyBnZW9tX3BvaW50KCkgK2dndGl0bGUoIlNjYXR0ZXIgcGxvdCBvZiBBZ2UgYW5kIEZhcmUiKQ0KDQpgYGANCg0KRnJvbSB0aGUgdGhlIHBsb3RzIHNvIGZhciB3ZSBjYW4gc2VlIHRoYXQgQWdlIGFuZCBGYXJlIHNlZW0gYWNjZXB0YWJsZSBpbiByYW5nZXMuIFdlIGFyZSBub3QgcmVxdWlyaW5nIGRpc3RyaWJ1dGlvbmFsIGFzc3VtcHRpb25zLiBBbmQgd2UgY2FuIGFsc28gc2VlIHRoYXQgdGhlcmUgaXMgbm8gY29ycmVsYXRpb24gKGV2aWRlbnQpIGJldHdlZW4gQWdlIGFuZCBGYXJlLg0KDQpOb3cgbGV0cyBsb29rIGF0IHRoZSBBZ2UgYW5kIHRoZSBGYXJlIHZzIHRoZSBTdXJ2aXZhbA0KDQpgYGB7cn0NCmdncGxvdCh0aXRhbmljLCBhZXMoeD1TdXJ2aXZlZCwgeT1BZ2UpKSArIGdlb21fYm94cGxvdCgpDQpgYGANClRoZXJlIGlzIG5vIGRpZmZlcmVuY2UgaW4gdGhlIG1lZGlhbiBhZ2VzIChmcm9tIHRoZSBwbG90KSBiZXR3ZWVuIHN1cnZpdm9ycyBhbmQgcGVyaXNoZWQuDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMsIGFlcyh4PVN1cnZpdmVkLCB5PUZhcmUpKSArIGdlb21fYm94cGxvdCgpDQpgYGANCk5vdywgb3V0bGllcnMgYXNpZGUsIHRoZXJlIGlzIGEgZGlmZmVyZW5jZSBpbiB0aGUgbWVkaWFuIEZhcmUgYW5kIHRoZWlyIHN1cnZpdmFsIHN0YXR1cy4uLg0KDQoNCg0KMy4gRXhwbG9yZSB0aGUgZGF0YSBhbmQgc3VnZ2VzdCBhIG1vZGVsIHVzaW5nIEFnZSwgR2VuZGVyIGFuZCBmYXJlLg0KQXMgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyBiaW5hcnksIHRoaXMgaXMgd2hlcmUgd2UgY2FuIHVzZSBMb2dpc3RpYyBSZWdyZXNzaW9uLg0KDQoNCmBgYHtyfQ0KdGl0YW5pYy5nbG08LWdsbSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkQWdlK3RpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSwgZmFtaWx5ID0gImJpbm9taWFsIikNCnN1bW1hcnkodGl0YW5pYy5nbG0pDQpgYGANCg0KRnJvbSB0aGlzIHdlIGNhbiBzZWUgdGhhdCB0aGUgRmFyZSBhbmQgdGhlIGdlbmRlciBhcmUgc2lnbmlmaWNhbnQgYnV0IG5vdCBBZ2UuDQoNCmBgYHtyfQ0KZXhwKGNvZWYodGl0YW5pYy5nbG0pKQ0KYGBgDQoNClRoZSBvZGRzIHJhdGlvcyBzaG93IHVzIHRoYXQgYmVpbmcgTWFsZSBsb3dlcnMgc3Vydml2YWwgY2hhbmNlcywgd2l0aCBldmVyeSBpbmNyZWFzZSBpbiBmYXJlIHRoZXJlIGlzIGFuIGluY3JlYXNlIGluIHN1cnZpdmFsIG9kZHMgYW5kIHdpdGggZXZlcnkgaW5jcmVhc2UgaW4geWVhciAoQWdlKSB0aGVyZSBpcyBhIGRlY3JlYXNlIGluIHN1cnZpdmFsIG9kZHMuDQoNCkxldHMgc2ltcGxpZnkgdGhlIG1vZGVsIC0gd2UgY2FuIGRvIHRoaXMgbWFudWFsbHkgb3IgdXNpbmcgc3RlcC4gTm90ZSB0aGF0IHlvdSBtYXkgZ2V0IGRpZmZlcmVudCBtb2RlbHMuLi4NCg0KYGBge3J9DQp0aXRhbmljMi5nbG08LWdsbSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSwgZmFtaWx5ID0gImJpbm9taWFsIikNCnN1bW1hcnkodGl0YW5pYzIuZ2xtKQ0KYGBgDQoNCk5vdyB0aGVyZSBpcyBhIGRpbGVtbWEuLi4udXNlIHRoZSBtb3JlIGNvbXBsZXggbW9kZWwgKGJ1dCB3aXRoIGEgdmFyaWFibGUgdGhhdCBoYXMgbWlzc2luZyBkYXRhKSBvciBhIHNpbXBsZXIgbW9kZWwgd2l0aCBhIGhpZ2hlciBBSUM/DQoNCkkgYW0gZ29pbmcgdG8gdXNlIHRoZSBzaW1wbGVyIG1vZGVsLCBhcyBpdCB3aWxsIGJlIGVhc2llciB0byBleHBsYWluIGFuZCBhbGwgdGhlIGNvZWZmaWNpZW50cyBhcmUgc2lnbmlmaWNhbnRzLg0KDQo0LiBXaGF0IGFyZSB0aGUgb2RkcyByYXRpb3MgZm9yIHN1cnZpdmFsDQoNCmBgYHtyfQ0KZXhwKGNvZWYodGl0YW5pYzIuZ2xtKSkNCmBgYA0KDQpgYGB7cn0NCmV4cChjYmluZChPUj1jb2VmKHRpdGFuaWMyLmdsbSksIGNvbmZpbnQodGl0YW5pYzIuZ2xtKSkpDQpgYGANCg0KV2UgY2FuIHNlZSB0aGF0IGJlaW5nIG1hbGUgbG93ZXJzIHlvdXIgY2hhbmNlcyBvZiBzdXJ2aXZpbmcsIHdoZXJlIGFzIHRoZSBtb3JlIGV4cGVuc2l2ZSB5b3VyIHRpY2tldCB0aGUgaGlnaGVyIHRoZSBjaGFuZ2VzIG9mIHN1cnZpdmluZy4NCg0KKioqDQpPUFRJT05BTA0KDQpMZXRzIHN0YXJ0IHdpdGggYSBtb2RlbCB3aXRoIGludGVyYWN0aW9ucy4gSSBhbSB1c2luZyBhIHRyZWUgdG8gZXhwbG9yZSB0aGUgc3RydWN0dXJlLg0KDQpgYGB7cn0NCmxpYnJhcnkodHJlZSkNCnRpdGFuaWMudHJlZTwtdHJlZSh0aXRhbmljJFN1cnZpdmVkfnRpdGFuaWMkQWdlK3RpdGFuaWMkU2V4K3RpdGFuaWMkRmFyZSkNCnBsb3QodGl0YW5pYy50cmVlKQ0KdGV4dCh0aXRhbmljLnRyZWUpDQpgYGANClRoaXMgdHJlZSBzdHJ1Y3R1cmUgcG9pbnRzIHRvIHBvdGVudGlhbCBpbnRlcmFjdGlvbiBiZXR3ZWVuIGZhcmUgYW5kIGFnZS4gQnV0IGFzIHdlIGhhdmUgZmV3IGV4cGxhbmF0b3J5IHZhcmlhYmxlcyB0byBiZWdpbiB3aXRoIGxldHMgcHV0IGFsbCB0aGUgaXRlcmFjdGlvbnMgaW4uDQoNCg0KYGBge3J9DQp0aXRhbmljLmkuZ2xtPC1nbG0odGl0YW5pYyRTdXJ2aXZlZH50aXRhbmljJEFnZSp0aXRhbmljJFNleCp0aXRhbmljJEZhcmUsIGZhbWlseSA9ICJiaW5vbWlhbCIpDQpzdW1tYXJ5KHRpdGFuaWMuaS5nbG0pDQpgYGANCg0KVGhlIERldmlhbmNlIGltcHJvdmVtZW50IGZyb20gdGhlIHNpbXBsZSBtb2RlbCBpcyBub3QgdG9vIGdyZWF0LiANCkkgd291bGQgcHJvcG9zZSB0aGUgZmlyc3Qgb3Igc2Vjb25kIG1vZGVsLg0KDQoNCioqKg0KDQo1LiBMb2FkIHRoZSBmdWxsIFRpdGFuaWMgZGF0YQ0KDQpgYGB7cn0NCnRpdGFuaWMuYWxsPC10aXRhbmljX2FsbF9jb2xzDQpgYGANCg0KDQpFeHBsb3JpbmcgdGhlIG5ldyB2YXJpYWJsZXMgYWRkZWQNCg0KYGBge3J9DQpzdW1tYXJ5KHRpdGFuaWMuYWxsKQ0KYGBgDQoNCm1ha2Ugc3VyZSB0aGUgdmFyaWFibGVzIGFyZSBkZWZpbmVkIGFwcHJvcHJpYXRlbHkNCg0KYGBge3J9DQp0aXRhbmljLmFsbCRTdXJ2aXZlZDwtYXMuZmFjdG9yKHRpdGFuaWMuYWxsJFN1cnZpdmVkKQ0KdGl0YW5pYy5hbGwkUGNsYXNzPC10aXRhbmljLmFsbCRQY2xhc3MNCmBgYA0KDQoNClVzZSBwbG90cyB0byBleHBsb3JlDQoNCmBgYHtyfQ0KZ2dwbG90KHRpdGFuaWMuYWxsLCBhZXMoeD1GYXJlKSkgKyBnZW9tX2hpc3RvZ3JhbShiaW5zPTIwKSArZ2d0aXRsZSgiSGlzdG9ncmFtIGZvciBGYXJlIikNCmBgYA0KDQpXZSBjYW4gYWxzbyBsb29rIGF0IHRoZSByZWxhdGlvbiBiZXR3ZWVuIHRoZSBjYXRlZ29yaWNhbCBleHBsYW5hdG9yeSB2YXJpYWJsZXMgYW5kIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUuDQpGb3IgZXhhbXBsZToNCg0KYGBge3J9DQp0YWJsZSh0aXRhbmljLmFsbCRTdXJ2aXZlZCwgdGl0YW5pYy5hbGwkUGNsYXNzKQ0KYGBgDQoNCldlIGNhbiBzZWUgdGhhdCB0aGVyZSBhcmUgbW9yZSBzdXJ2aXZvcnMgKDEpIHJlbGF0aXZlbHkgaW4gMXN0IGNsYXNzIGNvbXBhcmVkIHRvIG90aGVycy4gVGhpcyB3aWxsIGJlIHVzZWZ1bCBhcyBhbiBleHBsYW5hdG9yeSB2YXJpYWJsZS4NCg0KDQpOb3cgd2UgY2FuIHN0YXJ0IHdpdGggYSBtb2RlbCAoYSBsYXJnZSBvbmUgdG8gYmVnaW4gd2l0aCkNCg0KDQpgYGB7cn0NCnRpdGFuaWMuYWxsLmdsbTwtZ2xtKHRpdGFuaWMuYWxsJFN1cnZpdmVkfnRpdGFuaWMuYWxsJFBjbGFzcyt0aXRhbmljLmFsbCRTZXgrIHRpdGFuaWMuYWxsJEFnZSArDQogICAgICAgICAgICAgICAgICAgICAgIHRpdGFuaWMuYWxsJFNpYlNwKyB0aXRhbmljLmFsbCRQYXJjaCArIHRpdGFuaWMuYWxsJEZhcmUgKyB0aXRhbmljLmFsbCRFbWJhcmtlZCxmYW1pbHkgPSAiYmlub21pYWwiKQ0Kc3VtbWFyeSh0aXRhbmljLmFsbC5nbG0pDQpgYGANCg0KTGV0cyB1c2UgYSBzdGVwIGZ1bmN0aW9uIHRvIHNpbXBsaWZ5IHRoaXMgdGltZS4uLg0KDQpgYGB7cn0NCnN0ZXAodGl0YW5pYy5hbGwuZ2xtKQ0KYGBgDQoNClRoZSBtb2RlbCBpcyBzdWdnZXN0cyBpcw0KDQpgYGB7cn0NCnRpdGFuaWMuc3RlcC5nbG08LWdsbSh0aXRhbmljLmFsbCRTdXJ2aXZlZCB+IHRpdGFuaWMuYWxsJFBjbGFzcyArIHRpdGFuaWMuYWxsJFNleCArIA0KICAgIHRpdGFuaWMuYWxsJEFnZSArIHRpdGFuaWMuYWxsJFNpYlNwLCBmYW1pbHkgPSAiYmlub21pYWwiKQ0Kc3VtbWFyeSh0aXRhbmljLnN0ZXAuZ2xtKQ0KYGBgDQoNCkZyb20gdGhlc2UgY29lZmZpY2llbnRzIGVzdGltYXRlcyB3ZSBjYW4gc2VlIHRoYXQ6DQogLSB0aGUgaGlnaGVyIHRoZSB0cmF2ZWwgY2xhc3MgdGhlIGxvd2VyIHRoZSBsb2dpdCBmb3Igc3Vydml2YWwNCiAgLSBNYWxlcyBoYXZlIGxvd2VyIHN1cnZpdmFsIGNoYW5jZXMNCiAgLSB0aGUgaGlnaGVyIHRoZSBudW1iZXIgb2Ygc2libGluZ3Mgb3Igc3BvdXNlcyBhbHNvIHBvaW50IHRvIGxvd2VyIHN1cnZpdmFsIGNoYW5jZXMNCiAgLSBBZ2UgYWxzbyBtYWtlcyBhIGRpZmZlcmVuY2UsIHRoZSBoaWdoZXIgdGhlIGxvd2VyIHRoZSBzdXJ2aXZhbCBjaGFuY2VzDQogIA0KYGBge3J9DQpleHAoY29lZih0aXRhbmljLnN0ZXAuZ2xtKSkNCmBgYA0KDQpUaGUgb2RkcyByYXRpbyAob2J2aW91c2x5KSBwYWludCB0aGUgc2FtZSBwaWN0dXJlLg0KU3Vydml2YWwgb2RkcyBhcmUgc21hbGxlciBmb3IgaGlnaGVyIHRyYXZlbCBjbGFzcywgTWFsZSwgQWdlIGFuZCB0aGUgaGlnaGVyIHRoZSBudW1iZXIgb2Ygc2libGluZ3Mgb3Igc3BvdXNlcy4NCg0KT3RoZXIgYXBwcm9hY2hlczoNCi0gRG9udCB1c2UgQWdlIGFzIGl0IGlzIG1pc3NpbmcNCi0gVHJlYXQgVHJhdmVsIGNsYXNzIGFzIGEgY2F0ZWdvcnkgKGxvc2luZyB0aGUgb3JkaW5hbCByZWxhdGlvbiBiZXR3ZWVuIDEsMiwzKQ0KIC0gQWRkIHRoZSBpbnRlcmFjdGlvbnMgdG8gdGhlIG1pbmltYWwgYWRlcXVhdGUgbW9kZWwNCiAtIFVzZSBUcmVlIHRvIHNlZSB3aGF0IHZhcmlhYmxlcyBhcmUgaW1wb3J0YW50IHRvIGRpZmZlcmVudGlhdGluZyBiZXR3ZWVuIHN1cnZpdmFsIGFuZCBub3QsIGFuZCBzZWUgaWYgdGhlcmUgYXJlIGludGVyYWN0aW9ucy4NCiANCiA=</div>
 
 
 

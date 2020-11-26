@@ -296,7 +296,6 @@ Here ANOVA is very useful. The reason is that it, at a glance, will allow me to 
 
 ```{r}
 
-LeagueSeasonHit
 
 ```
 
@@ -372,9 +371,19 @@ ANOVA and ANCOVA will be useful for finding a lot of information in one go.
 Another thing is that I will go one by one and remove the weakest correlants.
 
 ```{r}
-
+step(league)
 
 ```
+
+For example, a boc plot will  be useful for the season hit statistic in particular.
+##the code below does not work as it should I want two parts. the first being 0, the other being 1. It works for bats, however. Perhaps they need to be changed from intergers to characters?
+What I learn here is that batting and salary seem to be related somehow.
+
+```{r}
+
+ggplot(League, aes(x=LeagueBats, y=LeagueSalary)) + geom_boxplot()
+```
+Handedness does not seem to correlate strongly. While ambidextrous seem to earn more than right handed people and even more than left handed people, the latter two have a very large number of outliers.
 
 ## 3.2 Critique model using relevant diagnostics
 

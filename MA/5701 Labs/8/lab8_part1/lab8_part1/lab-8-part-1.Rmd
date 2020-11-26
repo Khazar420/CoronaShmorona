@@ -1,0 +1,105 @@
+---
+title: "Lab 8 Part 1"
+author: Dr. Isabel Sassoon
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+
+# Table Analysis
+
+In this lab we will explore how to perform table analysis. This is useful when there are multiple columns of data that are categorical.
+
+```{r}
+# installing a new library
+library(vcdExtra)
+```
+
+The data we are using is called Arthritis
+
+```{r}
+help(Arthritis)
+```
+
+
+Lets explore the data
+
+```{r}
+summary(Arthritis)
+```
+
+
+We can see there is an ID, Gender, Age and whether the person had a Marked Improvement, Some improvement or none.
+
+Table analysis can help us if we want to find out if there is a relationship between the improvement and the treatment (for example).
+
+```{r}
+table(Arthritis$Improved, Arthritis$Treatment)
+```
+
+
+
+***Null hypothesis***: $H_0$, The treatment and improvement are independent
+***Alternative hypothesis***: $H_1$, there is a relationship between the treatment and the improvement
+
+```{r}
+chisq.test(table(Arthritis$Improved, Arthritis$Treatment))
+```
+
+
+We can see that our $\chi^2$ is significant - so there is a dependence between treatment and outcome.
+
+Note that there is no cell in the table that is so small that we need to consider using Fisher's exact test.
+
+***
+
+We can now take this one step further and see if we can answer the question: What attributes affect the success of the treatment?
+
+If we wanted to model this relationship further we could transform the dependent variable from one with three values to one with two and then use Logistic regression:
+
+Let's define the new dependent variable:
+
+- 0 if there is none 
+- 1. When there is an improvement (some or marked) 
+ 
+```{r}
+Arthritis$Improved.Ind<-ifelse(Arthritis$Improved=="None", 0,1)
+```
+ 
+Now we can model this:
+
+```{r}
+Arthritis.lr<-glm(Arthritis$Improved.Ind~Arthritis$Treatment, family = "binomial")
+summary(Arthritis.lr)
+```
+
+This confirms our table analysis. We can also look at the coefficients as Odds Ratios
+
+```{r}
+exp(coef(Arthritis.lr))
+```
+
+
+
+But what about the other possible covariates?
+
+```{r}
+Arthritis2.lr<-glm(Arthritis$Improved.Ind~Arthritis$Treatment+ Arthritis$Sex+ Arthritis$Age, family = "binomial")
+summary(Arthritis2.lr)
+```
+
+```{r}
+exp(coef(Arthritis2.lr))
+```
+
+We can also start with the interactions model
+
+```{r}
+Arthritis3.lr<-glm(Arthritis$Improved.Ind~Arthritis$Treatment*Arthritis$Sex*Arthritis$Age, family = "binomial")
+summary(Arthritis3.lr)
+```
+
+Note that all the interactions are not significant. The AIC is 97.18, which is very close to the one obtained without the interactions (100.06).

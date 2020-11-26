@@ -135,7 +135,7 @@ I would propose the first or second model.
 5. Load the full Titanic data
 
 ```{r}
-titanic.all<-read.csv("data/titanic-all-cols.csv")
+titanic.all<-titanic_all_cols
 ```
 
 

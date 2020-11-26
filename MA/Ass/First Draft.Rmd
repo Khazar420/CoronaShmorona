@@ -64,6 +64,12 @@ ancova.iq<-lm(iq$iq~iq$group+iq$age)
 summary(ancova.iq)
 plot(ancova.iq)
 
+Logistic regrassion:
+```{r}
+titanic.glm<-glm(titanic$Survived~titanic$Age+titanic$Sex+titanic$Fare, family = "binomial")
+summary(titanic.glm)
+```
+
 	F test to compare two variances
  Welch t-test
  lcl and ucl in the boxplots
@@ -98,7 +104,7 @@ summary(m8.lm)
 Step creates the minimal adaptive model
 AIC (lowerbetter) is like the opposite of R^2 (higherbetter)
 AICpenalises for having too many paremetres. It lists models and gives the best at the bottom
-
+as.factor(titanic$Survived) - this is userful to get a ratio of something
 ```{r}
 
 dim(CS5801.data)
@@ -122,6 +128,14 @@ ggpubr
 xtable
 mgcv
 tree
+
+ways of checking data:
+```{r}
+ggplot(titanic, aes(x=Age)) + geom_histogram(bins=20) +ggtitle("Histogram for Age of Passenger")
+ggplot(titanic, aes(x=Fare)) + geom_histogram(bins=20) +ggtitle("Histogram for Fare Passenger")
+ggplot(titanic, aes(x=Fare, y=Age)) + geom_point() +ggtitle("Scatter plot of Age and Fare")
+
+```
 
 
 The first thing that I will do is look at the data as a whole and try to see whenther there is anything that stands out such as unusual figures or trends between all of the teams.
@@ -235,3 +249,28 @@ after that, I can take that, make a dataframe, an then create a subset with the 
 checkResultsDF <- as.data.frame(checkResults)
 problems <- subset(checkResultsDF, value==FALSE)
 ```
+
+
+## the stuff below is very complicated
+But what about the other possible covariates?
+
+```{r}
+Arthritis2.lr<-glm(Arthritis$Improved.Ind~Arthritis$Treatment+ Arthritis$Sex+ Arthritis$Age, family = "binomial")
+summary(Arthritis2.lr)
+```
+
+We can also start with the interactions model
+
+```{r}
+Arthritis3.lr<-glm(Arthritis$Improved.Ind~Arthritis$Treatment*Arthritis$Sex*Arthritis$Age, family = "binomial")
+summary(Arthritis3.lr)
+```
+
+Step is very good because it will impress people. first make a glm, then do step to it
+
+```{r}
+step(Arthritis3.lr)
+```
+
+
+
