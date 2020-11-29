@@ -1,0 +1,181 @@
+---
+title: "Time Series Analysis"
+author: "Dr. Sarath Dantu"
+date: "25/11/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = T,fig.align = TRUE)
+```
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("limma")
+library(limma)
+```
+
+We are going to learn: 
+
+- Reading in time series data
+- Plotting
+- Trends
+
+## 1. Dataset
+
+You are going to work with a time series data from my research. In this dataset I was tracking movement of Benzene particle in eight simulations performed by me. You have eight files in the data folder (if you have not downloaded the data, please check the week9 folder on the blackboardlearn CS5701 module web page).
+
+Each data file contains two columns:
+- Time (nanoseconds --> ns)
+- Distance in Angstroms (Å), Angstrom is $10^{-8} cm$
+
+```{r}
+
+# I do not want to declare multiple objects to store data, so to make my life easy...
+list_file_names <- c("DT-1","EY-2","EY-5","EY-6","GC-1","GC-2","SK-3","VN-1")
+# declare an empty list
+data <- list()
+for (i in c(1:length(list_file_names)))
+{
+  # do ensure you have the data/ folder in the directory you are working in. Hint getwd()
+  file_name<-paste("data/",list_file_names[i],".out",sep="")
+  file_data<-read.table(file_name)
+  
+  # the time column is common in files and it is sufficient to store it once 
+  if(i==1) {
+    data<-cbind(file_data$V1,file_data$V2)  
+  } else {
+    # I do not want the time column so I am just storing the Benzene displacement
+    data<-cbind(data,file_data$V2)  
+  }
+}
+# For plotting I would like to have convenient column names
+colnames(data)<-c("Time",list_file_names)
+
+```
+
+How to access the data from the dataframe...
+
+```{r}
+# Just making sure things are proper
+head(data)
+head(data[,"Time"])
+summary(data[,"DT-1"])
+```
+
+## 2. Data visualisation
+
+Declaring the color palette. I find it easier to declare things upfront so that I can use them multiple times and backmapping the data to color guide makes life easy.
+
+```{r}
+transparency<-0.5
+data_color <- c(
+  rgb(0.0,0.0,0.0,transparency), #black
+  rgb(1.0,0.0,0.0,transparency), #red
+  rgb(0.0,1.0,0.0,transparency), #green
+  rgb(0.0,0.0,1.0,transparency), #blue
+  rgb(1.0,0.5,0.0,transparency), #orange
+  rgb(0.0,1.0,1.0,transparency), #cyan
+  rgb(0.0,0.5,0.5,transparency), #teal
+  rgb(0.28,0.24,0.2,transparency) #taupe
+)
+ylabel <- "Distance (Å)"
+xlabel <- "Time (ns)"
+plot_title <- "Benzene displacement"
+
+```
+
+
+### Box plot
+
+Can you identify any trends from the box plot?
+
+```{r}
+par(las=2)
+boxplot(subset(data,select=list_file_names),horizontal=F,ylab="ylabel")
+
+```
+
+
+### Time vs. Benzene displacement
+
+What do you see in this time series data. Distance close to 0, Benzene stays where it has started, if the distance increases benzene is running away.
+
+```{r,fig.fullwidth=TRUE}
+
+for (i in c(1:length(list_file_names)))
+{
+  
+  # the time column is common in files and it is sufficient to store it once 
+    if(i==1) {
+
+    plot(data[,"Time"],data[,list_file_names[i]],xlab=xlabel,ylab=ylabel,main=plot_title,col=data_color[i],type="l",ylim=c(0,70)) 
+  } else {
+    lines(data[,"Time"],data[,list_file_names[i]],col=data_color[i])
+  }
+}
+legend(x="topleft",legend=list_file_names,col=data_color,horiz=F,lwd=3,bty='n')
+```
+
+### Histograms
+
+What does the distribution of the data tell us? Is it possible for Benzene to stay in multiple places?
+
+```{r,fig.fullwidth=TRUE}
+ylabel <- "Distance (Å)"
+xlabel <- "Time (ns)"
+for (i in c(1:length(list_file_names)))
+{
+  
+  # the time column is common in files and it is sufficient to store it once 
+    if(i==1) {
+
+    plot(density(data[,list_file_names[i]]),xlab=ylabel,ylab="Frequency",main=plot_title,col=data_color[i],type="l",xlim=c(0,70),ylim=c(0,1),lwd=3) 
+  } else {
+    lines(density(data[,list_file_names[i]]),col=data_color[i],lwd=3)
+  }
+}
+legend(x="topright",legend=list_file_names,col=data_color,horiz=F,lwd=1,bty='n')
+
+```
+
+
+### Looking at a single dataset
+
+We are now going to take a closer look at DT-1 and EY-2. How would you identify outliers in this data?
+
+```{r}
+summary(cbind(data[,"DT-1"],data[,"EY-2"]))
+
+plot(data[,"Time"],data[,list_file_names[1]],xlab=xlabel,ylab="Frequency",main=plot_title,col=data_color[1],type="l",xlim=c(0,10),ylim=c(0,70),lwd=3) 
+lines(data[,"Time"],data[,list_file_names[2]],col=data_color[2],lwd=3)
+legend(x="topleft",legend=list_file_names[1:2],col=data_color,horiz=F,lwd=1,bty='n')
+
+plot(density(data[,list_file_names[1]]),xlab=ylabel,ylab="Frequency",main=plot_title,col=data_color[1],type="l",xlim=c(0,70),ylim=c(0,1),lwd=3) 
+lines(density(data[,list_file_names[2]]),col=data_color[2],lwd=3)
+legend(x="topright",legend=list_file_names[1:2],col=data_color,horiz=F,lwd=1,bty='n')
+```
+
+
+### Trends
+
+The data is very noisy. To understand the trends better, we can calculate the running average or running median, i.e. moving median of every 'n' points is calculated. 
+
+```{r}
+
+plot(data[,"Time"],data[,list_file_names[1]],xlab=xlabel,ylab=ylabel,main=plot_title,col=data_color[1],type="l",xlim=c(0,10),ylim=c(0,70),lwd=3) 
+lines(data[,"Time"],runmed(data[,list_file_names[1]],k=101),col=data_color[2],lwd=1.5)
+lines(data[,"Time"],tricubeMovingAverage(data[,list_file_names[1]],span=0.01),col=data_color[3],lwd=1.5)
+abline(h=mean(data[,list_file_names[1]]),lty=2,lwd=3,col="orange")
+abline(v=7.2,lty=2,lwd=3,col=rgb(0,0.5,0.8,0.5))
+legend(x="topleft",legend=c("DT-1","Running median","Running Average","Mean"),col=c(data_color[1:3],"orange"),horiz=F,lwd=1,bty='n')
+```
+
+### Optional
+
+Can you get rid of a subset (without deleting the data from the dataframe) and check what is going on with the remaining simulations?
+
+

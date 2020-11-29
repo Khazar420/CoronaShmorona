@@ -1,0 +1,102 @@
+---
+title: "Lab 9 Part 1 - Survival analysis"
+author: "Isabel Sassoon"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Survival Analysis
+
+This notebook walks through the analysis of the lung data from the survival library.
+
+```{r}
+library(survival)
+```
+
+The lung data has many columns
+
+```{r}
+help("lung")
+```
+
+In order to focus I subset the data into a smaller set of columns:
+
+```{r}
+lung.analysis<-subset(lung, select = c("time", "status", "sex"))
+```
+
+
+## To estimate the survival curve using KM
+
+```{r}
+s.survfit <- survfit(Surv(lung.analysis$time, lung.analysis$status)~ 1, data=lung.analysis )
+s.survfit
+```
+
+and to plot it:
+
+```{r}
+plot(s.survfit, mark.time = TRUE, conf.int = FALSE)
+title(main="Survival Curve for Lung data", xlab="Days", ylab = "Proportion of Patients still alive")
+```
+
+## Research Question: Does Gender affect survival?
+
+Here we use survdiff to see if there is a difference.
+
+```{r}
+lung.gender.survfit<-survfit(Surv(lung.analysis$time, lung.analysis$status)~ lung.analysis$sex, data=lung.analysis)
+
+lung.gender.survdiff<-survdiff(Surv(lung.analysis$time, lung.analysis$status)~ lung.analysis$sex, data=lung.analysis)
+
+lung.gender.survdiff
+
+plot(lung.gender.survfit, mark.time = TRUE, col=c("black", "grey75"), lty=1:2)
+title(main="Survival Curve by Gender", xlab="Days", ylab = "Proportion of Patients still alive")
+legend("topright", c("1- Male", "2-Female"), lty=1:2, col=c("black", "grey75"))
+
+```
+The p-value is significant and this supports what we see in the survival curves. There is a difference in survival curves between Male and Female patients.
+
+# Another possible research question
+
+```{r}
+lung.perf.survfit<-survfit(Surv(lung$time, lung$status)~ lung$ph.ecog, data=lung)
+
+lung.perf.survdiff<-survdiff(Surv(lung$time, lung$status)~ lung$ph.ecog, data=lung)
+
+lung.perf.survdiff
+
+plot(lung.perf.survfit, mark.time = TRUE, col=c("black", "grey75"), lty=1:4)
+title(main="Survival Curve by ECOG performance score", xlab="Days", ylab = "Proportion of Patients still alive")
+legend("topright", c("0", "1", "2", "3"), lty=1:4, col=c("black", "grey75"))
+```
+
+We can see that there is one category with only one case. Perhaps this can be removed or grouped with group ecog=2?
+
+
+## Cox Proportional Hazards (OPTIONAL)
+
+```{r}
+lung.gender.ph<-coxph(Surv(lung.analysis$time, lung.analysis$status)~ lung.analysis$sex, data=lung.analysis)
+summary(lung.gender.ph)
+
+```
+
+The exp(coef) column contains $exp(\beta_1)$
+This is the hazard ratio – the multiplicative effect of that variable on the hazard rate (for each unit increase in that variable). So, for a categorical variable like gender (in this case), going from male (baseline) to female results in approximately ~40% reduction in hazard.
+Recall that the CoxPH model is a linear model of the natural log of the hazard at time t, denoted $h(t)$, as a function of the baseline hazard $(h_0(t))$
+
+$log(h(t))=log(h_0(t))+ \beta_1x_1 + \dots + \beta_px_p$
+
+if both sides are exponentitated:
+
+$h_1(t)=h_0(t) \times exp(\beta_1x_1)$
+
+Rearranging makes it possible to estimate the hazard ratio:
+
+$HR(t)=\frac{h_1(t)}{h_0(t)}=exp^{\beta_1}$
+
