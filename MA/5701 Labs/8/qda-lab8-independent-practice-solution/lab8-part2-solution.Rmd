@@ -10,7 +10,7 @@ output:
 # Part 1 - ARM data
 
 ```{r}
-arm.folding<-read.csv("arm.csv")
+arm.folding<-arm
 ```
 
 This data contains two columns only
@@ -46,7 +46,7 @@ Note: it is not necessary in this case but wanted to show that it would return t
 # Part 2 - back to titanic
 
 ```{r}
-titanic<-read.csv("titanic-all-cols.csv")
+titanic<-titanic.all
 ```
 
 Recall from week 7 - we need to make sure that the data is read in correctly:

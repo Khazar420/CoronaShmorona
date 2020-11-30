@@ -29,6 +29,7 @@ install.packages("xtable")
 install.packages("mgcv")
 install.packages("tree")
 install.packages("validate")
+install.packages("ggpubr")
 ```
 Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate
 Then load the libraries below
@@ -43,6 +44,7 @@ library(xtable)
 library(mgcv)
 library(tree)
 library(validate)
+library("ggpubr")
 ```
 
 
@@ -80,33 +82,39 @@ summary(LAA)
  
 *Provide a description of a comprehensive plan to assess the quality of the data, and document your findings.  Include all variables/columns (5 marks) from the data set and provide a full implementation (5 marks).  NB even if no data quality issues are identified you should still check and report.*
 
-In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One is a negative number of games, runs, or length of career, for example.
-What I will do is use
+In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team.  When plotting them, one sees that they look quite similar too. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One is a negative number of games, runs, or length of career, for example. Another anomaly is that some things have a median of zero.
+
 
 It contains 15 variables. They are as follows:
-platerID
-teamID.x
-R
-G
-H
-AB
-RBI
-weight
-height
-salary
-birthDate
-career.legth
-bats
-age
-hit.ind
+1 - platerID
+2 - teamID.x
+3 - R
+4 - G
+5 - H
+6 - AB
+7 - RBI
+8 - weight
+9 - height
+10 - salary
+11 - birthDate
+12 - career.legth
+13 - bats
+14 - age
+15 - hit.ind
+structure() and glimpse() are good here
+```{r}
+
+structure(BOSLAA)
+glimpse(BOSLAA)
+```
 
 
 ```{r}
+##here I am checking for missing values. Luckily there are none here. Because this prints a maximum number of values, splitting the subset allowed for all to be visible. As can be seen, there is not a single missing value.
+is.na(BOS)
+is.na(LAA)
 
-structure(CS5801.data)
-glimpse(CS5801.data)
 ```
-
 I will also check this way:
 is.na(filename)
 finds missing values
@@ -124,7 +132,7 @@ mean, median, quartile
 
 I will rename some collumns, so that I can better understand what I am loking at at a glance. This will help better understand the data as well. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on.
 
-It contains 15 variables. They are as follows:
+It contains 15 variables. They will be renamed as follows:
 platerID
 teamID.x
 R - Runs
@@ -224,8 +232,9 @@ median(BOSGames)
 median(LAAGames)
 
 ```
-Before using any software, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. check_that is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole.  
+Before taking any further steps, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. check_that() is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole.  
 
+I might have to turn these back into dataframes, but at least I understand what the figures mean. This will be important when doing aov and similar things
 
 ```{r}
 ## Data quality checking for the whole league
@@ -244,7 +253,8 @@ LeagueCheck <- check_that(League,
                           LeagueBirth > 0,
                           LeagueCareer >= 0,
                           LeagueAge > 0,  
-                          LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B" )
+                          LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B",
+                          LeagueSeasonHit == "1" | LeagueSeasonHit == "0")
               
 # Produce a bar chart of the quality rule failures
 barplot(LeagueCheck)
@@ -274,7 +284,7 @@ BOSLAACheck <- check_that(BOSLAA,
 barplot(BOSLAACheck)
 
 ```
-Here I see that there is one negative RBI.
+Here I see that there is one negative RBI. This would appear to be the only problematic value at this stage.
 
 ```{r}
 LAACheck <- check_that(LAA, 
@@ -303,13 +313,40 @@ Here ANOVA is very useful. The reason is that it, at a glance, will allow me to 
         
 # 2. Exploratory Data Analysis (EDA)
 
-I will do a usmary and histogram of each variable
+I will do a usmary and histogram of each variable aside from birthdate, and batting hand. This is because they are dates and factorsm which are not suitable for this format.
 
 ```{r}
+##variablew platerID
+##teamID.x
+##R - Runs
+##G - Games
+##H - Hits
+##AB - AtBat
+##RBI - RunsBatted
+##weight 
+##height
+##salary
+##birthDate - Birth
+##career.length - Career
+##bats
+##age
+##hit.ind - SeasonHit
+
 summary(BOSLAA)
 
 hist(BOSLAARuns)
-
+lines(density(BOSLAARuns))
+hist(BOSLAAGames)
+hist(BOSLAAHits)
+hist(BOSLAAAtBat)
+hist(BOSLAARunsBatted)
+hist(BOSLAAWeight)
+lines(density(BOSLAAWeight,na.rm=T),col="red",lwd=4)
+## for some reaso nwhen I try to plot a line it stays at the bottom of the graph
+hist(BOSLAAHeight)
+hist(BOSLAACareer)
+hist(BOSLAAAge)
+hist(BOSLAASeasonHit)
 ```
 
 ## 2.1 EDA plan
@@ -323,13 +360,7 @@ The second cycle will be ask the questions relevant to these assumptions, see wh
 The first epicycle was more or less done in the data cleaning stage. Now I need to build some models.  I will start with some histograms and bar graphs for all data, as well as box plots. Not only this, but means and medians where applicable. I will try to see if any are skewed, and use a Poisson method to measure this.
 I will then look at the new data again
 
-For example, a boc plot will  be useful for the season hit statistic in particular.
-##the code below does not work as it should I want two parts. the first being 0, the other being 1. It works for bats, however. Perhaps they need to be changed from intergers to characters?
-What I learn here is that batting and salary seem to be related somehow.
-
-```{r}
-
-ggplot(League, aes(x=LeagueBats, y=LeagueSalary)) + geom_boxplot()
+ot(BOS, aes(x=BOSBats, y=BOSSalary)) + geom_boxplot()
 ```
 
 ```
@@ -378,13 +409,29 @@ step(league)
 For example, a boc plot will  be useful for the season hit statistic in particular.
 ##the code below does not work as it should I want two parts. the first being 0, the other being 1. It works for bats, however. Perhaps they need to be changed from intergers to characters?
 What I learn here is that batting and salary seem to be related somehow.
+For example, a box plot will  be useful for the season hit, and batting hand statistics in particular.
+
+##the code below does not work as it should I want two parts. the first being 0, the other being 1. It works for bats, however. Perhaps they need to be changed from intergers to characters?
+What I learn here is that batting and salary seem to be related somehow.
 
 ```{r}
 
-ggplot(League, aes(x=LeagueBats, y=LeagueSalary)) + geom_boxplot()
+
+ggplot(BOSLAA, aes(x=BOSLAABats, y=BOSLAASalary)) + geom_boxplot()
+ggplot(LAA, aes(x=LAABats, y=LAASalary)) + geom_boxplot()
+ggplot(BOS, aes(x=BOSBats, y=BOSSalary)) + geom_boxplot()
 ```
 Handedness does not seem to correlate strongly. While ambidextrous seem to earn more than right handed people and even more than left handed people, the latter two have a very large number of outliers.
 
+What about career lenght, and age?
+What about birthmonth and age?
+
+
+```{r}
+##testing correlations is important here
+cor(BOSLAAAge, BOSLAASalary, method = c("pearson", "kendall", "spearman"))
+cor.test(BOSLAAAge, BOSLAASalary, method=c("pearson", "kendall", "spearman"))
+```
 ## 3.2 Critique model using relevant diagnostics
 
 *Offer an interpretation of the model characteristics, goodness of fit and graphical diagnostics (5 marks) for the model built in 3.1. Explain any potential weaknesses (5 marks).*
@@ -402,6 +449,7 @@ Do I have overfitting?
 
 *Based on the findings in 3.2 articulates possible alternative approaches to address them (5 marks).*
 The easiest and most obvious way to improve the model would be to have even more data to compare to. This will allow one to track chenges over time. Player salary could behave differently according to the player profile over time. Some players would have high salaries over a short period, while others could have high salaries over a long period.
+Luckily, I do have more data. I can compare it with the league as a whole. Not only this, but I could also get a hold of data over time.
 ```{r}
 
 
@@ -418,10 +466,15 @@ The easiest and most obvious way to improve the model would be to have even more
 This will be done on four levels. The whole set, two teams, and then each of the two teams. This iwll be very similar to how the model for player salary was developed.
 
 ```{r}
-
+table(BOSLAASeasonHit)
+mean(BOSLAASeasonHit)
 
 ```
-
+```{r}
+CrossTable(BOSLAASeasonHit, BOSLAABats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
+           chisq = TRUE, fisher = TRUE)
+```
+##crosstable shows more information
 # References  
 
 *Add any references here. NB You can either do this manually or automatically with a `.bib` file (which then must be submitted along with your `.Rmd` file).  See the RMarkdown [documentation](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html) for guidance.*    
