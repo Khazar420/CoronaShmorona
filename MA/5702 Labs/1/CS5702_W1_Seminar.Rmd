@@ -187,7 +187,10 @@ lines(density(surveyDF$ProgKnowl), col = "red")
 # Alternatively we can use boxplots
 boxplot(surveyDF$StatsKnowl, surveyDF$ProgKnowl)
 ```
-
+```{r}
+hist(surveyDF$ProgKnowl)
+lines(density(surveyDF$ProgKnowl), col = "red")
+```
 For the character string variables we can use the `table()` function to produce frequency counts of categories.  This makes no sense when we deal with longer text (since each input will almost certainly be unique in phrasing if not in sentiment).  Similarly the `ProgLangs` variable is problematic because it is multi-valued i.e., it may contain zero or more programming languages.  This is a challenge we will return to in Week 5 on Data Cleaning.
 
 ```{r}
