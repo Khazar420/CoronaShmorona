@@ -139,15 +139,40 @@ ggsave("cv19_UK_infectionrate.png")
 To better visualise the trends (i.e., over time) we use the **loess** (locally estimated scatterplot smoothing) smoother.  It is designed to detect trends in the presence of noisy data when the shape of the trend is unknown thus it is a robust (non-parametric) method.  
 
 **Exercise 2.3:** If you look carefully at the data there is a clear cycle within the overall trend.  What is it and why?  How should we deal with it?
-
+Weekly cycle
 **Exercise 2.4:** What does the light orange shaded region around the smoothed trend line mean?  Why does it vary in breadth?
-
+Confidence interval, as stats get updated
 **Exercise 2.5:** What was the greatest number of new infections in one day in the UK?  HINT there is a built in function `max()` and the you will need to examine the vector `new.i` which is part of the `cv.uk.df` dataframe so you will need the `$` operator.  
+```{r}
+max(cv.uk.df$new.i, na.rm = FALSE)
+```
 
 **Extension Exercise 2.6:** Edit the R code to produce a similar trend analysis for another country of your choice.  Note that the data set uses 3 character country codes e.g., SWE, USA see [wikipedia](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) for a complete list.  HINT: you will need to change the subset command and perhaps save to a new dataframe and then make sure you turn the cummulative counts into new counts.
+```{r}
+cv.fr.df <- subset(cv.df, iso3c=="FRA")
+# Compute new deaths as the data shows cumulative deaths
+cv.fr.df$new.d[2:nrow(cv.fr.df)] <- tail(cv.fr.df$deaths, -1) - head(cv.fr.df$deaths, -1)
+cv.fr.df$new.d[1] <- 0     # Add zero for first row 
 
+# Compute new infections
+cv.fr.df$new.i[2:nrow(cv.fr.df)] <- tail(cv.fr.df$confirmed, -1) - head(cv.fr.df$confirmed, -1)
+cv.fr.df$new.i[1] <- 0     # Add zero for first row 
+```
+
+```{r}
+ggplot(data = cv.fr.df, aes(x = date, y = new.i)) +
+  geom_line(color = "skyblue", size = 0.6) +
+  scale_y_continuous(trans = "log10") +
+  stat_smooth(color = "darkorange", fill = "darkorange", method = "loess") +
+  ggtitle("Daily new infections in the UK from covid-19") +
+  xlab("Date") + ylab("Daily new infections") 
+ggsave("cv19_UK_infectionrate.png")
+```
 **Exercise 2.7:** Is `new.i` in the cv.uk.df dataframe an integer?  
-
+```{r}
+typeof(cv.fr.df$new.i)
+```
+It is a double
 **Exercise 2.8:** How many people recovered in the UK on the 236th day of data collection.  Write an R statement to answer.  
 
 **Exercise 2.9:** Update the number of new deaths on the 236th day to zero.  

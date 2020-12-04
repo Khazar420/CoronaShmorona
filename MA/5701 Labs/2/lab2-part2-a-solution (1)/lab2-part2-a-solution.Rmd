@@ -1,0 +1,223 @@
+---
+title: "Lab2-Part2-a-solution"
+author: "Isabel Sassoon"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+# Part 1 Distributions
+
+(1) The evidence shows that 25% of people exposed to a specific virus will show symptoms. If we have a group of 5 people all exposed to this virus. 
+
+	
+ (a) Use  the dbinom function to compute the probabilities that 0,1,2,3,4,5 of the people who are exposed will show symptoms.
+
+```{r}
+nsamples = 10000
+nsamplesmean = 0
+nsamplessd = 1
+rnormsamples = rnorm(nsamples, nsamplesmean, nsamplessd)
+plot(rnormsamples)
+hist(rnormsamples)
+dnorm(2)
+pnormsamples= pnorm(nsamplesmean)
+qnormsamples=qnorm(nsamplesmean)
+lab2sol = dbinom(0:5, size = 5, prob = 0.25)
+plot(lab2sol)
+
+
+```
+
+To specify the **binomial** distribution you need parameters **size** (in this case 5) and **prob** the porbability of infection.
+
+***
+	
+	(b) What is the probability that at least one will show symptoms? (hint: use pbinom)
+
+
+The probability that at least one will show symptoms is 1- the probability that none will show symptoms. The latter can be obtained with pbinom(0,5,0.25)
+	
+```{r}
+1-pbinom(0,5,0.25)
+##dbinom(x, size, prob, log = FALSE)
+##pbinom(q, size, prob, lower.tail = TRUE, log.p = FALSE)
+##qbinom(p, size, prob, lower.tail = TRUE, log.p = FALSE)
+##rbinom(n, size, prob)
+```
+	
+Therefore the probability is 0.76 that at least someone will show symptoms out of the 5.	
+	
+***
+	
+(2) Assume that among diabetics the fasting blood level of glucose is approximately normally distributed with a mean of 105 mg per 100 ml and a standard deviation of 9mg per 100ml.
+
+plot the density function for this distribution.
+
+In order to do this first we need to generate the x values that are suitable for a normal distribution with the parameters above
+```{r}
+x<-seq(50,150)
+y<-dnorm(x,mean = 105, sd=9)
+```
+
+Then we can plot this
+
+```{r}
+plot(x, dnorm(x,mean = 105, sd=9), type = "l")
+
+
+```
+--note-- it is also possible to use ggplot to do this.
+
+what proportion of diabetics have levels between 90 and 125 mg per 100ml? (This quantity is represented by the area under the normal curve between 90 and 125)
+
+We can visualise this using 
+
+```{r}
+plot(x, dnorm(x,mean = 105, sd=9), type = "l")
+abline(v=90, lty=2)
+abline(v=125, lty=3)
+```
+
+you should see from the plot that most of the area under the normal curve is contained between the two vertical lines. Therefore we should expect that the proportion of diabetics with levels between 90 and 125 mg per 100 ml to be high. 
+
+
+Use the **pnorm** function to calculate this proportion. (you may need to use it twice)
+
+```{r}
+pnorm(125, mean = 105, sd=9)-pnorm(90, mean = 105, sd=9)
+```
+
+94% of the diabetics have values between 90 and 125
+
+what level cuts off the lower 10% of diabetics? (hint: use **qnorm**)
+
+```{r}
+qnorm(0.1, mean = 105, sd=9)
+```
+
+	This cut off value is 93ml
+
+***
+# Part 2 Confidence Intervals
+
+(2) Read in the auto-mpg.csv data set into a new R notebook
+
+```{r}
+mpg<-auto_mpg
+```
+
+
+(3) Visualise the data and check which columns from the continuous variables look normally distributed
+
+First lets look at the numerical summaries of the variables
+
+```{r}
+summary(mpg)
+```
+
+Acceleration looks to have a similar mean and median, so I am picking this one to explore further
+
+```{r}
+library(ggplot2)
+
+ggplot(data=mpg, aes(x=acceleration)) + geom_density() + 
+  theme_classic() + ggtitle("Histogram of Acceletation")
+
+plot(mpg$horsepower,mpg$acceleration,type="l", col = "blue")
+```
+This plot gives the distribution.
+
+
+(4) Compute a 95% confidence interval for the mean for one of the variable that appears to be normally distributed
+
+```{r}
+mean.acceleration<-mean(mpg$acceleration)
+sd.acceleration<-sd(mpg$acceleration)
+hist(mpg$acceleration)
+```
+
+The value for Z at 95% is (remember its two sided)
+
+```{r}
+ylab2 = rnorm(1000, mean = 0, sd = 1)
+zlab2 = qnorm(0.975)
+zlaba = qnorm(0.025)
+plot(density(ylab2))
+abline(v=zlab2)
+abline(v=zlaba)
+
+```
+
+```{r}
+ucl<-mean.acceleration-qnorm(0.975)*sd.acceleration/sqrt(398)
+lcl<-mean.acceleration+qnorm(0.975)*sd.acceleration/sqrt(398)
+```
+
+So the confidence intervals are:
+
+```{r}
+ucl
+lcl
+```
+
+The sample is very large so the confidence interval is small.
+
+
+(50) The model years range from the 70s and the 80s. What proportion of cars are from the 80s? 
+
+```{r}
+table(mpg$`model year`)
+sum(mpg$`model year`>79)
+```
+
+There are 89 cars from the years 80,81 and 82
+
+```{r}
+prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
+prop.80
+```
+
+About 22% of the cars are from the 80s.
+
+Compute a 90% confidence interval for the proportion of cars from the 80s?
+
+```{r}
+vr<-prop.80*(1-prop.80)/nrow(mpg)
+
+prop.ucl<-prop.80+ qnorm(0.975)*sqrt(vr)
+prop.lcl<-prop.80- qnorm(0.975)*sqrt(vr)
+```
+
+So the confidence intervals are
+
+```{r}
+prop.ucl
+prop.lcl
+```
+
+
+(6) [OPTIONAL] Compute the confidence intervals for the mean using the "bootstrap method".	
+
+This code loops over the different sample sizes and samples a size of 200 with replacement, returning the mean every time.
+The distribution of these values is then used to plot the confidence interval.
+
+```{r}
+a<-sample(mpg$acceleration ,100, replace=T)	
+
+plot(c(0,200), c(0,30), type="n", xlab="Sample Size", ylab="Confidence Interval")
+
+for (k in seq(10,200,10)){
+  a<-numeric(200)
+  for (i in 1:200){
+  a[i]<-mean(sample(mpg$acceleration, k , replace=T)	)
+  }
+  points(c(k,k),quantile(a,c(0.025, 0.975)), type="b", pch=21, bg="red")
+}
+```
+
+	
+
+	

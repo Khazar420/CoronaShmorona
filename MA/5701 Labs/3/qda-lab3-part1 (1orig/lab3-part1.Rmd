@@ -1,0 +1,78 @@
+
+```{r}
+
+test.statistic<-(1.97-2)/(0.1/sqrt(20))
+
+dt(test.statistic, df=19)*2
+
+plot(test.statistic)
+
+
+```
+
+```{r}
+
+dim(iris)
+glimpse(iris)
+plot(iris)
+
+```
+blind
+
+
+
+```{r}
+
+head(iris)
+table(iris$Species)
+mean(iris$Sepal.Length)
+mean(iris$Sepal.Width)
+mean(iris$Petal.Length)
+mean(iris$Petal.Width)
+nrow(iris)
+ncol(iris)
+     
+
+
+```
+
+```{r}
+
+hist(iris$Sepal.Length)
+hist(iris$Sepal.Width)
+hist(iris$Petal.Length)
+hist(iris$Petal.Width)
+
+```
+separating out the dataset allows for making comparisons
+```{r}
+setosa.flowers<-subset(iris, iris$Species=="setosa")
+versicolor.flowers<-subset(iris, iris$Species=="versicolor")
+virginica.flowers<-subset(iris, iris$Species=="virginica")
+
+plot(setosa.flowers)
+plot(versicolor.flowers)
+plot(virginica.flowers)
+
+```
+
+```{r}
+
+var(setosa.flowers$Petal.Length)
+## [1] 0.03015918
+var(virginica.flowers$Petal.Length)
+## [1] 0.3045878
+#The test statistic is obtained by dividing the variances and then using the F - distribution
+var.setosa<-var(setosa.flowers$Petal.Length)
+var.virginica<-var(virginica.flowers$Petal.Length)
+f.st<-var.setosa/var.virginica
+f.st
+## [1] 0.0990164
+#This ratio looks very far from 1 so using the a built in function in R to perform the variance test
+var.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length )
+#compares means
+t.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length)
+
+
+
+```

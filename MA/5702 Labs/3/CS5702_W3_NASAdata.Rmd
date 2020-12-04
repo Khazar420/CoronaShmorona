@@ -90,3 +90,10 @@ ProbResultsDF <- subset(checkResultsDF, value=="FALSE")
 **Exercise**
 
 Extend the rule set to check for other potential data quality problems.  
+
+
+```{r}
+
+check_that(defectDF, defectDF$Defective == "Y" | defectDF$Defective == "N")
+barplot(check_that(defectDF, defectDF$Defective == "Y" | defectDF$Defective == "N"))
+```

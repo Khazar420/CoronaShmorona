@@ -386,50 +386,7 @@ The first epicycle was more or less done in the data cleaning stage. Now I need 
 I will then look at the new data again
 
 I will do a summary and histogram of each variable aside from birthdate, and batting hand. This is because they are dates and factors which are not suitable for this format.
-
-```{r}
-##variablew platerID
-##teamID.x
-##R - Runs
-##G - Games
-##H - Hits
-##AB - AtBat
-##RBI - RunsBatted
-##weight 
-##height
-##salary
-##birthDate - Birth
-##career.length - Career
-##bats
-##age
-##hit.ind - SeasonHit
-
-summary(BOSLAA)
-
-
-hist(BOSLAA$R, prob= T)
-lines(density(BOSLAA$R), col = "red")
-hist(BOSLAAGames, prob= T)
-lines(density(BOSLAAGames), col = "red")
-hist(BOSLAAHits, prob= T)
-lines(density(BOSLAAHits), col = "red")
-hist(BOSLAAAtBat, prob= T)
-lines(density(BOSLAAAtBat), col = "red")
-hist(BOSLAARunsBatted, prob= T)
-lines(density(BOSLAARunsBatted), col = "red")
-hist(BOSLAAWeight, prob= T)
-lines(density(BOSLAAWeight), col = "red")
-## for some reaso nwhen I try to plot a line it stays at the bottom of the graph
-hist(BOSLAAHeight, prob= T)
-lines(density(BOSLAAHeight), col = "red")
-hist(BOSLAACareer, prob= T)
-lines(density(BOSLAACareer), col = "red")
-hist(BOSLAAAge, prob= T)
-lines(density(BOSLAAAge), col = "red")
-hist(BOSLAASeasonHit, prob= T)
-lines(density(BOSLAASeasonHit), col = "red")
-
-```
+Because this is a relativel small sample size, rather than focus on standard deviation, I will calculate the t as well. This is also because I do not know what to expect in terms of the standard deviation.
 
 ```{r}
 
@@ -489,17 +446,46 @@ lines(density(BOSLAASeasonHit), col = "red")
 ```
 
 There are many things that instantly stand out which I will be able to test soon. 
-Seeing as the median is zero in a few graphs, yielding extremely skewed distributions, to remove the zero values would allow me to learn a lot more about the rest. Let's take a look at Runs and RunsBatted.
-In fact, it would also be helpful to do the same to AtBat and Hits
-
-```{r}
-
-
-```
+Right now, I will look at the distributions.
 
 ## 2.3 Additional insights and issues
 
 *Highlight potential further issues or insights uncovered in 2.2.  This might include follow up to findings from your initial EDA.  We accept that the boundary between 2.2 and 2.3 is somewhat arbitrary so use your judgement and maximise good structure and readability. (5 marks)*
+
+Seeing as the median is zero in a few graphs, yielding extremely skewed distributions, to remove the zero values would allow me to learn a lot more about the rest. Let's take a look at Runs and RunsBatted.
+In fact, it would also be helpful to do the same to Hits and AtBat
+
+```{r}
+## create new sets removing values =0
+BOSLAARunsDone = BOSLAARuns[BOSLAARuns != "0"]
+hist(BOSLAARunsDone, prob = T)
+lines(density(BOSLAARunsDone), col = "red")
+summary(BOSLAARunsDone)
+
+BOSLAAHitsDone = BOSLAAHits[BOSLAAHits != "0"]
+hist(BOSLAAHitsDone, prob = T)
+lines(density(BOSLAAHitsDone), col = "red")
+summary(BOSLAAHitsDone)
+
+BOSLAAAtBatDone = BOSLAAAtBat[BOSLAAAtBat != "0"]
+hist(BOSLAAAtBatDone, prob = T)
+lines(density(BOSLAAAtBatDone), col = "red")
+summary(BOSLAAAtBatDone)
+
+BOSLAARunsBattedDone = BOSLAARunsBatted[BOSLAARunsBatted !="0"]
+
+##This is a very good moment to remove that -4
+hist(BOSLAARunsBattedDone, prob = T)
+lines(density(BOSLAARunsBattedDone), col = "red")
+summary(BOSLAARunsBattedDone)
+
+##Another way to do this is to select sums greater than or lower than a certain amount. I will probably to this to analyse those who did not do any runs hits, at bats, or bats.
+##table(mpg$`model year`)
+##sum(mpg$`model year`>79)
+##
+```
+
+Some of these look radically different, while others do not. I can test this by looking at the various distributions.
 
 ```{r}
 
@@ -575,7 +561,9 @@ cor.test(BOSLAAAge, BOSLAASalary, method=c("pearson", "kendall", "spearman"))
 cor(BOSLAACareer, BOSLAASalary, method = c("pearson", "kendall", "spearman"))
 cor.test(BOSLAACareer, BOSLAASalary, method=c("pearson", "kendall", "spearman"))
 ```
-What we find here is pretty amazing. They have the exact same correlation.
+What we find here is pretty amazing. They have the exact same correlation. 
+We can learn several things. One is that the longer a person plays, the more they will make, and it does not matter what year they start in.
+
 
 
 
@@ -586,6 +574,29 @@ What we find here is pretty amazing. They have the exact same correlation.
 
 In order to test this model, I will want to see what happens with other teams. How accurate is it then?
 Do I have overfitting?
+
+
+```{r}
+##sum of something above a certain limit
+table(mpg$`model year`)
+sum(mpg$`model year`>79)
+```##proportion of something above a certain limit
+```{r}
+prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
+prop.80
+```
+```{r}
+##the below needs to be adjusted for salary to creata a confifence interval
+
+
+vr<-prop.80*(1-prop.80)/nrow(mpg)
+
+##upper confidence limit
+prop.ucl<-prop.80+ qnorm(0.975)*sqrt(vr)
+##lower confidence limit
+prop.lcl<-prop.80- qnorm(0.975)*sqrt(vr)
+##see lab2soution 5701 for more
+```
 
 ```{r}
 

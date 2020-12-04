@@ -1,6 +1,10 @@
 {
-    "path" : "~/R/CoronaShmorona/MA/5701 Labs/5/lab5-part2-a-solution",
+    "path" : "~/R/CoronaShmorona/MA/5702 Labs/2",
     "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
         {
             "ascending" : true,
             "columnIndex" : 2

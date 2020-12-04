@@ -1834,7 +1834,7 @@ summary {
 <p>This R code may appear daunting but don’t worry. We will revisit it in detail in Week 3. For the time being see it as a way to install and load necessary extra functionality beyond base ER.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJZiBhIHBhY2thZ2UgaXMgaW5zdGFsbGVkLCBpdCB3aWxsIGJlIGxvYWRlZCBhbmQgbWlzc2luZyBwYWNrYWdlKHMpIHdpbGwgYmUgaW5zdGFsbGVkIFxuIyBmcm9tIENSQU4gYW5kIHRoZW4gbG9hZGVkLlxuIyBUaGUgcGFja2FnZXMgd2UgbmVlZCBhcmU6XG4gXG5wYWNrYWdlcyA9IGMoXCJ0aWR5dmVyc2VcIiwgXCJkZXZ0b29sc1wiKVxuIyBMb2FkIHRoZSBwYWNrYWdlIG9yIGluc3RhbGwgYW5kIGxvYWQgaXRcbnBhY2thZ2UuY2hlY2sgPC0gbGFwcGx5KFxuICBwYWNrYWdlcyxcbiAgRlVOID0gZnVuY3Rpb24oeCkge1xuICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7XG4gICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpXG4gICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICB9XG4gIH1cbilcbmluc3RhbGxfZ2l0aHViKFwiaHR0cHM6Ly9naXRodWIuY29tL2pvYWNoaW0tZ2Fzc2VuL3RpZHljb3ZpZDE5LmdpdFwiKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJZiBhIHBhY2thZ2UgaXMgaW5zdGFsbGVkLCBpdCB3aWxsIGJlIGxvYWRlZCBhbmQgbWlzc2luZyBwYWNrYWdlKHMpIHdpbGwgYmUgaW5zdGFsbGVkIFxuIyBmcm9tIENSQU4gYW5kIHRoZW4gbG9hZGVkLlxuIyBUaGUgcGFja2FnZXMgd2UgbmVlZCBhcmU6XG4gXG5wYWNrYWdlcyA9IGMoXCJ0aWR5dmVyc2VcIiwgXCJkZXZ0b29sc1wiKVxuIyBMb2FkIHRoZSBwYWNrYWdlIG9yIGluc3RhbGwgYW5kIGxvYWQgaXRcbnBhY2thZ2UuY2hlY2sgPC0gbGFwcGx5KFxuICBwYWNrYWdlcyxcbiAgRlVOID0gZnVuY3Rpb24oeCkge1xuICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7XG4gICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpXG4gICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICB9XG4gIH1cbilcbmBgYCJ9 -->
 <pre class="r"><code># If a package is installed, it will be loaded and missing package(s) will be installed 
 # from CRAN and then loaded.
 # The packages we need are:
@@ -1849,140 +1849,39 @@ package.check &lt;- lapply(
       library(x, character.only = TRUE)
     }
   }
-)
-install_github(&quot;https://github.com/joachim-gassen/tidycovid19.git&quot;)</code></pre>
+)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV0FSTklORzogUnRvb2xzIGlzIHJlcXVpcmVkIHRvIGJ1aWxkIFIgcGFja2FnZXMsIGJ1dCBpcyBub3QgY3VycmVudGx5IGluc3RhbGxlZC5cblxuUGxlYXNlIGRvd25sb2FkIGFuZCBpbnN0YWxsIFJ0b29scyA0LjAgZnJvbSBodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9iaW4vd2luZG93cy9SdG9vbHMvLlxuRG93bmxvYWRpbmcgR2l0SHViIHJlcG8gam9hY2hpbS1nYXNzZW4vdGlkeWNvdmlkMTlASEVBRFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB0aWR5dmVyc2VcbnBhY2thZ2UgkXRpZHl2ZXJzZZIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjAuM1x1MDAxYlszMG0tLSBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSB0aWR5dmVyc2UgMS4zLjAgLS1cdTAwMWJbMzltXG5cdTAwMWJbMzBtXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG10aWJibGUgXHUwMDFiWzMwbSAzLjAuNCAgICAgXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG1wdXJyciAgXHUwMDFiWzMwbSAwLjMuNFxuXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG10aWR5ciAgXHUwMDFiWzMwbSAxLjEuMiAgICAgXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG1zdHJpbmdyXHUwMDFiWzMwbSAxLjQuMFxuXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzMwbSAxLjQuMCAgICAgXHUwMDFiWzMybXZcdTAwMWJbMzBtIFx1MDAxYlszNG1mb3JjYXRzXHUwMDFiWzMwbSAwLjUuMFx1MDAxYlszOW1cbnBhY2thZ2UgkXRpYmJsZZIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjAuM3BhY2thZ2UgkXJlYWRykiB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuMC4zXHUwMDFiWzMwbS0tIFx1MDAxYlsxbUNvbmZsaWN0c1x1MDAxYlsyMm0gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHRpZHl2ZXJzZV9jb25mbGljdHMoKSAtLVxuXHUwMDFiWzMxbXhcdTAwMWJbMzBtIFx1MDAxYlszNG1sdWJyaWRhdGVcdTAwMWJbMzBtOjpcdTAwMWJbMzJtYXMuZGlmZnRpbWUoKVx1MDAxYlszMG0gbWFza3MgXHUwMDFiWzM0bWJhc2VcdTAwMWJbMzBtOjphcy5kaWZmdGltZSgpXG5cdTAwMWJbMzFteFx1MDAxYlszMG0gXHUwMDFiWzM0bW5sbWVcdTAwMWJbMzBtOjpcdTAwMWJbMzJtY29sbGFwc2UoKVx1MDAxYlszMG0gICAgICAgICBtYXNrcyBcdTAwMWJbMzRtZHBseXJcdTAwMWJbMzBtOjpjb2xsYXBzZSgpXG5cdTAwMWJbMzFteFx1MDAxYlszMG0gXHUwMDFiWzM0bWx1YnJpZGF0ZVx1MDAxYlszMG06Olx1MDAxYlszMm1kYXRlKClcdTAwMWJbMzBtICAgICAgICBtYXNrcyBcdTAwMWJbMzRtYmFzZVx1MDAxYlszMG06OmRhdGUoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzBtIFx1MDAxYlszNG12YWxpZGF0ZVx1MDAxYlszMG06Olx1MDAxYlszMm1leHByKClcdTAwMWJbMzBtICAgICAgICAgbWFza3MgXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzMwbTo6ZXhwcigpLCBcdTAwMWJbMzRtZ2dwbG90Mlx1MDAxYlszMG06OmV4cHIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzBtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszMG06Olx1MDAxYlszMm1maWx0ZXIoKVx1MDAxYlszMG0gICAgICAgICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzMwbTo6ZmlsdGVyKClcblx1MDAxYlszMW14XHUwMDFiWzMwbSBcdTAwMWJbMzRtZGJwbHlyXHUwMDFiWzMwbTo6XHUwMDFiWzMybWlkZW50KClcdTAwMWJbMzBtICAgICAgICAgIG1hc2tzIFx1MDAxYlszNG1kcGx5clx1MDAxYlszMG06OmlkZW50KClcblx1MDAxYlszMW14XHUwMDFiWzMwbSBcdTAwMWJbMzRtbHVicmlkYXRlXHUwMDFiWzMwbTo6XHUwMDFiWzMybWludGVyc2VjdCgpXHUwMDFiWzMwbSAgIG1hc2tzIFx1MDAxYlszNG1iYXNlXHUwMDFiWzMwbTo6aW50ZXJzZWN0KClcblx1MDAxYlszMW14XHUwMDFiWzMwbSBcdTAwMWJbMzRtZHBseXJcdTAwMWJbMzBtOjpcdTAwMWJbMzJtbGFnKClcdTAwMWJbMzBtICAgICAgICAgICAgIG1hc2tzIFx1MDAxYlszNG1zdGF0c1x1MDAxYlszMG06OmxhZygpXG5cdTAwMWJbMzFteFx1MDAxYlszMG0gXHUwMDFiWzM0bWx1YnJpZGF0ZVx1MDAxYlszMG06Olx1MDAxYlszMm1zZXRkaWZmKClcdTAwMWJbMzBtICAgICBtYXNrcyBcdTAwMWJbMzRtYmFzZVx1MDAxYlszMG06OnNldGRpZmYoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzBtIFx1MDAxYlszNG1kYnBseXJcdTAwMWJbMzBtOjpcdTAwMWJbMzJtc3FsKClcdTAwMWJbMzBtICAgICAgICAgICAgbWFza3MgXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzMwbTo6c3FsKClcblx1MDAxYlszMW14XHUwMDFiWzMwbSBcdTAwMWJbMzRtbHVicmlkYXRlXHUwMDFiWzMwbTo6XHUwMDFiWzMybXVuaW9uKClcdTAwMWJbMzBtICAgICAgIG1hc2tzIFx1MDAxYlszNG1iYXNlXHUwMDFiWzMwbTo6dW5pb24oKVx1MDAxYlszOW1cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZGV2dG9vbHNcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogdXNldGhpc1xuIn0= -->
+<pre><code>Loading required package: tidyverse
+package 㤼㸱tidyverse㤼㸲 was built under R version 4.0.3[30m-- [1mAttaching packages[22m --------------------------------------------- tidyverse 1.3.0 --[39m
+[30m[32mv[30m [34mtibble [30m 3.0.4     [32mv[30m [34mpurrr  [30m 0.3.4
+[32mv[30m [34mtidyr  [30m 1.1.2     [32mv[30m [34mstringr[30m 1.4.0
+[32mv[30m [34mreadr  [30m 1.4.0     [32mv[30m [34mforcats[30m 0.5.0[39m
+package 㤼㸱tibble㤼㸲 was built under R version 4.0.3package 㤼㸱readr㤼㸲 was built under R version 4.0.3[30m-- [1mConflicts[22m ------------------------------------------------ tidyverse_conflicts() --
+[31mx[30m [34mlubridate[30m::[32mas.difftime()[30m masks [34mbase[30m::as.difftime()
+[31mx[30m [34mnlme[30m::[32mcollapse()[30m         masks [34mdplyr[30m::collapse()
+[31mx[30m [34mlubridate[30m::[32mdate()[30m        masks [34mbase[30m::date()
+[31mx[30m [34mvalidate[30m::[32mexpr()[30m         masks [34mdplyr[30m::expr(), [34mggplot2[30m::expr()
+[31mx[30m [34mdplyr[30m::[32mfilter()[30m          masks [34mstats[30m::filter()
+[31mx[30m [34mdbplyr[30m::[32mident()[30m          masks [34mdplyr[30m::ident()
+[31mx[30m [34mlubridate[30m::[32mintersect()[30m   masks [34mbase[30m::intersect()
+[31mx[30m [34mdplyr[30m::[32mlag()[30m             masks [34mstats[30m::lag()
+[31mx[30m [34mlubridate[30m::[32msetdiff()[30m     masks [34mbase[30m::setdiff()
+[31mx[30m [34mdbplyr[30m::[32msql()[30m            masks [34mdplyr[30m::sql()
+[31mx[30m [34mlubridate[30m::[32munion()[30m       masks [34mbase[30m::union()[39m
+Loading required package: devtools
+Loading required package: usethis</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zdGFsbF9naXRodWIoXCJodHRwczovL2dpdGh1Yi5jb20vam9hY2hpbS1nYXNzZW4vdGlkeWNvdmlkMTkuZ2l0XCIpXG5gYGAifQ== -->
+<pre class="r"><code>install_github(&quot;https://github.com/joachim-gassen/tidycovid19.git&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV0FSTklORzogUnRvb2xzIGlzIHJlcXVpcmVkIHRvIGJ1aWxkIFIgcGFja2FnZXMsIGJ1dCBpcyBub3QgY3VycmVudGx5IGluc3RhbGxlZC5cblxuUGxlYXNlIGRvd25sb2FkIGFuZCBpbnN0YWxsIFJ0b29scyA0LjAgZnJvbSBodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9iaW4vd2luZG93cy9SdG9vbHMvLlxuRXJyb3I6IEZhaWxlZCB0byBpbnN0YWxsICd0aWR5Y292aWQxOScgZnJvbSBHaXRIdWI6XG4gIFRpbWVvdXQgd2FzIHJlYWNoZWQ6IFthcGkuZ2l0aHViLmNvbV0gUmVzb2x2aW5nIHRpbWVkIG91dCBhZnRlciAxMDAwMCBtaWxsaXNlY29uZHNcbiJ9 -->
 <pre><code>WARNING: Rtools is required to build R packages, but is not currently installed.
 
 Please download and install Rtools 4.0 from https://cran.r-project.org/bin/windows/Rtools/.
-Downloading GitHub repo joachim-gassen/tidycovid19@HEAD</code></pre>
+Error: Failed to install 'tidycovid19' from GitHub:
+  Timeout was reached: [api.github.com] Resolving timed out after 10000 milliseconds</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVGhlc2UgcGFja2FnZXMgaGF2ZSBtb3JlIHJlY2VudCB2ZXJzaW9ucyBhdmFpbGFibGUuXG5JdCBpcyByZWNvbW1lbmRlZCB0byB1cGRhdGUgYWxsIG9mIHRoZW0uXG5XaGljaCB3b3VsZCB5b3UgbGlrZSB0byB1cGRhdGU/XG5cbjE6IEFsbCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuMjogQ1JBTiBwYWNrYWdlcyBvbmx5ICAgICAgICAgICAgICAgICAgXG4zOiBOb25lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbjQ6IGNvbG9yc3BhY2UgKDEuNC0xIC0+IDIuMC0wICApIFtDUkFOXVxuNTogcnN0dWRpb2FwaSAoMC4xMSAgLT4gMC4xMyAgICkgW0NSQU5dXG42OiBycHJvanJvb3QgICgxLjMtMiAtPiAyLjAuMiAgKSBbQ1JBTl1cbjc6IHdhbGRvICAgICAgKDAuMi4yIC0+IDAuMi4zICApIFtDUkFOXVxuODogbHVicmlkYXRlICAoMS43LjkgLT4gMS43LjkuMikgW0NSQU5dXG4ifQ== -->
-<pre><code>These packages have more recent versions available.
-It is recommended to update all of them.
-Which would you like to update?
-
-1: All                                 
-2: CRAN packages only                  
-3: None                                
-4: colorspace (1.4-1 -&gt; 2.0-0  ) [CRAN]
-5: rstudioapi (0.11  -&gt; 0.13   ) [CRAN]
-6: rprojroot  (1.3-2 -&gt; 2.0.2  ) [CRAN]
-7: waldo      (0.2.2 -&gt; 0.2.3  ) [CRAN]
-8: lubridate  (1.7.9 -&gt; 1.7.9.2) [CRAN]</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV0FSTklORzogUnRvb2xzIGlzIHJlcXVpcmVkIHRvIGJ1aWxkIFIgcGFja2FnZXMsIGJ1dCBpcyBub3QgY3VycmVudGx5IGluc3RhbGxlZC5cblxuUGxlYXNlIGRvd25sb2FkIGFuZCBpbnN0YWxsIFJ0b29scyA0LjAgZnJvbSBodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9iaW4vd2luZG93cy9SdG9vbHMvLlxuIn0= -->
-<pre><code>WARNING: Rtools is required to build R packages, but is not currently installed.
-
-Please download and install Rtools 4.0 from https://cran.r-project.org/bin/windows/Rtools/.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBcbiAgXG4gIFxuXHUwMDFiWzMybeKImlx1MDAxYlszOW0gIFx1MDAxYlszODs1OzI0N21jaGVja2luZyBmb3IgZmlsZSAnQzpcXFVzZXJzXFxkYW5pZVxcQXBwRGF0YVxcTG9jYWxcXFRlbXBcXFJ0bXBNUHpGeG9cXHJlbW90ZXMyZjMwNDc4YzUxXFxqb2FjaGltLWdhc3Nlbi10aWR5Y292aWQxOS1mZTBkMmQ5L0RFU0NSSVBUSU9OJ1x1MDAxYlszOW1cdTAwMWJbMzZtXHUwMDFiWzM2bSAoNTMxbXMpXHUwMDFiWzM2bVx1MDAxYlszOW1cblxuICBcbiAgXG4gIFxuXHUwMDFiWzM4OzU7MjQ3bS1cdTAwMWJbMzltXHUwMDFiWzM4OzU7MjQ3bSAgXHUwMDFiWzM5bVx1MDAxYlszODs1OzI0N21wcmVwYXJpbmcgJ3RpZHljb3ZpZDE5JzpcdTAwMWJbMzltXHUwMDFiWzM2bVx1MDAxYlszNm0gKDc0Nm1zKVx1MDAxYlszNm1cdTAwMWJbMzltXG4gICBjaGVja2luZyBERVNDUklQVElPTiBtZXRhLWluZm9ybWF0aW9uIC4uLlxuICBcbiAgIGNoZWNraW5nIERFU0NSSVBUSU9OIG1ldGEtaW5mb3JtYXRpb24gLi4uIFxuICBcblx1MDAxYlszMm3iiJpcdTAwMWJbMzltICBcdTAwMWJbMzg7NTsyNDdtY2hlY2tpbmcgREVTQ1JJUFRJT04gbWV0YS1pbmZvcm1hdGlvblx1MDAxYlszOW1cdTAwMWJbMzZtXHUwMDFiWzM5bVxuXG4gIFxuICBcbiAgXG5cdTAwMWJbMzg7NTsyNDdtLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsyNDdtICBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MjQ3bWNoZWNraW5nIGZvciBMRiBsaW5lLWVuZGluZ3MgaW4gc291cmNlIGFuZCBtYWtlIGZpbGVzIGFuZCBzaGVsbCBzY3JpcHRzXHUwMDFiWzM5bVx1MDAxYlszNm1cdTAwMWJbMzZtICg0MjBtcylcdTAwMWJbMzZtXHUwMDFiWzM5bVxuXG4gIFxuICBcbiAgXG5cdTAwMWJbMzg7NTsyNDdtLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsyNDdtICBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MjQ3bWNoZWNraW5nIGZvciBlbXB0eSBvciB1bm5lZWRlZCBkaXJlY3Rvcmllc1x1MDAxYlszOW1cdTAwMWJbMzZtXHUwMDFiWzM5bVxuXG4gIFxuICBcbiAgXG5cdTAwMWJbMzg7NTsyNDdtLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsyNDdtICBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MjQ3bWJ1aWxkaW5nICd0aWR5Y292aWQxOV8wLjAuMC45MDAwLnRhci5neidcdTAwMWJbMzltXHUwMDFiWzM2bVx1MDAxYlszOW1cblxuICBcbiAgIFxuIn0= -->
-<pre><code>  
-  
-  
-[32m√[39m  [38;5;247mchecking for file 'C:\Users\danie\AppData\Local\Temp\RtmpMPzFxo\remotes2f30478c51\joachim-gassen-tidycovid19-fe0d2d9/DESCRIPTION'[39m[36m[36m (531ms)[36m[39m
-
-  
-  
-  
-[38;5;247m-[39m[38;5;247m  [39m[38;5;247mpreparing 'tidycovid19':[39m[36m[36m (746ms)[36m[39m
-   checking DESCRIPTION meta-information ...
-  
-   checking DESCRIPTION meta-information ... 
-  
-[32m√[39m  [38;5;247mchecking DESCRIPTION meta-information[39m[36m[39m
-
-  
-  
-  
-[38;5;247m-[39m[38;5;247m  [39m[38;5;247mchecking for LF line-endings in source and make files and shell scripts[39m[36m[36m (420ms)[36m[39m
-
-  
-  
-  
-[38;5;247m-[39m[38;5;247m  [39m[38;5;247mchecking for empty or unneeded directories[39m[36m[39m
-
-  
-  
-  
-[38;5;247m-[39m[38;5;247m  [39m[38;5;247mbuilding 'tidycovid19_0.0.0.9000.tar.gz'[39m[36m[39m
-
-  
-   </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiSW5zdGFsbGluZyBwYWNrYWdlIGludG8gkUM6L1VzZXJzL2RhbmllL0RvY3VtZW50cy9SL3dpbi1saWJyYXJ5LzQuMJJcbihhcyCRbGlikiBpcyB1bnNwZWNpZmllZClcbiJ9 -->
-<pre><code>Installing package into 㤼㸱C:/Users/danie/Documents/R/win-library/4.0㤼㸲
-(as 㤼㸱lib㤼㸲 is unspecified)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiKiBpbnN0YWxsaW5nICpzb3VyY2UqIHBhY2thZ2UgJ3RpZHljb3ZpZDE5JyAuLi5cbioqIHVzaW5nIHN0YWdlZCBpbnN0YWxsYXRpb25cbioqIFJcbioqIGRhdGFcbioqKiBtb3ZpbmcgZGF0YXNldHMgdG8gbGF6eWxvYWQgREJcbioqIGluc3RcbioqIGJ5dGUtY29tcGlsZSBhbmQgcHJlcGFyZSBwYWNrYWdlIGZvciBsYXp5IGxvYWRpbmdcbioqIGhlbHBcbioqKiBpbnN0YWxsaW5nIGhlbHAgaW5kaWNlc1xuICBjb252ZXJ0aW5nIGhlbHAgZm9yIHBhY2thZ2UgJ3RpZHljb3ZpZDE5J1xuICAgIGZpbmRpbmcgSFRNTCBsaW5rcyAuLi4gZG9uZVxuICAgIGRvd25sb2FkX2FjYXBzX25waV9kYXRhICAgICAgICAgICAgICAgICBodG1sICBcbiAgICBkb3dubG9hZF9hcHBsZV9tdHJfZGF0YSAgICAgICAgICAgICAgICAgaHRtbCAgXG4gICAgZG93bmxvYWRfZWNkY19jb3ZpZDE5X2RhdGEgICAgICAgICAgICAgIGh0bWwgIFxuICAgIGRvd25sb2FkX2dvb2dsZV9jbXJfZGF0YSAgICAgICAgICAgICAgICBodG1sICBcbiAgICBkb3dubG9hZF9nb29nbGVfdHJlbmRzX2RhdGEgICAgICAgICAgICAgaHRtbCAgXG4gICAgZG93bmxvYWRfamh1X2Nzc2VfY292aWQxOV9kYXRhICAgICAgICAgIGh0bWwgIFxuICAgIGZpbmRpbmcgbGV2ZWwtMiBIVE1MIGxpbmtzIC4uLiBkb25lXG5cbiAgICBkb3dubG9hZF9tZXJnZWRfZGF0YSAgICAgICAgICAgICAgICAgICAgaHRtbCAgXG4gICAgZG93bmxvYWRfb3dpZF90ZXN0aW5nX2RhdGEgICAgICAgICAgICAgIGh0bWwgIFxuICAgIGRvd25sb2FkX294Zm9yZF9ucGlfZGF0YSAgICAgICAgICAgICAgICBodG1sICBcbiAgICBkb3dubG9hZF93YmFua19kYXRhICAgICAgICAgICAgICAgICAgICAgaHRtbCAgXG4gICAgbWFwX2NvdmlkMTkgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGh0bWwgIFxuUmQgd2FybmluZzogQzovVXNlcnMvZGFuaWUvQXBwRGF0YS9Mb2NhbC9UZW1wL1J0bXA0YzhsVmUvUi5JTlNUQUxMMzQ3Y2FmNTc1NTkvdGlkeWNvdmlkMTkvbWFuL21hcF9jb3ZpZDE5LlJkOjYxOiBmaWxlIGxpbmsgJ2dncGxvdDInIGluIHBhY2thZ2UgJ2dncGxvdDInIGRvZXMgbm90IGV4aXN0IGFuZCBzbyBoYXMgYmVlbiB0cmVhdGVkIGFzIGEgdG9waWNcbiAgICBwaXBlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaHRtbCAgXG4gICAgcGxvdF9jb3ZpZDE5X3NwcmVhZCAgICAgICAgICAgICAgICAgICAgIGh0bWwgIFxuICAgIHBsb3RfY292aWQxOV9zdHJpcGVzICAgICAgICAgICAgICAgICAgICBodG1sICBcbiAgICBzaGlueV9jb3ZpZDE5X3NwcmVhZCAgICAgICAgICAgICAgICAgICAgaHRtbCAgXG4gICAgdGlkeWNvdmlkMTlfZGF0YV9zb3VyY2VzICAgICAgICAgICAgICAgIGh0bWwgIFxuICAgIHRpZHljb3ZpZDE5X3ZhcmlhYmxlX2RlZmluaXRpb25zICAgICAgICBodG1sICBcbioqKiBjb3B5aW5nIGZpZ3VyZXNcbioqIGJ1aWxkaW5nIHBhY2thZ2UgaW5kaWNlc1xuKiogdGVzdGluZyBpZiBpbnN0YWxsZWQgcGFja2FnZSBjYW4gYmUgbG9hZGVkIGZyb20gdGVtcG9yYXJ5IGxvY2F0aW9uXG4qKiogYXJjaCAtIGkzODZcbioqKiBhcmNoIC0geDY0XG4qKiB0ZXN0aW5nIGlmIGluc3RhbGxlZCBwYWNrYWdlIGNhbiBiZSBsb2FkZWQgZnJvbSBmaW5hbCBsb2NhdGlvblxuKioqIGFyY2ggLSBpMzg2XG4qKiogYXJjaCAtIHg2NFxuKiogdGVzdGluZyBpZiBpbnN0YWxsZWQgcGFja2FnZSBrZWVwcyBhIHJlY29yZCBvZiB0ZW1wb3JhcnkgaW5zdGFsbGF0aW9uIHBhdGhcbiogRE9ORSAodGlkeWNvdmlkMTkpXG4ifQ== -->
-<pre><code>* installing *source* package 'tidycovid19' ...
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-  converting help for package 'tidycovid19'
-    finding HTML links ... done
-    download_acaps_npi_data                 html  
-    download_apple_mtr_data                 html  
-    download_ecdc_covid19_data              html  
-    download_google_cmr_data                html  
-    download_google_trends_data             html  
-    download_jhu_csse_covid19_data          html  
-    finding level-2 HTML links ... done
-
-    download_merged_data                    html  
-    download_owid_testing_data              html  
-    download_oxford_npi_data                html  
-    download_wbank_data                     html  
-    map_covid19                             html  
-Rd warning: C:/Users/danie/AppData/Local/Temp/Rtmp4c8lVe/R.INSTALL347caf57559/tidycovid19/man/map_covid19.Rd:61: file link 'ggplot2' in package 'ggplot2' does not exist and so has been treated as a topic
-    pipe                                    html  
-    plot_covid19_spread                     html  
-    plot_covid19_stripes                    html  
-    shiny_covid19_spread                    html  
-    tidycovid19_data_sources                html  
-    tidycovid19_variable_definitions        html  
-*** copying figures
-** building package indices
-** testing if installed package can be loaded from temporary location
-*** arch - i386
-*** arch - x64
-** testing if installed package can be loaded from final location
-*** arch - i386
-*** arch - x64
-** testing if installed package keeps a record of temporary installation path
-* DONE (tidycovid19)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KHRpZHljb3ZpZDE5KVxuYGBgIn0= -->
-<pre class="r"><code>library(tidyverse)
-library(tidycovid19)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdodG1sdG9vbHMnOlxuICBtZXRob2QgICAgICAgICAgICAgICBmcm9tICAgICAgICAgXG4gIHByaW50Lmh0bWwgICAgICAgICAgIHRvb2xzOnJzdHVkaW9cbiAgcHJpbnQuc2hpbnkudGFnICAgICAgdG9vbHM6cnN0dWRpb1xuICBwcmludC5zaGlueS50YWcubGlzdCB0b29sczpyc3R1ZGlvXG4ifQ== -->
-<pre><code>Registered S3 methods overwritten by 'htmltools':
-  method               from         
-  print.html           tools:rstudio
-  print.shiny.tag      tools:rstudio
-  print.shiny.tag.list tools:rstudio</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh6b28pXG5gYGAifQ== -->
-<pre class="r"><code>library(zoo)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixem9v46S847iyXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpiYXNl46S847iyOlxuXG4gICAgYXMuRGF0ZSwgYXMuRGF0ZS5udW1lcmljXG4ifQ== -->
-<pre><code>
-Attaching package: 㤼㸱zoo㤼㸲
-
-The following objects are masked from 㤼㸱package:base㤼㸲:
-
-    as.Date, as.Date.numeric</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5Y292aWQxOSlcbmBgYCJ9 -->
-<pre class="r"><code>library(tidycovid19)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Download the data (cached on GitHub rather than directly from John Hopkins University). This is live data updated within the last 24 hours.</p>
