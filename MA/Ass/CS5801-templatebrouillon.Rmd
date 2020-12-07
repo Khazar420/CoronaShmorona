@@ -342,8 +342,8 @@ BOSLAACheck <- check_that(BOSLAA,
                           BOSLAAGames >= 0,
                           BOSLAARuns >= 0)
               
-# Produce a bar chart of the quality rule failures
-barplot(BOSLAACheck)
+# Produce a bar chart of the quality rule failures. I need to turn it into a dataframe   
+
 
 ```
 Here I see that there is one negative RBI. This would appear to be the only problematic value at this stage.
@@ -358,6 +358,11 @@ BOSCheck <- check_that(BOS,
 
                           BOSRunsBatted>= round(0))
 barplot(BOSCheck)
+BOSCheckDF =  as.data.frame(BOSCheck)
+#let's look at the problem player
+ProblemPlayer <- subset(BOSCheckDF, value ==FALSE)
+ProblemPlayer
+#I have located the player but not identified it
 ```
 The problem is in Boston. This error could have various causes.
 
@@ -485,12 +490,8 @@ summary(BOSLAARunsBattedDone)
 ##
 ```
 
-Some of these look radically different, while others do not. I can test this by looking at the various distributions.
-
-```{r}
 
 
-```
 
 # 3. Modelling
 
@@ -568,6 +569,9 @@ We can learn several things. One is that the longer a person plays, the more the
 
 
 
+Some of these look radically different, while others do not. I can test this by looking at the various distributions.
+
+
 ## 3.2 Critique model using relevant diagnostics
 
 *Offer an interpretation of the model characteristics, goodness of fit and graphical diagnostics (5 marks) for the model built in 3.1. Explain any potential weaknesses (5 marks).*
@@ -614,6 +618,34 @@ Luckily, I do have more data. I can compare it with the league as a whole. Not o
 
 ```
 
+I want to dia little bit deeper and look at the variance as well. This is a way to test my salary model against something larger.
+
+```{r}
+##This whole bit here might e removed, I want to fit it in, but my brain is cloude. this is what the brouillon is for.
+##I can also look at the variance and create a test statistic like in lab35701
+
+var(setosa.flowers$Petal.Length)
+##two of the same type between teams
+var(virginica.flowers$Petal.Length)
+
+
+##The test statistic is obtained by dividing the variances and then using the F - distribution
+
+
+var.setosa<-var(setosa.flowers$Petal.Length)
+var.virginica<-var(virginica.flowers$Petal.Length)
+f.st<-var.setosa/var.virginica
+
+
+##This ratio looks very far from 1 so using the a built in function in R to perform the variance test
+
+var.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length )
+
+##We confirm that the p-value is very small so such a ratio is very unlikely (if we assume $H_0$ of equal variances). We can conclude that the variances are different.
+## If we want to compare the means using the apropriate hypothesis test
+
+t.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length)
+```
 
 # 4. Extension work
 
