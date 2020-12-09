@@ -31,6 +31,7 @@ install.packages("tree")
 install.packages("validate")
 install.packages("ggpubr")
 install.packages("lubridate")
+install.packages("GGally")
 ```
 Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: 
 ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate, lubridate
@@ -47,6 +48,7 @@ library(mgcv)
 library(tree)
 library(validate)
 library(lubridate)
+library(GGally)
 ```
 
 
@@ -618,6 +620,12 @@ The cleaner version shows that this is clearly not a normal distribution.
 *Given the research question (i.e., the target attribute of salary) outline an analysis plan that incorporates/references any findings from the data cleaning (1.3) and EDA (2.2)  (5 marks). Use R to build a suitable model (10 marks).*  
 *NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.*  
 
+The first thing that I can do is look at all of the collelants.This is quite good, because I can see in one shot what appears to affect what. Some of this might be misleading. For example, height and weight seem to have nothing to do with salary. This is to do with the fact that height and weight have a normal distribution. There could be an ideal height and weight, and this is not indicated here.
+
+
+```{r}
+ggcorr(BOSLAAClean)
+```
 I want to see the correlates between each variable and player salary. Then, within that, see wether any of those items move win or against one another. Such as career length and age. or runs and bats. This is to see whether I am correct to assume that these elements might be connected.
 ANOVA and ANCOVA will be useful for finding a lot of information in one go.
 Another thing is that I will go one by one and remove the weakest correlants.
@@ -687,8 +695,35 @@ cor.test(BOSLAACleanCareer, BOSLAACleanSalary, method=c("pearson", "kendall", "s
 What we find here is pretty amazing. They have very similar correlations. 
 We can learn several things. One is that the longer a person plays, the more they will make, and it does not matter what year they start in.
 
+This is very interesting. Now that we see that the longer someone has played indicates a higher salary, what about performance during the season itself?
+It might seem obvious that performance and salary would correlate, but not necessarily. For instance, studies have shown that athletes' performance can dip after transferring from one team to another. This transfer usually follows an offer of a higher salary. There was another stuyd in Israel as noted by Judea Pearl in the Book of Why about the effect of praise on soldier performances. It seemed to have an inverse correlatin, but this was due to some form of mean regression.
+Because some players will never bat or run because players on a baseball team sometimes have specialisations, all those with a zero value will be removed. This is a complicated decision because some of the players with zero will be unnecessary, others will be necessary. The proportion of these is unknown without knowing more about each individual player. It is important to compare like-for-like. It would not be correct to measure salary on batting performance on someone who is not on the team to bat, for example. They are being paid for something else otherwise undefined.
+
+```{r}
+#create version of only what was done
+
+# another version could perhaps include the version with the zero values to illustrate their effect
+
+HitsLM = (lm(formula = BOSLAACleanHits ~ BOSLAACleanSalary))
+plot(HitsLM)
+GamesLM = (lm(formula = BOSLAACleanGames ~ BOSLAACleanSalary))
+plot(GamesLM)
+RunsLM = (lm(formula = BOSLAACleanRuns ~ BOSLAACleanSalary))
+plot(RunsLM)
+RunsBattedLM = (lm(formula = BOSLAACleanRunsBatted ~ BOSLAACleanSalary))
+plot(RunsBattedLM)
+```
 
 
+The next thing that I want to look at is height and weight. Is there an ideal height or weight?
+
+```{r}
+HeightLM = lm(formula = BOSLAACleanHeight ~ BOSLAACleanSalary)
+plot(HeightLM)
+WeightLM = lm(formula = BOSLAACleanWeight ~ BOSLAACleanSalary)
+plot(WeightLM)
+#create model comparing heigth and weright - scatter plot?
+```
 
 
 Some of these look radically different, while others do not. I can test this by looking at the various distributions.
@@ -706,7 +741,8 @@ Do I have overfitting?
 ##sum of something above a certain limit
 table(mpg$`model year`)
 sum(mpg$`model year`>79)
-```##proportion of something above a certain limit
+```
+##proportion of something above a certain limit
 ```{r}
 prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
 prop.80
