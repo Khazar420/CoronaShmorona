@@ -32,6 +32,7 @@ install.packages("validate")
 install.packages("ggpubr")
 install.packages("lubridate")
 install.packages("GGally")
+install.packages("PerformanceAnalytics")
 ```
 Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: 
 ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate, lubridate
@@ -49,6 +50,8 @@ library(tree)
 library(validate)
 library(lubridate)
 library(GGally)
+library(PerformanceAnalytics)
+
 ```
 
 
@@ -81,7 +84,7 @@ Only the two teams need to be separated at this stage, but I also decivded to ha
  
 *Provide a description of a comprehensive plan to assess the quality of the data, and document your findings.  Include all variables/columns (5 marks) from the data set and provide a full implementation (5 marks).  NB even if no data quality issues are identified you should still check and report.*
 
-In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team (38 and 42).  When plotting them, one sees that they look quite similar too. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One anomaly is a negative number of games, runs, or length of career, for example. These are physical impossibilities. Another anomaly is that some things have a median of zero.
+In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team (38 and 42).  When plotting them, one sees that they look quite similar too. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One anomaly is a negative number of games, runs, or length of career, for example. These are physical impossibilities. Another anomaly is that some things have a median of zero.It would be interesting to see why.
 
 ```{r}
 
@@ -90,7 +93,7 @@ plot(BOSLAA)
 ```
 
 It contains 15 variables. They are as follows:
-1 - platerID
+1 - playerID
 2 - teamID.x
 3 - R
 4 - G
@@ -105,6 +108,7 @@ It contains 15 variables. They are as follows:
 13 - bats
 14 - age
 15 - hit.ind
+
 
 
 structure() and glimpse() are good here. This is because they tell me the size and appearance on the values as well as their type. I have mostly numeric (int and dbl) data, but also factors, characters, and a date
@@ -129,7 +133,7 @@ is.na(LAA)
  
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
-The dataset name will be renamed to League, because it carries more meaning. not only this, but later on, when comparing the two teams to the league as a whole, there will be fewer formatting issues. The reason is that punctuation in the wrong places can impact things, and having punctuation in the middle of a name can also be confusing to the reader as it could look like it has a purpose. It is also a personal stylistic choice.
+The dataset name will be renamed to League, because it carries more meaning. not only this, but later on, when comparing the two teams to the league as a whole, there will be fewer formatting issues. The reason is that punctuation in the wrong places can impact things, and having punctuation in the middle of a name can also be confusing to the reader as it could look like it has a purpose beyond beying a character in a name. It is also a personal stylistic choice.
 I will rename some collumns as well, so that I can better understand what I am loking at at a glance, but also for the reasons above. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on. It also means that my definitions are, for the large part, in one place.
 
 It contains 15 variables. They will be renamed as follows:
@@ -147,7 +151,7 @@ birthDate - Birth
 career.length - Career
 bats
 age
-hit.ind - SeasonHit. I do not know what hit.ind means, but it represents whether a player had a hit that season.It has a Bernoulli disctribution, which has a binary distribution, turning this into a yes/no question which makes more intuitive sense.
+hit.ind - SeasonHit. I do not know what hit.ind means, but it represents whether a player had a hit that season.It has a Bernoulli disctribution, which has a binary distribution. SeasonHit 1 or 0 basically turns it into a yes/no question which makes more intuitive sense to me.
 The rest will simply be capitalised for consistent formatting
 ```{r}
 
@@ -225,7 +229,7 @@ LAA %>%
 
 
 ```
-
+Here I am making subests of everything so that I do not have to later. Having this in one place means that I need to look in fewer places when making changes.
 ```{r}
 League = CS5801.data
 
@@ -300,10 +304,10 @@ BOSLAAplayerID = BOSLAA$playerID
 BOSplayerID = BOS$playerID
 LAAplayerID = LAA$playerID
 ```
-Before taking any further steps, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. check_that() is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole.  
+Before taking any further steps, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. It is not possible to run a negative number of runs. check_that() is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole, going down in number. 
 
-I might have to turn these back into dataframes, but at least I understand what the figures mean. This will be important when doing aov and similar things.
-It might be a good idea to check for duplicate players here. This is not clever. The reason is that the same player can play for multiple teams.
+I might have to turn these subsets back into dataframes, but at least I understand what the figures mean. This will be important when analysing everything later.
+It might seem like a good idea to check for duplicate players here. This is not clever. The reason is that the same player can play for multiple teams.
 
 ```{r}
 ## Data quality checking for the whole league
@@ -330,7 +334,7 @@ barplot(LeagueCheck)
 
 
 ```
-I see very quickly that there are four values which do not make sense. This is because they are negative, and in this case any negative values are a physical impossiblity. These four are:
+I see very quickly that there are four areas where the rules were broken. This is because they are negative, and in this case any negative values are a physical impossiblity. These four are:
 LeagueCareer
 LeagueRunsBatted
 LeagueGames
@@ -351,6 +355,7 @@ BOSLAACheck <- check_that(BOSLAA,
              
 # Produce a bar chart of the quality rule failures. I need to turn it into a dataframe   
 
+barplot(BOSLAACheck)
 
 ```
 Here I see that there is one negative RBI. This would appear to be the only problematic value at this stage.
@@ -370,16 +375,23 @@ BOSCheckDF =  as.data.frame(BOSCheck)
 ProblemPlayer <- subset(BOSCheckDF, value ==FALSE)
 ProblemPlayer
 #I have located the player but not identified it
+
+```
+The RBI problem is in Boston. This error could have various causes. I have no way of telling the true value at this stage, however.
+
+Now to identify the duplicate playeys.
+```{r}
 BOSDoubles = duplicated(BOSplayerID) 
 table(BOSDoubles)
 
 LAADoubles = duplicated(LAAplayerID) 
 table(LAADoubles)
-#Each team seems to have a duplicate player. By looking at the dataframe itself, Both are indeed duplicated. BOS has pedrodu01, and LAA has richaga01.
+
 
 ```
-The RBI problem is in Boston. This error could have various causes. I have no wya of telling the true value at this stage, however.
-Now to remove the duplicated from each team. this will be done on each team individually, this is because one player could have played on both teams in the same year.
+Each team seems to have a duplicate player. By looking at the dataframe itself, Both are indeed duplicated. BOS has pedrodu01, and LAA has richaga01.
+
+Now to remove the duplicated player from each team. this will be done on each team individually, this is because one player could have played on both teams in the same year.
 ```{r}
 #I need to be careful to only remove duplicates in terms of name, and nothing else.
 
@@ -388,6 +400,12 @@ BOSClean <- BOS[!duplicated(BOS$playerID), ]
 LAAClean <- LAA[!duplicated(LAA$playerID), ]
 BOSClean
 LAAClean
+
+BOSCleanDoubles = duplicated(BOSClean$playerID) 
+table(BOSCleanDoubles)
+
+LAACleanDoubles = duplicated(LAAClean$playerID) 
+table(LAACleanDoubles)
 
 BOSLAAClean = rbind(BOSClean, LAAClean)
 BOSLAAClean
@@ -455,8 +473,6 @@ BOSCleanplayerID = BOSClean$playerID
 LAACleanplayerID = LAAClean$playerID
 ```
 
-Here ANOVA is very useful. The reason is that it, at a glance, will allow me to work out a lot of things very quickly. one of them is the outliers, and where they are located. I need to be casreful, because I could skew the data in favour of existing assumptions that I have. ANOVA also allows me to look at all of the correlates and get rid of the lower ones and focus on what it important. 
-
 
 
         
@@ -476,12 +492,9 @@ The first epicycle was more or less done in the data cleaning stage. Now I need 
 I will then look at the new data again
 
 I will do a summary and histogram of each variable aside from birthdate, and batting hand. This is because they are dates and factors which are not suitable for this format.
-Because this is a relativel small sample size, rather than focus on standard deviation, I will calculate the t as well. This is also because I do not know what to expect in terms of the standard deviation.
-
-```{r}
+Because this is a relatively small sample size, rather than focus on standard deviation, I will calculate the t as well. This is also because I do not know what to expect in terms of the standard deviation.
 
 
-```
 
 ## 2.2 EDA and summary of results  
 
@@ -549,17 +562,29 @@ Now is time to test these.
 
 ```{r}
 
-shapiro.test(BOSLAAClean$weight)
-shapiro.test(BOSLAAClean$height)
-shapiro.test(BOSLAAClean$age)
+shapiro.test(BOSLAACleanWeight)
+shapiro.test(BOSLAACleanHeight)
+shapiro.test(BOSLAACleanAge)
 
 
 
 ```
-Weight and height are normal, as their p-value is over 0.05. 
+Age, weight, and height are normal, as their p-value is over 0.05. 
 The others need to be looked at.
 
-I need gto test skewness (poisson?) here I do so using the standard deviation, I think, somehow
+I can also measure the skewness of Runs, hits, runs batted, games, salary, career. They are indeed skewed.
+
+```{r}
+
+RunSkew = skewness(BOSLAACleanRuns)
+HitSkew = skewness(BOSLAACleanHits)
+RunsBattedSkew = skewness(BOSLAACleanRunsBatted)
+AtBatSkew = skewness(BOSLAACleanAtBat)
+GamesSkew = skewness(BOSLAACleanGames)         
+SalarySkew = skewness(BOSLAACleanSalary)
+CareerSkew = skewness(BOSLAACleanCareer)         
+```
+
 ## 2.3 Additional insights and issues
 
 *Highlight potential further issues or insights uncovered in 2.2.  This might include follow up to findings from your initial EDA.  We accept that the boundary between 2.2 and 2.3 is somewhat arbitrary so use your judgement and maximise good structure and readability. (5 marks)*
@@ -593,7 +618,14 @@ lines(density(BOSLAACleanRunsBattedDone), col = "red")
 summary(BOSLAACleanRunsBattedDone)
 
 ##Another way to do this is to select sums greater than or lower than a certain amount. I will probably to this to analyse those who did not do any runs hits, at bats, or bats.
-
+RunsDoneSkew =  skewness(BOSLAACleanRunsDone)
+RunsDoneSkew
+HisDoneSkew = skewness(BOSLAACleanHitsDone)
+HisDoneSkew
+AtBatDoneSkew = skewness(BOSLAACleanAtBatDone) 
+AtBatDoneSkew
+RunsBattedDoneSkew = skewness(BOSLAACleanRunsBattedDone)
+RunsBattedDoneSkew
 ##
 ```
 We see that the distribution is still skewed in all three aside from the runs BOSLAACleanRunsBattedDone This might seem like something interesting to take away. Looking carefully, there is a negative value. Thi si sa good time to make it a little bit cleaner. I cheated by turning the negative value positive by using the abs() function
@@ -606,6 +638,8 @@ BOSLAACleanerRunsBattedDone
 hist(BOSLAACleanerRunsBattedDone, prob = T)
 lines(density(BOSLAACleanerRunsBattedDone), col = "red")
 summary(BOSLAACleanerRunsBattedDone)
+CleanerRunsBattedDoneSkew = skewness(BOSLAACleanerRunsBattedDone)
+CleanerRunsBattedDoneSkew
 ```
 
 The cleaner version shows that this is clearly not a normal distribution.
@@ -620,11 +654,13 @@ The cleaner version shows that this is clearly not a normal distribution.
 *Given the research question (i.e., the target attribute of salary) outline an analysis plan that incorporates/references any findings from the data cleaning (1.3) and EDA (2.2)  (5 marks). Use R to build a suitable model (10 marks).*  
 *NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.*  
 
-The first thing that I can do is look at all of the collelants.This is quite good, because I can see in one shot what appears to affect what. Some of this might be misleading. For example, height and weight seem to have nothing to do with salary. This is to do with the fact that height and weight have a normal distribution. There could be an ideal height and weight, and this is not indicated here.
+The first thing that I can do is look at all of the collelants.This is quite good, because I can see in one shot what appears to affect what. Some of this might be misleading. For example, height and weight seem to have nothing to do with salary. This is to do with the fact that height and weight have a normal distribution. There could be an ideal height and weight, and this is not indicated here. The strongest relationship seems to do ith age and career length.
 
 
 ```{r}
 ggcorr(BOSLAAClean)
+
+
 ```
 I want to see the correlates between each variable and player salary. Then, within that, see wether any of those items move win or against one another. Such as career length and age. or runs and bats. This is to see whether I am correct to assume that these elements might be connected.
 ANOVA and ANCOVA will be useful for finding a lot of information in one go.
