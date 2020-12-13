@@ -1,0 +1,880 @@
+---
+title: "CS5801 Coursework Template Proforma"
+author: "student-id"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_notebook
+version: 1.0
+---
+
+# 0. Instructions 
+
+*1. Remove the (italicised) guidance text but keep the section headings.*  
+*2. Add as many chunks of R code as required.*  
+*3. Add descriptions of your analysis plans and explanations of your code and findings.  Please be detailed and where you have made choices explain the rationale for them.*  
+*4. Write your report using RMarkdown.  For guidance see a [helpful blog](https://www.dataquest.io/blog/r-markdown-guide-cheatsheet/#tve-jump-17333da0719) or use the R Markdown cheatsheet which can be accessed from within RStudio by selecting `Help > Cheatsheets > R Markdown Cheat Sheet`.*  
+*5. Your report should be clearly and professionally presented with appropriate use of cited external sources. (5 marks)*  
+*6. It should also be easy to understand, with well-documented code following the principles of literate programming. (5 marks)*  
+
+```{r}
+# Add code here to load any required libraries with `library()`.  
+# We suggest you use `install.package()` for any required packages externally to this document 
+# since installation only need be done once.
+
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("dbplyr")
+install.packages("foreign")
+install.packages("ggpubr")
+install.packages("xtable")
+install.packages("mgcv")
+install.packages("tree")
+install.packages("validate")
+install.packages("ggpubr")
+install.packages("lubridate")
+install.packages("GGally")
+install.packages("PerformanceAnalytics")
+```
+Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: 
+ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate, lubridate
+Then load the libraries below
+```{r}
+
+library(ggplot2)
+library(dplyr)
+library(dbplyr)
+library(foreign)
+library(ggpubr)
+library(xtable)
+library(mgcv)
+library(tree)
+library(validate)
+library(lubridate)
+library(GGally)
+library(PerformanceAnalytics)
+
+```
+
+
+# 1. Organise and clean the data
+
+## 1.1 Subset the data into the specific dataset allocated
+ 
+*A description of the data set provided, its contents and which subset you should select is documented in the assessment brief at ???.pdf*  
+*Use R code to correctly select the subset of data allocated. (5 marks)*  
+
+```{r}
+# Code to select the student specific team combination.  
+# Feel free to change it including the data frame name.
+# 
+# my.2teams.df <- subset(analysis.data, teamID.x=="???" | teamID.x=="???")
+
+
+BOSLAA = subset(CS5801.data, teamID.x == "BOS" | teamID.x=="LAA")
+BOS = subset(CS5801.data, teamID.x == "BOS")
+LAA = subset(CS5801.data, teamID.x == "LAA")
+
+
+
+
+```
+Only the two teams need to be separated at this stage, but I also decivded to have subsets including only one team each. The reason is that later on, I will probably want to look at each on of them separately. This is because depending on the task at hand, different sized datasets will be more useful. **spoiler alert**, it is useful at the end of part 1.
+
+
+## 1.2 Data quality analysis
+ 
+*Provide a description of a comprehensive plan to assess the quality of the data, and document your findings.  Include all variables/columns (5 marks) from the data set and provide a full implementation (5 marks).  NB even if no data quality issues are identified you should still check and report.*
+
+In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team (38 and 42).  When plotting them, one sees that they look quite similar too. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One anomaly is a negative number of games, runs, or length of career, for example. These are physical impossibilities. Another anomaly is that some things have a median of zero.It would be interesting to see why.
+
+```{r}
+
+summary(BOSLAA)
+plot(BOSLAA)
+```
+
+It contains 15 variables. They are as follows:
+1 - playerID
+2 - teamID.x
+3 - R
+4 - G
+5 - H
+6 - AB
+7 - RBI
+8 - weight
+9 - height
+10 - salary
+11 - birthDate
+12 - career.legth
+13 - bats
+14 - age
+15 - hit.ind
+
+
+
+structure() and glimpse() are good here. This is because they tell me the size and appearance on the values as well as their type. I have mostly numeric (int and dbl) data, but also factors, characters, and a date
+```{r}
+
+
+structure(BOSLAA)
+glimpse(BOSLAA)
+```
+
+I will also check for missing values. Luckily there are none here. Because the test prints a maximum number of values, splitting the subset into two (divided by team) allowed for all 80 rows to be visible. As can be seen, there is not a single missing value. Producing a table also shows that all 1200 values have been filled in.
+
+
+```{r}
+
+table(is.na(BOSLAA))
+(is.na(BOS))
+(is.na(LAA))
+
+
+```
+Returning rows with missing data also produces nothing. There are several ways to check for missing values.
+```{r}
+
+BOSLAA[!complete.cases(BOSLAA),]
+
+```
+## 1.3 Data cleaning  
+ 
+*Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
+
+The dataset name will be renamed to League, because it carries more meaning. not only this, but later on, when comparing the two teams to the league as a whole, there will be fewer formatting issues. The reason is that punctuation in the wrong places can impact things, and having punctuation in the middle of a name can also be confusing to the reader as it could look like it has a purpose beyond beying a character in a name. It is also a personal stylistic choice.
+I will rename some collumns as well, so that I can better understand what I am loking at at a glance, but also for the reasons above. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on. It also means that my definitions are, for the large part, in one place.
+
+It contains 15 variables. They will be renamed as follows:
+platerID
+teamID.x
+R - Runs
+G - Games
+H - Hits
+AB - AtBat
+RBI - RunsBatted
+weight 
+height
+salary
+birthDate - Birth
+career.length - Career
+bats
+age
+hit.ind - SeasonHit. I do not know what hit.ind means, but it represents whether a player had a hit that season.It has a Bernoulli disctribution, which has a binary distribution. SeasonHit 1 or 0 basically turns it into a yes/no question which makes more intuitive sense to me.
+The rest will simply be capitalised for consistent formatting
+```{r}
+
+League = CS5801.data
+
+League %>% 
+  rename(
+    Team = teamID.x,
+    Runs = R,
+    Games = G,
+    Hits = H,
+    AtBat = AB,
+    RunsBatted = RBI,
+    Weight = weight,
+    Height = height,
+    Salary = salary,
+    Birth = birthDate,
+    Career = career.length,
+    Bats = bats,
+    Age = age,
+    SeasonHit = hit.ind
+    )
+BOSLAA %>% 
+  rename(
+    Team = teamID.x,
+    Runs = R,
+    Games = G,
+    Hits = H,
+    AtBat = AB,
+    RunsBatted = RBI,
+    Weight = weight,
+    Height = height,
+    Salary = salary,
+    Birth = birthDate,
+    Career = career.length,
+    Bats = bats,
+    Age = age,
+    SeasonHit = hit.ind
+    )
+BOS %>% 
+  rename(
+    Team = teamID.x,
+    Runs = R,
+    Games = G,
+    Hits = H,
+    AtBat = AB,
+    RunsBatted = RBI,
+    Weight = weight,
+    Height = height,
+    Salary = salary,
+    Birth = birthDate,
+    Career = career.length,
+    Bats = bats,
+    Age = age,
+    SeasonHit = hit.ind
+    )
+LAA %>% 
+  rename(
+    Team = teamID.x,
+    Runs = R,
+    Games = G,
+    Hits = H,
+    AtBat = AB,
+    RunsBatted = RBI,
+    Weight = weight,
+    Height = height,
+    Salary = salary,
+    Birth = birthDate,
+    Career = career.length,
+    Bats = bats,
+    Age = age,
+    SeasonHit = hit.ind
+    )
+
+
+
+```
+Here I am making subests of everything so that I do not have to later. Having this in one place means that I need to look in fewer places when making changes.
+```{r}
+League = CS5801.data
+
+#1
+LeagueGames = League$G
+BOSLAAGames = BOSLAA$G
+BOSGames = BOS$G
+LAAGames = LAA$G
+#2
+LeagueRuns = League$R
+BOSLAARuns = BOSLAA$R
+BOSRuns = BOS$R
+LAARuns = LAA$R
+#3
+LeagueHits = League$H
+BOSLAAHits = BOSLAA$H
+BOSHits = BOS$H
+LAAHits = LAA$H
+#4
+LeagueAtBat = League$AB
+BOSLAAAtBat = BOSLAA$AB
+BOSAtBat = BOS$AB
+LAAAtBat = LAA$AB
+#5
+LeagueRunsBatted = League$RBI
+BOSLAARunsBatted = BOSLAA$RBI
+BOSRunsBatted = BOS$RBI
+LAARunsBatted = LAA$RBI
+#6
+LeagueWeight = League$weight
+BOSLAAWeight = BOSLAA$weight
+BOSWeight = BOS$weight
+LAAWeight = LAA$weight
+#7
+LeagueHeight = League$height
+BOSLAAHeight = BOSLAA$height
+BOSHeight = BOS$height
+LAAHeight = LAA$height
+#8
+LeagueSalary = League$salary
+BOSLAASalary = BOSLAA$salary
+BOSSalary = BOS$salary
+LAASalary = LAA$salary
+#9
+LeagueBirth = League$birthDate
+BOSLAABirth = BOSLAA$birthDate
+BOSBirth = BOS$birthDate
+LAABirth = LAA$birthDate
+#10
+LeagueCareer = League$career.length
+BOSLAACareer = BOSLAA$career.length
+BOSCareer = BOS$career.length
+LAACareer = LAA$career.length
+#11
+LeagueBats = League$bats
+BOSLAABats = BOSLAA$bats
+BOSBats = BOS$bats
+LAABats = LAA$bats
+#12
+LeagueAge = League$age
+BOSLAAAge = BOSLAA$age
+BOSAge = BOS$age
+LAAAge = LAA$age
+#13
+LeagueSeasonHit = League$hit.ind
+BOSLAASeasonHit = BOSLAA$hit.ind
+BOSSeasonHit = BOS$hit.ind
+LAASeasonHit = LAA$hit.ind
+#14
+LeagueplayerID = League$playerID
+BOSLAAplayerID = BOSLAA$playerID
+BOSplayerID = BOS$playerID
+LAAplayerID = LAA$playerID
+```
+Before taking any further steps, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. It is not possible to run a negative number of runs. check_that() is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole, going down in number. 
+
+I might have to turn these subsets back into dataframes, but at least I understand what the figures mean. This will be important when analysing everything later.
+It might seem like a good idea to check for duplicate players here. This is not clever. The reason is that the same player can play for multiple teams.
+
+```{r}
+## Data quality checking for the whole league
+
+summary(League)
+
+LeagueCheck <- check_that(League, 
+                          LeagueRuns>= 0,
+                          LeagueGames>= 0,
+                          LeagueHits >= 0,
+                          LeagueAtBat >= 0,
+                          LeagueRunsBatted >= 0,
+                          LeagueWeight > 0,
+                          LeagueHeight > 0,
+                          LeagueSalary > 0,
+                          LeagueBirth > 0,
+                          LeagueCareer >= 0,
+                          LeagueAge > 0,  
+                          LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B",
+                          LeagueSeasonHit == "1" | LeagueSeasonHit == "0")
+#Looking for duplicate team namtes      
+# Produce a bar chart of the quality rule failures
+barplot(LeagueCheck)
+
+
+```
+I see very quickly that there are four areas where the rules were broken. This is because they are negative, and in this case any negative values are a physical impossiblity. These four are:
+LeagueCareer
+LeagueRunsBatted
+LeagueGames
+LeagueRuns
+These foud have at least one entry which is negative.
+
+Now I need to see whether they are present in either team:
+
+```{r}
+
+summary(BOSLAA)
+
+BOSLAACheck <- check_that(BOSLAA, 
+                          BOSLAACareer>= 0,
+                          BOSLAARunsBatted>= 0,
+                          BOSLAAGames >= 0,
+                          BOSLAARuns >= 0)
+             
+# Produce a bar chart of the quality rule failures. I need to turn it into a dataframe   
+
+barplot(BOSLAACheck)
+
+```
+Here I see that there is one negative RBI. This would appear to be the only problematic value at this stage.
+
+```{r}
+LAACheck <- check_that(LAA, 
+                          LAARunsBatted>= 0)
+
+barplot(LAACheck)
+
+BOSCheck <- check_that(BOS, 
+
+                          BOSRunsBatted>= round(0))
+barplot(BOSCheck)
+BOSCheckDF =  as.data.frame(BOSCheck)
+#let's look at the problem player
+ProblemPlayer <- subset(BOSCheckDF, value ==FALSE)
+ProblemPlayer
+#I have located the player but not identified it
+
+```
+The RBI problem is in Boston. This error could have various causes. I have no way of telling the true value at this stage, however.
+
+Now to identify the duplicate playeys.
+```{r}
+BOSDoubles = duplicated(BOSplayerID) 
+table(BOSDoubles)
+
+LAADoubles = duplicated(LAAplayerID) 
+table(LAADoubles)
+
+
+```
+Each team seems to have a duplicate player. By looking at the dataframe itself, Both are indeed duplicated. BOS has pedrodu01, and LAA has richaga01.
+
+Now to remove the duplicated player from each team. this will be done on each team individually, this is because one player could have played on both teams in the same year.
+```{r}
+#I need to be careful to only remove duplicates in terms of name, and nothing else.
+
+BOSClean <- BOS[!duplicated(BOS$playerID), ]
+
+LAAClean <- LAA[!duplicated(LAA$playerID), ]
+BOSClean
+LAAClean
+
+BOSCleanDoubles = duplicated(BOSClean$playerID) 
+table(BOSCleanDoubles)
+
+LAACleanDoubles = duplicated(LAAClean$playerID) 
+table(LAACleanDoubles)
+
+BOSLAAClean = rbind(BOSClean, LAAClean)
+BOSLAAClean
+```
+
+I can now comfortably look at the data, knowing that I need to watch out for this single negative RBI value. Hopefully the reason for its being will be revealed.
+I need a clean version of everything now.
+
+```{r}
+#1
+BOSLAACleanGames = BOSLAAClean$G
+BOSCleanGames = BOSClean$G
+LAACleanGames = LAAClean$G
+#2
+BOSLAACleanRuns = BOSLAAClean$R
+BOSCleanRuns = BOSClean$R
+LAACleanRuns = LAAClean$R
+#3
+BOSLAACleanHits = BOSLAAClean$H
+BOSCleanHits = BOSClean$H
+LAACleanHits = LAAClean$H
+#4
+BOSLAACleanAtBat = BOSLAAClean$AB
+BOSCleanAtBat = BOSClean$AB
+LAACleanAtBat = LAAClean$AB
+#5
+BOSLAACleanRunsBatted = BOSLAAClean$RBI
+BOSCleanRunsBatted = BOSClean$RBI
+LAACleanRunsBatted = LAAClean$RBI
+#6
+BOSLAACleanWeight = BOSLAAClean$weight
+BOSCleanWeight = BOSClean$weight
+LAACleanWeight = LAAClean$weight
+#7
+BOSLAACleanHeight = BOSLAAClean$height
+BOSCleanHeight = BOSClean$height
+LAACleanHeight = LAAClean$height
+#8
+BOSLAACleanSalary = BOSLAAClean$salary
+BOSCleanSalary = BOSClean$salary
+LAACleanSalary = LAAClean$salary
+#9
+BOSLAACleanBirth = BOSLAAClean$birthDate
+BOSCleanBirth = BOSClean$birthDate
+LAACleanBirth = LAAClean$birthDate
+#10
+BOSLAACleanCareer = BOSLAAClean$career.length
+BOSCleanCareer = BOSClean$career.length
+LAACleanCareer = LAAClean$career.length
+#11
+BOSLAACleanBats = BOSLAAClean$bats
+BOSCleanBats = BOSClean$bats
+LAACleanBats = LAAClean$bats
+#12
+BOSLAACleanAge = BOSLAAClean$age
+BOSCleanAge = BOSClean$age
+LAACleanAge = LAAClean$age
+#13
+BOSLAACleanSeasonHit = BOSLAAClean$hit.ind
+BOSSCleaneasonHit = BOSClean$hit.ind
+LAACleanSeasonHit = LAAClean$hit.ind
+#14
+BOSLAACleanplayerID = BOSLAAClean$playerID
+BOSCleanplayerID = BOSClean$playerID
+LAACleanplayerID = LAAClean$playerID
+```
+
+
+
+        
+# 2. Exploratory Data Analysis (EDA)
+
+
+
+## 2.1 EDA plan
+
+*Outline a suitable plan to explore, describe and visualise your data. (5 marks)*  
+
+i will undergo a process including two cyclces which I will switch between at each stage of the data analysis. Most people will use a similar process. This one is inspired by Peng and Matsui's method in their book, **the Art of Data Science**. They call them epicycles.
+The first cycle will be to look at the data, develop assumptions, and then see whether they match.
+The second cycle will be ask the questions relevant to these assumptions, see what models might be appropriate, build them, interpret the results, and then report them.
+
+The first epicycle was more or less done in the data cleaning stage. Now I need to build some models.  I will start with some histograms and bar graphs for all data, as well as box plots. Not only this, but means and medians where applicable. I will try to see if any are skewed, and use a Poisson method to measure this.
+I will then look at the new data again
+
+I will do a summary and histogram of each variable aside from birthdate, and batting hand. This is because they are dates and factors which are not suitable for this format.
+Because this is a relatively small sample size, rather than focus on standard deviation, I will calculate the t as well. This is also because I do not know what to expect in terms of the standard deviation.
+
+
+
+## 2.2 EDA and summary of results  
+
+*Undertake and summarise the findings of your data exploration, particularly with respect to the research questions.  Use appropriate summary statistics (uni- and multi-variate) and visualisations. (10 marks)*
+
+I will do a histogram of each variable with a density line. This will allow me to identify any clear trends or distributions, and therefore infer any dependencies.
+Batting hand will not be graphed this way because it is a factor. Birthdate will not either.
+
+```{r}
+##variablew platerID
+##teamID.x
+##R - Runs
+##G - Games
+##H - Hits
+##AB - AtBat
+##RBI - RunsBatted
+##weight 
+##height
+##salary
+##birthDate - Birth
+##career.length - Career
+##bats
+##age
+##hit.ind - SeasonHit
+
+summary(BOSLAAClean)
+
+hist(BOSLAACleanRuns, prob= T)
+lines(density(BOSLAACleanRuns), col = "red")
+hist(BOSLAACleanGames, prob= T)
+lines(density(BOSLAACleanGames), col = "red")
+hist(BOSLAACleanHits, prob= T)
+lines(density(BOSLAACleanHits), col = "red")
+hist(BOSLAACleanAtBat, prob= T)
+lines(density(BOSLAACleanAtBat), col = "red")
+hist(BOSLAACleanRunsBatted, prob= T)
+lines(density(BOSLAACleanRunsBatted), col = "red")
+hist(BOSLAACleanWeight, prob= T)
+lines(density(BOSLAACleanWeight), col = "red")
+hist(BOSLAACleanHeight, prob= T)
+lines(density(BOSLAACleanHeight), col = "red")
+hist(BOSLAACleanSalary, prob= T)
+lines(density(BOSLAACleanSalary), col = "red")
+hist(BOSLAACleanCareer, prob= T)
+lines(density(BOSLAACleanCareer), col = "red")
+hist(BOSLAACleanAge, prob= T)
+lines(density(BOSLAACleanAge), col = "red")
+hist(BOSLAACleanSeasonHit, prob= T)
+lines(density(BOSLAACleanSeasonHit), col = "red")
+
+
+```
+
+This is quite interesting, because we have a nice assortment of different kinds of disctributions. 
+
+
+There are many things that instantly stand out which I will be able to test soon. 
+Right now, I will look at the distributions.
+
+Height, weight, and age appear to have binomial distribution.
+Runs, hits, bats, games, salary, career and at bats all seem to have poisson distribution. This is because evrybody starts at zero.
+Season hit has a bernouilli distribution.
+
+Now is time to test these.
+
+```{r}
+
+shapiro.test(BOSLAACleanWeight)
+shapiro.test(BOSLAACleanHeight)
+shapiro.test(BOSLAACleanAge)
+
+
+
+```
+Age, weight, and height are normal, as their p-value is over 0.05. 
+The others need to be looked at.
+
+I can also measure the skewness of Runs, hits, runs batted, games, salary, career. They are indeed skewed.
+
+```{r}
+
+RunSkew = skewness(BOSLAACleanRuns)
+HitSkew = skewness(BOSLAACleanHits)
+RunsBattedSkew = skewness(BOSLAACleanRunsBatted)
+AtBatSkew = skewness(BOSLAACleanAtBat)
+GamesSkew = skewness(BOSLAACleanGames)         
+SalarySkew = skewness(BOSLAACleanSalary)
+CareerSkew = skewness(BOSLAACleanCareer)         
+```
+
+## 2.3 Additional insights and issues
+
+*Highlight potential further issues or insights uncovered in 2.2.  This might include follow up to findings from your initial EDA.  We accept that the boundary between 2.2 and 2.3 is somewhat arbitrary so use your judgement and maximise good structure and readability. (5 marks)*
+
+Seeing as the median is zero in a few graphs, yielding extremely skewed distributions, to remove the zero values would allow me to learn a lot more about the rest. Let's take a look at Runs and RunsBatted.
+In fact, it would also be helpful to do the same to Hits and AtBat
+What you have here is what Nassim Taleb might call a fat-tailed distribution in these cases. This means that given that everybody  starts at zero, but the upper limit is theoretically unlimited. What will happen in this case is precicely what is found here.
+
+```{r}
+## create new sets removing values =0
+BOSLAACleanRunsDone = BOSLAACleanRuns[BOSLAACleanRuns != "0"]
+hist(BOSLAACleanRunsDone, prob = T)
+lines(density(BOSLAACleanRunsDone), col = "red")
+summary(BOSLAACleanRunsDone)
+
+BOSLAACleanHitsDone = BOSLAACleanHits[BOSLAACleanHits != "0"]
+hist(BOSLAACleanHitsDone, prob = T)
+lines(density(BOSLAACleanHitsDone), col = "red")
+summary(BOSLAACleanHitsDone)
+
+BOSLAACleanAtBatDone = BOSLAACleanAtBat[BOSLAACleanAtBat != "0"]
+hist(BOSLAACleanAtBatDone, prob = T)
+lines(density(BOSLAACleanAtBatDone), col = "red")
+summary(BOSLAACleanAtBatDone)
+
+BOSLAACleanRunsBattedDone = BOSLAACleanRunsBatted[BOSLAACleanRunsBatted !="0"]
+
+##This is a very good moment to remove that -4
+hist(BOSLAACleanRunsBattedDone, prob = T)
+lines(density(BOSLAACleanRunsBattedDone), col = "red")
+summary(BOSLAACleanRunsBattedDone)
+
+##Another way to do this is to select sums greater than or lower than a certain amount. I will probably to this to analyse those who did not do any runs hits, at bats, or bats.
+RunsDoneSkew =  skewness(BOSLAACleanRunsDone)
+RunsDoneSkew
+HisDoneSkew = skewness(BOSLAACleanHitsDone)
+HisDoneSkew
+AtBatDoneSkew = skewness(BOSLAACleanAtBatDone) 
+AtBatDoneSkew
+RunsBattedDoneSkew = skewness(BOSLAACleanRunsBattedDone)
+RunsBattedDoneSkew
+##
+```
+We see that the distribution is still skewed in all three aside from the runs BOSLAACleanRunsBattedDone This might seem like something interesting to take away. Looking carefully, there is a negative value. Thi si sa good time to make it a little bit cleaner. I cheated by turning the negative value positive by using the abs() function
+
+```{r}
+BOSLAACleanerRunsBattedDone <- abs(BOSLAACleanRunsBattedDone)
+
+BOSLAACleanerRunsBattedDone
+
+hist(BOSLAACleanerRunsBattedDone, prob = T)
+lines(density(BOSLAACleanerRunsBattedDone), col = "red")
+summary(BOSLAACleanerRunsBattedDone)
+CleanerRunsBattedDoneSkew = skewness(BOSLAACleanerRunsBattedDone)
+CleanerRunsBattedDoneSkew
+```
+
+The cleaner version shows that this is clearly not a normal distribution.
+
+
+
+
+# 3. Modelling
+
+## 3.1 Build a model for player salary
+
+*Given the research question (i.e., the target attribute of salary) outline an analysis plan that incorporates/references any findings from the data cleaning (1.3) and EDA (2.2)  (5 marks). Use R to build a suitable model (10 marks).*  
+*NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.*  
+
+The first thing that I can do is look at all of the collelants.This is quite good, because I can see in one shot what appears to affect what. Some of this might be misleading. For example, height and weight seem to have nothing to do with salary. This is to do with the fact that height and weight have a normal distribution. There could be an ideal height and weight, and this is not indicated here. The strongest relationship seems to do ith age and career length.
+
+
+```{r}
+ggcorr(BOSLAAClean)
+
+
+```
+I want to see the correlates between each variable and player salary. Then, within that, see wether any of those items move win or against one another. Such as career length and age. or runs and bats. This is to see whether I am correct to assume that these elements might be connected.
+ANOVA and ANCOVA will be useful for finding a lot of information in one go.
+Another thing is that I will go one by one and remove the weakest correlants.
+
+```{r}
+step(league)
+
+```
+
+For example, a bloc plot will  be useful for the season hit statistic in particular.
+
+
+What I learn here is that batting and salary seem to be related somehow.
+For example, a box plot will  be useful for the season hit, and batting hand statistics in particular.
+
+
+
+```{r}
+
+
+ggplot(BOSLAAClean, aes(x=BOSLAACleanBats, y=BOSLAACleanSalary)) + geom_boxplot()
+ggplot(LAAClean, aes(x=LAACleanBats, y=LAACleanSalary)) + geom_boxplot()
+ggplot(BOSClean, aes(x=BOSCleanBats, y=BOSCleanSalary)) + geom_boxplot()
+```
+Handedness does not seem to correlate strongly. While ambidextrous seem to earn more than right handed people and even more than left handed people, the latter two have a very large number of outliers.
+
+What about career lenght, and age?
+What about birthmonth and age?
+I will also look at birth month and salaray.The reason for this is that there are many studie swhich show that the birth month of a person can have a high impact on their sports performance. This is due to how the school year functions. I will also check the year, while I'm at it.
+For this to work, I need to extract the month from the birth date, and then turn it into a factor so that it they can be separate like in the batting box plot above. The same will be done with season hit which has only two possible answers, 0 and 1.
+
+```{r}
+BOSLAACleanMonth = month(BOSLAACleanBirth)
+
+BOSLAACleanMonthFactor = factor(BOSLAACleanMonth)
+levels(BOSLAACleanMonthFactor)
+ggplot(BOSLAAClean, aes(x=BOSLAACleanMonthFactor, y=BOSLAACleanSalary)) + geom_boxplot()
+
+BOSLAACleanYear = year(BOSLAACleanBirth)
+
+BOSLAACleanYearFactor = factor(BOSLAACleanYear)
+levels(BOSLAACleanYearFactor)
+ggplot(BOSLAAClean, aes(x=BOSLAACleanYearFactor, y=BOSLAACleanSalary, prob = T)) + geom_boxplot()
+
+
+```
+
+
+
+```{r}
+
+
+
+BOSLAACleanSeasonHitFactor = factor(BOSLAACleanSeasonHit)
+levels(BOSLAACleanSeasonHitFactor)
+ggplot(BOSLAAClean, aes(x=BOSLAACleanSeasonHitFactor, y=BOSLAACleanSalary)) + geom_boxplot()
+
+```
+Obvious things to test whether they correlate are career length and salary, especially since we saw that the birth year seems linked. We need to see whether it is only a function of length, or seniority.
+```{r}
+##testing correlations is important here
+cor(BOSLAACleanAge, BOSLAACleanSalary, method = c("pearson", "kendall", "spearman"))
+cor.test(BOSLAACleanAge, BOSLAACleanSalary, method=c("pearson", "kendall", "spearman"))
+cor(BOSLAACleanCareer, BOSLAACleanSalary, method = c("pearson", "kendall", "spearman"))
+cor.test(BOSLAACleanCareer, BOSLAACleanSalary, method=c("pearson", "kendall", "spearman"))
+```
+What we find here is pretty amazing. They have very similar correlations. 
+We can learn several things. One is that the longer a person plays, the more they will make, and it does not matter what year they start in.
+
+This is very interesting. Now that we see that the longer someone has played indicates a higher salary, what about performance during the season itself?
+It might seem obvious that performance and salary would correlate, but not necessarily. For instance, studies have shown that athletes' performance can dip after transferring from one team to another. This transfer usually follows an offer of a higher salary. There was another stuyd in Israel as noted by Judea Pearl in the Book of Why about the effect of praise on soldier performances. It seemed to have an inverse correlatin, but this was due to some form of mean regression.
+Because some players will never bat or run because players on a baseball team sometimes have specialisations, all those with a zero value will be removed. This is a complicated decision because some of the players with zero will be unnecessary, others will be necessary. The proportion of these is unknown without knowing more about each individual player. It is important to compare like-for-like. It would not be correct to measure salary on batting performance on someone who is not on the team to bat, for example. They are being paid for something else otherwise undefined.
+
+```{r}
+#create version of only what was done
+
+# another version could perhaps include the version with the zero values to illustrate their effect
+
+HitsLM = (lm(formula = BOSLAACleanHits ~ BOSLAACleanSalary))
+plot(HitsLM)
+GamesLM = (lm(formula = BOSLAACleanGames ~ BOSLAACleanSalary))
+plot(GamesLM)
+RunsLM = (lm(formula = BOSLAACleanRuns ~ BOSLAACleanSalary))
+plot(RunsLM)
+RunsBattedLM = (lm(formula = BOSLAACleanRunsBatted ~ BOSLAACleanSalary))
+plot(RunsBattedLM)
+```
+```{r}
+summary(GamesLM)
+summary(RunsLM)
+summary(RunsBattedLM)
+```
+
+The next thing that I want to look at is height and weight. Is there an ideal height or weight?
+
+```{r}
+HeightLM = lm(formula = BOSLAACleanHeight ~ BOSLAACleanSalary)
+plot(HeightLM)
+WeightLM = lm(formula = BOSLAACleanWeight ~ BOSLAACleanSalary)
+plot(WeightLM)
+#create model comparing heigth and weright - scatter plot?
+```
+
+```{r}
+summary(HeightLM)
+summary(WeightLM)
+```
+Some of these look radically different, while others do not. I can test this by looking at the various distributions.
+
+
+## 3.2 Critique model using relevant diagnostics
+
+*Offer an interpretation of the model characteristics, goodness of fit and graphical diagnostics (5 marks) for the model built in 3.1. Explain any potential weaknesses (5 marks).*
+
+In order to test this model, I will want to see what happens with other teams. How accurate is it then?
+Do I have overfitting?
+
+
+```{r}
+##sum of something above a certain limit
+table(mpg$`model year`)
+sum(mpg$`model year`>79)
+```
+##proportion of something above a certain limit
+```{r}
+prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
+prop.80
+```
+```{r}
+##the below needs to be adjusted for salary to creata a confifence interval
+
+
+vr<-prop.80*(1-prop.80)/nrow(mpg)
+
+##upper confidence limit
+prop.ucl<-prop.80+ qnorm(0.975)*sqrt(vr)
+##lower confidence limit
+prop.lcl<-prop.80- qnorm(0.975)*sqrt(vr)
+##see lab2soution 5701 for more
+```
+
+```{r}
+
+
+```
+
+
+## 3.3 Suggest improvements to your model
+
+*Based on the findings in 3.2 articulates possible alternative approaches to address them (5 marks).*
+The easiest and most obvious way to improve the model would be to have even more data to compare to. This will allow one to track chenges over time. Player salary could behave differently according to the player profile over time. Some players would have high salaries over a short period, while others could have high salaries over a long period.
+Luckily, I do have more data. I can compare it with the league as a whole. Not only this, but I could also get a hold of data over time.
+```{r}
+
+
+```
+
+I want to dia little bit deeper and look at the variance as well. This is a way to test my salary model against something larger.
+
+```{r}
+##This whole bit here might e removed, I want to fit it in, but my brain is cloude. this is what the brouillon is for.
+##I can also look at the variance and create a test statistic like in lab35701
+
+var(setosa.flowers$Petal.Length)
+##two of the same type between teams
+var(virginica.flowers$Petal.Length)
+
+
+##The test statistic is obtained by dividing the variances and then using the F - distribution
+
+
+var.setosa<-var(setosa.flowers$Petal.Length)
+var.virginica<-var(virginica.flowers$Petal.Length)
+f.st<-var.setosa/var.virginica
+
+
+##This ratio looks very far from 1 so using the a built in function in R to perform the variance test
+
+var.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length )
+
+##We confirm that the p-value is very small so such a ratio is very unlikely (if we assume $H_0$ of equal variances). We can conclude that the variances are different.
+## If we want to compare the means using the apropriate hypothesis test
+
+t.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length)
+```
+
+# 4. Extension work
+
+## 4.1 Model the likelihood of a player having scored a Hit (using the hit.ind variable provided).
+
+*Given this second research question (i.e., involving the binary target attribute) provide a plan of analysis based on relevant EDA for this attribute (10 marks). The model is described, explained and critiqued (10 marks).*
+*NB Submissions where suitable models do not have good fit due to the nature of the data will not be penalised.* 
+
+This will be done on four levels. The whole set, two teams, and then each of the two teams. This iwll be very similar to how the model for player salary was developed.
+
+```{r}
+table(BOSLAASeasonHit)
+mean(BOSLAASeasonHit)
+
+```
+
+```{r}
+CrossTable(BOSLAASeasonHit, BOSLAABats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
+           chisq = TRUE, fisher = TRUE)
+```
+##crosstable shows more information
+# References  
+
+*Add any references here. NB You can either do this manually or automatically with a `.bib` file (which then must be submitted along with your `.Rmd` file).  See the RMarkdown [documentation](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html) for guidance.*    

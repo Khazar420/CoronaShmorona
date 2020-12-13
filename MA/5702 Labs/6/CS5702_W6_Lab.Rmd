@@ -50,13 +50,29 @@ table(gend)
 
 **Exercise 6.4:** In this case we have relatively few categories (levels) and also the categories are important for an analysis where we might want to make comparisons e.g., do males and females differ in some respect?  Convert `gend` into a factor.  HINT look at `as.factor()`.
 
+```{r}
+as.factor(gend)
+```
+
 
 **Exercise 6.5:** Recreate `gend` with 30 elements using the `rep()` function as per the answer to 6.2.  Leave `gend` as a character vector.  Create a new numeric vector `height` also with 30 elements.  You can generate random heights.  
+
+```{r}
+gend1 = rep(c("M","F", "?"), length.out=30 )
+heightvector = sample(140:200, 30, replace=TRUE)
+gend1
+heightvector
+```
 
 
 **Exercise 6.6:** Convert `gend` into a factor.   Then using gend as a factor compare the heights of the three gender groups of people.  Use a boxplot.  HINT `boxplot()` can take as an argument the dependent variable (in this case height) and the level (in this case `gend`) so use `boxplot(height~gend)`
 
+```{r}
+as.factor(gend1)
 
+boxplot(heightvector~gend1)
+
+```
 
 ## 2. Building a simple shiny web app {#W6S2}
 
@@ -151,7 +167,7 @@ You can also check that gend has changed by again examining the Environment Pane
 
 ```{r}
 # Create a numeric vector of 30 random heights
-height <- rnorm(n = 30, mean = 1.7, sd = 0.15)
+heightvector2 <- rnorm(n = 30, mean = 1.7, sd = 0.15)
 # Create a new character vector gend and convert to a factor
 gend <- rep(c('M','F','?'), length.out=30)
 gend <- as.factor(gend)
@@ -163,7 +179,7 @@ gend <- as.factor(gend)
 # convert to a factor
 gend <- as.factor(gend)
 #generate side by side boxplots to compare the heights for the three levels
-boxplot(height~gend)
+boxplot(heightvector2~gend)
 ```
 
 
