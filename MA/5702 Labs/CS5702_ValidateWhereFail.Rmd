@@ -1,0 +1,41 @@
+---
+title: "Which data items fail?"
+output: html_notebook
+---
+
+## Initialisation 
+```{r}
+library(validate)
+data("women")
+View(women)
+```
+
+## Simple check
+
+One rule which should fail for 3 women
+
+```{r}
+check144 <- check_that(women, weight > 120)
+summary(check144)
+```
+
+```{r}
+
+min120 = subset.data.frame(women, weight <= 120)
+min120
+
+```
+
+## Getting by record output
+
+```{r}
+aggregate(check144,by="record")
+```
+
+or look at the raw data directly
+
+```{r}
+str(check144) 
+check144$._value
+```
+
