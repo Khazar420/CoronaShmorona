@@ -47,7 +47,7 @@ ggplot(data=iq, aes(x=iq)) + geom_histogram(bins=10) +theme_classic()
 And more importantly we want to see if the mean for iq or age is different between the three groups.
  
 ```{r}
-ggplot(data = iq, aes(x=group, y=)) +geom_boxplot() + theme_classic()
+ggplot(data = iq, aes(x=group, y=age)) +geom_boxplot() + theme_classic()
 ```
 We can also look at the same plot for iq and group.
  
