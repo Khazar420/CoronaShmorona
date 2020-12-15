@@ -33,6 +33,7 @@ install.packages("ggpubr")
 install.packages("lubridate")
 install.packages("GGally")
 install.packages("PerformanceAnalytics")
+install.package("gmodels")
 ```
 Sometimes this does not work, in which case go to tools>install packages>paste the following under CRAN: 
 ggplot2,dplyr,dbplyr,foreign,ggpubr,xtable,mgcv,tree,validate, lubridate
@@ -51,6 +52,7 @@ library(validate)
 library(lubridate)
 library(GGally)
 library(PerformanceAnalytics)
+library(gmodels)
 
 ```
 
@@ -89,7 +91,8 @@ In terms of quality, the data appears to be rather robust. We have more or less 
 ```{r}
 
 summary(BOSLAA)
-plot(BOSLAA)
+plot(BOSLAA, panel = panel.smooth)
+
 ```
 
 It contains 15 variables. They are as follows:
@@ -718,14 +721,14 @@ BOSLAACleanMonth = month(BOSLAACleanBirth)
 
 BOSLAACleanMonthFactor = factor(BOSLAACleanMonth)
 levels(BOSLAACleanMonthFactor)
-ggplot(BOSLAAClean, aes(x=BOSLAACleanMonthFactor, y=BOSLAACleanSalary)) + geom_boxplot()
+ggplot(BOSLAAClean, aes(x=BOSLAACleanMonthFactor, y=BOSLAACleanSalary)) + geom_boxplot() + geom_jitter(color = "red")
 
 BOSLAACleanYear = year(BOSLAACleanBirth)
 
 BOSLAACleanYearFactor = factor(BOSLAACleanYear)
 levels(BOSLAACleanYearFactor)
-ggplot(BOSLAAClean, aes(x=BOSLAACleanYearFactor, y=BOSLAACleanSalary, prob = T)) + geom_boxplot()
-
+ggplot(BOSLAAClean, aes(x=BOSLAACleanYearFactor, y=BOSLAACleanSalary, prob = T,)) + geom_boxplot() +
+geom_jitter(color = "red")
 
 ```
 
@@ -796,7 +799,21 @@ summary(HeightLM)
 summary(WeightLM)
 ```
 Some of these look radically different, while others do not. I can test this by looking at the various distributions.
+We could try to look at it in in another way, through a tree.
 
+```{r}
+SalaryTree<-tree(BOSLAAClean$salary~., data = BOSLAAClean)
+plot(SalaryTree)
+##for some reason I cannot get this to work./ - see lab 6 for source
+```
+The below will need to be readapted for all 15 variables, I think
+```{r}
+m1.lm<-lm(ozone~temp*wind*rad+I(temp^2)+ I(wind^2)+ I(rad^2), data=ozone.pollution )
+summary(m1.lm)
+##this will be a challenge to adapt, but will give something very good for the salary model
+##Eventually, it will be reduced to a fe wimportant variables for m to ploit below
+plot(m6.lm)
+```
 
 ## 3.2 Critique model using relevant diagnostics
 
@@ -883,14 +900,17 @@ t.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length)
 
 This will be done on four levels. The whole set, two teams, and then each of the two teams. This iwll be very similar to how the model for player salary was developed.
 
+Because hit.ind/seasonhit is a binary variable, logistic regression is the best model according to the lectures.
+##use logistic regression here somehow
+
 ```{r}
-table(BOSLAASeasonHit)
-mean(BOSLAASeasonHit)
+table(BOSLAACleanSeasonHit)
+mean(BOSLAACleanSeasonHit)
 
 ```
 
 ```{r}
-CrossTable(BOSLAASeasonHit, BOSLAABats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
+CrossTable(BOSLAACleanSeasonHit, BOSLAACleanBats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
            chisq = TRUE, fisher = TRUE)
 ```
 ##crosstable shows more information
