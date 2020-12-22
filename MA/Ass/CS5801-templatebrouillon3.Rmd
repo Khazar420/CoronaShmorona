@@ -74,8 +74,8 @@ library(gmodels)
 BOSLAA = subset(CS5801.data, teamID.x == "BOS" | teamID.x=="LAA")
 BOS = subset(CS5801.data, teamID.x == "BOS")
 LAA = subset(CS5801.data, teamID.x == "LAA")
-
-
+#I am also renaming the dataframe to "League" because I have a personal preference not to have punctuation in the names of my objects.
+League = CS5801.data
 
 
 ```
@@ -86,9 +86,14 @@ Only the two teams need to be separated at this stage, but I also decivded to ha
  
 *Provide a description of a comprehensive plan to assess the quality of the data, and document your findings.  Include all variables/columns (5 marks) from the data set and provide a full implementation (5 marks).  NB even if no data quality issues are identified you should still check and report.*
 
-In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team (38 and 42).  When plotting them, one sees that they look quite similar too. When simply plotting shows that there are clear trends, and a summary shows a couple of anomalies. One anomaly is a negative number of games, runs, or length of career, for example. These are physical impossibilities. Another anomaly is that some things have a median of zero.It would be interesting to see why.
+In terms of quality, the data appears to be rather robust. We have more or less the same number of players per team (38 and 42).  When plotting them, one sees that they look quite similar too. 
+Simply plotting a line shows that there are clear and observable trends.A summary shows anomalies very quickly. 
+One anomaly is a negative number of games, runs, or length of career, for example. These are physical impossibilities. Another anomaly is that some things have a median of zero, or other extreme distributions.It would be interesting to see why.
+Some of these anomalies do not appear to be in my teams, but let's take a look.
 
 ```{r}
+summary(League)
+plot(League, panel = panel.smooth)
 
 summary(BOSLAA)
 plot(BOSLAA, panel = panel.smooth)
@@ -143,29 +148,29 @@ BOSLAA[!complete.cases(BOSLAA),]
  
 *Explain any data quality issues found in 1.2 (5 marks), justify and document the responses made (if any) (5 marks).*
 
-The dataset name will be renamed to League, because it carries more meaning. not only this, but later on, when comparing the two teams to the league as a whole, there will be fewer formatting issues. The reason is that punctuation in the wrong places can impact things, and having punctuation in the middle of a name can also be confusing to the reader as it could look like it has a purpose beyond beying a character in a name. It is also a personal stylistic choice.
+The dataset have been renamed to League, because it carries more meaning. not only this, but later on, when comparing the two teams to the league as a whole, there will be fewer formatting issues. The reason is that punctuation in the wrong places can impact things, and having punctuation in the middle of a name can also be confusing to the reader as it could look like it has a purpose beyond beying a character in a name. It is also a personal stylistic choice.
 I will rename some collumns as well, so that I can better understand what I am loking at at a glance, but also for the reasons above. While renaming, I can also separate it by team. While it looks like a lot of work, this will save a lot of time later on. It also means that my definitions are, for the large part, in one place.
 
-It contains 15 variables. They will be renamed as follows:
+The 15 variables will be renamed as follows:
 platerID
-teamID.x
+teamID.x - Team
 R - Runs
 G - Games
 H - Hits
 AB - AtBat
 RBI - RunsBatted
-weight 
-height
-salary
+weight - Weight
+height - Height
+salary - Salary
 birthDate - Birth
 career.length - Career
-bats
-age
+bats - Bats
+age - Age
 hit.ind - SeasonHit. I do not know what hit.ind means, but it represents whether a player had a hit that season.It has a Bernoulli disctribution, which has a binary distribution. SeasonHit 1 or 0 basically turns it into a yes/no question which makes more intuitive sense to me.
 The rest will simply be capitalised for consistent formatting
 ```{r}
 
-League = CS5801.data
+
 
 League %>% 
   rename(
@@ -313,6 +318,8 @@ LeagueplayerID = League$playerID
 BOSLAAplayerID = BOSLAA$playerID
 BOSplayerID = BOS$playerID
 LAAplayerID = LAA$playerID
+#15
+#The team names are not here, because only two will be used, and they are present in all of the subsets above.
 ```
 Before taking any further steps, it is clear that some values make no sense. For example, BOS has a player with a negative RBI. It is not possible to run a negative number of runs. check_that() is very useful as it allows me to create rules and check them. Rules such as valid answers, or logical answers. This is first done for the league as a whole, going down in number. 
 
@@ -338,7 +345,7 @@ LeagueCheck <- check_that(League,
                           LeagueAge > 0,  
                           LeagueBats == "R" | LeagueBats == "L" | LeagueBats == "B",
                           LeagueSeasonHit == "1" | LeagueSeasonHit == "0")
-#Looking for duplicate team namtes      
+#Duplicate players are not looked at here for a reason     
 # Produce a bar chart of the quality rule failures
 barplot(LeagueCheck, main = "League Verification")
 
@@ -387,13 +394,13 @@ ProblemPlayer
 #I have located the player but not identified it
 
 ```
-The RBI problem is in Boston. This error could have various causes. I have no way of telling the true value at this stage, however. the reason why is that the relevant dataframe looks are 3 variables, and none of these match the 15 from the main dataframe. I can search for the player manually, and his name is grokkel01.
+The RBI problem is in Boston. This error could have various causes. I have no way of telling the true value at this stage, however. the reason why, is that the relevant dataframe looks are 3 variables, and none of these match the 15 from the main dataframe. I can search for the player manually, and their name is grokkel01. They d not have any other unusual values.
 
 ```{r}
 str(BOSCheckDF) 
 ```
 
-Now to identify the duplicate playeys.
+Now to identify the duplicate players.
 ```{r}
 BOSDoubles = duplicated(BOSplayerID) 
 table(BOSDoubles)
@@ -422,6 +429,16 @@ LAACleanDoubles = duplicated(LAAClean$playerID)
 table(LAACleanDoubles)
 
 BOSLAAClean = rbind(BOSClean, LAAClean)
+BOSLAAClean
+```
+I can also check for duplicate players here. It looks like victosh01 played for both teams. his performance was actually quite similar across both teams.
+
+```{r}
+BOSLAACleanDoubles = duplicated(BOSLAAClean$playerID) 
+table(BOSLAACleanDoubles)
+BOSLAACleanDoubles
+BOSLAACleanDouble = BOSLAAClean$playerID[duplicated(BOSLAAClean$playerID)]
+BOSLAACleanDouble
 BOSLAAClean
 ```
 
@@ -663,10 +680,10 @@ CleanerRunsBattedDoneSkew = skewness(BOSLAACleanerRunsBattedDone)
 CleanerRunsBattedDoneSkew
 ```
 
-The cleaner version shows that this is clearly not a normal distribution.
+The cleaner version shows that this is clearly not a normal distribution. Although it might appear to be less skewed, it is more skewed thanRuns, Bats, Hits, or AtBats.
 
 
-This is very interesting. Although career length had amonth the highest median values in terms of the skewed (by virtue of career length's impossiblitliyt of being zero), career length is the most skewed. This is  further accentuated when removing the zero values from runs, games, hit, and at bats.
+This is very interesting. Although career length had amonth the highest median values in terms of the skewed (by virtue of career length's impossiblitliy of being zero), career length is the most skewed. This is  further accentuated when removing the zero values from runs, games, hit, and at bats.
 
 
 # 3. Modelling
@@ -913,7 +930,16 @@ mean(BOSLAACleanSeasonHit)
 CrossTable(BOSLAACleanSeasonHit, BOSLAACleanBats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
            chisq = TRUE, fisher = TRUE)
 ```
-##crosstable shows more information
+##crosstable shows more information - i don't knwo how to use it , however.
+
+Using 
+```{r}
+LeagueHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary ,data = League, family = "binomial")
+LeagueHitsGLM
+###this gives really low numbers for some reason
+```
 # References  
+
+
 
 *Add any references here. NB You can either do this manually or automatically with a `.bib` file (which then must be submitted along with your `.Rmd` file).  See the RMarkdown [documentation](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html) for guidance.*    

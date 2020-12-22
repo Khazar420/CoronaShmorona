@@ -1,0 +1,439 @@
+---
+title: "CS5802: Critical Analysis of Modern Data Exam"
+output: html_notebook
+date: 15/12/2020
+author: xxx
+version: 1.1 
+---
+
+![](https://www.brunel.ac.uk/SiteElements/images/brunel-logo-blue.png)
+
+
+# Exam Question Paper
+
+#### College/ Institute:	College of Engineering, Design & Physical Sciences (CEDPS)
+#### Department: Computer Science	
+#### Exam Author(s): Martin Shepperd and Isabel Sassoon
+#### Module Code: CS5802
+#### Module Title: Critical Analysis of Modern Data Exam
+#### Month: 0930-1230 GMT, 15th December,	2020
+#### Exam Type: Full
+#### Duration: 3 hours plus 5 minutes upload time  
+
+
+## Exam instructions  
+
+1. Uploads need to be **COMPLETED** before the end of the upload time.  Late work will not be accepted.  If you have any problems uploading work you must notify us that you are experiencing difficulties in uploading and/or submitting your work, using the contact details you have been given (in exam "Live WiseFlow Chat" or phone +44 (0)1895 268860).  Work sent via email will not be marked.  
+2. You should upload a *single answer file* (as an RMarkdown file) based on this Exam Template containing your answers which will be a mix of text and R code.  
+3. When you save your notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *(Mac OS: Cmd+Shift+K; Windows: Cntrl+Shift+K)* to preview the HTML file).  There is no need to upload any rendered HTML or PDF files.  
+4. Do not edit the YAML header (lines 1-7) except to replace xxx with your student id.  
+5. Write your answers using RMarkdown.  For guidance see a [helpful blog](https://www.dataquest.io/blog/r-markdown-guide-cheatsheet/#tve-jump-17333da0719) or use the R Markdown cheatsheet which can be accessed from within RStudio by selecting `Help > Cheatsheets > R Markdown Quick Reference`.  
+6. If you wish you can obtain a formatted view of this exam template and your answers by using the Preview button in RStudio.  
+7. You may *not* communicate with other candidates nor share information/discuss exam-related matters with any external person for the duration of the exam.  
+
+## Exam rubric
+
+1. The exam comprises two equally weighted sections each with three questions, making a total of SIX questions.  You should attempt *all* questions.  
+2. The allocated marks are indicated for each question and sub-question.  There is a total of 100 marks.  
+3. Note that although each section notionally 'belongs' to either CS5701 or CS5702 you are encouraged to draw on any relevant material.  
+4. This is an open book exam.  
+5. Make sure you fully explain your answers with text and/or code comments as appropriate.  
+6. The end of the exam questions is delimited by "*****END OF EXAM*****".    
+
+By continuing beyond this point, you confirm that you have read the information and instructions above and understand the conditions of this examination.  
+
+---
+
+## Section I: Modern Data
+
+**Question 1: (Total 15 marks)**
+
+i) Explain, with examples, why understandable code matters for data analysis **(4 MARKS)**
+
+    -- Answer here  
+Understantable code matters for at least four main reasons. This answer is based loosely on Robert C. Martin's "Clean Code" book.
+The most important reason is that the author will not necessarilly build something in one go. they might pick up a project every few months or years. This means that the code needs to be clear and understandable for when they return to it. This is becayse they will not neceserily remember everything.
+The second reason is that other people will probably haveaccess or read the code. If it is a group project, or perhaps something that will be open-sourse or on Github, understandability is very impotant. 
+The third reason is ease of editing. making changed will not only be more straightforward, but it will allow for the code itself to be less fragile, abd more flexible.
+The four reason is that it will take away from unnecessary complexity and repetition. This will ultimately make it run better and require less disk space.
+
+
+One way to to it is through having variables that carry meaning. For instance, saving objects with unambuguous names helps. Leaving clear explanations when performing certain action, or indeed not performing certain actions means that things will be much clearer for all readers. Things such as explaining assumptions or referring to certain methodologies give clear indication of what was attempted to acchieve.
+There are other general principles such as Ockam's razor, in that the simplest solution is probably the best.
+
+
+ii) Edit and improve understandability of the R code fragment below.  The code: 
+
+    1. sets a seed for a random number generator  
+    2. generates some random numbers  
+    3. checks if the sample mean is less or equal/greater than the population mean, i.e., the mean parameter for rnorm()  
+
+    Note that the code works as intended.  Retain the original version and edit the **second** code chunk.  Explain the rationale for your changes.  **(6 MARKS)** 
+
+```{r}
+# Unedited version - you are advised not to update this version though you might wish to execute it.
+
+p <- function(){
+# Checking code sort of 
+  q <- 1234;P<-q
+set.seed(P);return(q)      } #end of definition
+
+    p() # Call function to do stuff
+pP<-20;pp <-rnorm(n=pP,pP,sd  =pP/10);Q<-mean(pp)    
+   if(Q<pP){message("The sample mean is less than the population mean")}else{message("The sample mean is equal or greater than the population mean")}
+```
+
+
+```{r}
+# Edit and improve the understandability of this version.  
+
+p <- function(){
+# Checking code sort of 
+  q <- 1234;P<-q
+set.seed(P);return(q)      } #end of definition
+
+    p() # Call function to do stuff
+pP<-20;pp <-rnorm(n=pP,pP,sd  =pP/10);Q<-mean(pp)    
+   if(Q<pP){message("The sample mean is less than the population mean")}else{message("The sample mean is equal or greater than the population mean")}
+```
+
+    -- Answer here  
+
+```{r}
+# Edit and improve the understandability of this version.  
+
+p <- function(){
+# Checking code sort of 
+  q <- 1234;P<-q
+set.seed(P);return(q)      } #end of definition
+
+    p() # Call function to do stuff
+pP<-20;pp <-rnorm(n=pP,pP,sd  =pP/10);Q<-mean(pp)    
+   if(Q<pP){message("The sample mean is less than the population mean")}else{message("The sample mean is equal or greater than the population mean")}
+```
+
+    1. sets a seed for a random number generator  
+    2. generates some random numbers  
+    3. checks if the sample mean is less or equal/greater than the population mean, i.e., the mean parameter for rnorm()  
+
+    Note that the code works as intended.  Retain the original version and edit the **second** code chunk.  Explain the rationale for your changes.  **(6 MARKS)** 
+iii) Outline the advice you would give to a data scientist to produce an understandable and reproducible analysis.  **(5 MARKS)**
+
+    -- Answer here  
+
+
+
+
+**Question 2: (Total 25 Marks)**
+
+This question is based on a fictitious data set which *you* need to `load()` using the following code.  
+
+```{r}
+# You should run this code chunk to obtain the data set as a data frame named sexBMIdata
+remoteFileName <- "https://raw.githubusercontent.com/mjshepperd/CS5702-Data/master/CS5802_sexBMIdata.Rda"
+load(file = url("https://raw.githubusercontent.com/mjshepperd/CS5702-Data/master/CS5802_sexBMIdata.Rda"))
+```
+
+### Meta Data for sexBMIdata 
+
+1. Sex: {Male,Female}  
+2. Age: in whole years  
+3. Height: in metres
+4. Weight: in kilograms  
+5: BMI: body mass index (computed as $$BMI = kg/m^2$$) is an estimate of body fat based on height and weight.  It is broadly interpreted as follows:  
+
+    <18.5 = Underweight
+    18.5–24.9	= Normal
+    25.0–29.9	= Overweight
+    30.0+ = Obese
+
+
+i) Outline a quality checking plan for this data set.  **(5 MARKS)**
+
+    -- Answer here  
+I will first check for missing values, or values which do not make sense. This will be done using the is.na() function, as well as elements from the validate package. Please install validate if needed.
+I will then test whether the information is correct. I can compare the BMI to the height and weight using the equation provided.
+
+I will also do a summary
+
+
+ii) Implement your quality plan in R (in the code chunk below).  Use inline comments and additional text as appropriate.  What, if any, data quality issue can you identify?  **(5 MARKS)**  
+
+```{r}
+
+library(validate)
+# Add your code to check the data quality 
+summary(sexBMIdata)
+table(is.na(sexBMIdata))
+sexBMIdataCheck = check_that(sexBMIdata,
+                        sexBMIdata$Sex == "Male" | sexBMIdata$Sex == "Female",
+                        sexBMIdata$Age >= 0,
+                        sexBMIdata$Height >= 0,
+                        sexBMIdata$Weight >= 0,
+                        sexBMIdata$BMI >= 0)
+barplot(sexBMIdataCheck, main = "BMI Data Verification")
+```
+
+
+
+
+    -- Answer here   
+I can see that of the 500 piece of iinformation, one is not available.Is is somebody's BMI.
+
+
+iii) Explain your data cleaning strategy for any problems you have detected.  **(3 MARKS)** 
+
+    -- Answer here  
+
+
+
+iv) Use R to implement your data cleaning strategy for any problems you have detected.  **(3 MARKS)** 
+
+```{r}
+# R code to implement your data cleaning strategy here
+
+```
+
+
+v)	Describe and summarise the data set using R.  Explain the purpose of your code.  Use inline comments and additional text as appropriate.  **(4 MARKS)**  
+
+```{r}
+
+hist(sexBMIdata$Age, prob= T)
+lines(density(sexBMIdata$Age), col = "red")
+hist(sexBMIdata$Height, prob= T)
+lines(density(sexBMIdata$Height), col = "red")
+hist(sexBMIdata$Weight, prob= T)
+lines(density(sexBMIdata$Weight), col = "red")
+hist(sexBMIdata$BMI, prob= T)
+lines(density(sexBMIdata$BMI), col = "red")
+
+boxplot(sexBMIdata)
+# R code to describe and summarise sexBMIdata here
+
+```
+
+    -- Answer here  
+
+
+
+vi) Undertake an exploratory data analysis to compare males and females?  What do you learn?  **(5 MARKS)**  
+
+```{r}
+# R code to compare males and females here
+
+```
+
+    -- Answer here  
+
+
+
+
+**Question 3: (Total 10 Marks)**
+
+
+i) Explain why the R chunk below fails to work as intended.  Suggest some R code to automatically check for empty strings in a character vector such as `letterVector`.   **(4 MARKS)** 
+
+```{r}
+# Part of the question - do not edit
+# Create a character vector
+letterVector <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "")
+# Check whether there are any missing values
+is.na(letterVector)
+```
+
+    -- Answer here  
+This fails to work as intended because is.na() searches for what are considered missing values. This has a very particular fdefinition in r. It appears in
+
+
+```{r}
+# Your R code for checking for empty strings in a character vector such as letterVector.
+letterVectorWorks <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", NA)
+is.na(letterVectorWorks)
+```
+
+
+
+ii) In R what does NaN mean?  Give an example of how it might arise?  **(2 MARKS)**
+
+    -- Answer here  
+NaN means not a number.
+
+
+iii) Why is missingness a problem for data analysis?  **(4 MARKS)**
+
+    -- Answer here  
+
+Missing
+Shepperd's book https://bookdown.org/martin_shepperd/ModernDataBook/C5-Cleaning.html explains it well.
+
+
+---
+
+## Section II: Quantitative Data Analysis
+
+**Question 4: (Total 20 Marks)**
+
+A set of 4 Nitrogen Dioxide (NO2) sensors have been installed on the Brunel Campus on the North, South, East and West corners of the Lecture Centre. Data is available from these sensors. The sensors measure the concentration of NO2 in the air.The Brunel environmental team have prepared this data using the code in the R chunk below.
+
+```{r}
+# Unedited version - you are advised not to update this version though you might wish to execute it.
+sensor.readings<-c(115.41, 103.08 ,130.58, 140.15, 129.20 , 85.18 ,125.94 ,163.56 ,147.85 , 86.78, 97.62, 116.30, 112.92, 119.76, 145.25,  34.47, 155.55,  72.41, 149.86,  93.39, 138.12, 122.76, 140.85, 163.31, 108.98, 136.74, 153.31, 167.12, 158.07, 123.17, 112.01,  74.05, 125.86 , 99.26,  73.06, 130.26, 136.56, 114.43, 109.03, 116.22)
+sensor.location<-c("n","n","n","n","n","n","n","n","n","n", "s","s","s","s","s","s","s","s","s", "s", "e","e","e","e","e","e","e","e","e","e","w","w","w","w","w","w","w","w","w","w")
+sensor.data<-as.data.frame(cbind(sensor.location, sensor.readings))
+sensor.data$sensor.readings<-as.numeric(sensor.data$sensor.readings)
+head(sensor.data)
+```
+
+This dataframe has two columns: sensor.location (n,s,w,e) and sensor.readings.
+
+For your convenience some summary statistics are provided below:
+
+```{r}
+#DO NOT EDIT THIS CHUNK
+aggregate(sensor.data$sensor.readings~sensor.data$sensor.location, FUN="mean")
+```
+
+i) Use the code chunk below to visualise the data graphically (using a plot) and explain what it shows. **(5 MARKS)**
+
+* Use the space below to explain in words and use the code chunk to insert any code*
+
+    -- Answer here  
+
+
+
+```{r}
+# Edit this version
+library(ggplot2)
+
+ggplot(sensor.data, aes(x=sensor.location, y=sensor.readings)) + geom_boxplot() + geom_jitter(color = "red")
+```
+
+
+
+ii) The Brunel environmental team are interested in knowing if there is a difference in NO2 levels between the four corners of the Lecture Centre. What modelling approach would you use and why? **(5 MARKS)**
+
+    -- Answer here  
+Looking at the boxplot, there are clear differences.
+
+
+iii) Write the R code for the model proposed in the chunk below: **(5 MARKS)**
+
+```{r}
+# Edit this version
+
+```
+
+iv) Do you conclude that there is a difference between the different in the NO2 levels measured at the different corners? **(5 MARKS)**  
+Explain your answer (if you need to run more code add it below)  
+
+```{r}
+# Edit this version
+```
+
+    -- Answer here  
+
+
+
+**Question 5: (Total 15 Marks)**
+
+The science museum in London has been collecting survey data from visitors. They shared the table (that is generated by running the code below) that comprises answers to the following two questions:  
+  - Would you return to this museum in the future?  
+  - Did you visit the IMAX cinema during your visit today?  
+  
+```{r}
+# R code to produce table of visitor survey data
+# Do not edit this code
+visits<-matrix(c(35,12,10,23), ncol=2)
+colnames(visits)<-c("Yes- would return", "No would not")
+rownames(visits)<-c("Visited Imax", "Did not visit Imax")
+visits
+```
+
+i) Explain what approach would you take to testing whether there is a relationship between the answers to these two questions or they are independent. **(5 MARKS)**  
+
+    -- Answer here  
+I will check for correlation.
+
+
+ii) Implement the approach and explain whether the test you ran confirms that the two answers are independent. **(5 MARKS)**  
+
+```{r}
+# Edit this version
+library(GGally)
+cor(visits)
+ggcorr(visits)
+```
+
+    -- Answer here    
+Thos who visited are more likely to visit again. those who did not visit are less likely to visit in future.
+
+
+iii) The science museum now provides you with the raw data and some additional attributes such as: responder-id, age, visited IMAX (yes/no), travel time (in minutes) as well as the answer to the question: "Would you return to this museum in the future?"   
+The science museum team wants to know if there are any attributes that make a return visit more likely.  
+
+What model would you use and why? **(5 MARKS)**
+
+    -- Answer here  
+
+I would use the Dirichlet model if I had better r skills.
+The Dirichlet: A Comprehensive Model of Buying Behaviour
+
+
+
+**Question 6: (Total 15 Marks)**
+
+A linear regression model with three explanatory variables is shown below. The model's target variable is mpg (miles per gallon) of a car. The explanatory variables are hp (HorsePower), disp (displacement in cubic inches) and wt (weight of the car).
+
+Output of the summary function:
+
+```
+Call:
+lm(formula = cars$mpg ~ cars$hp + cars$disp + cars$wt)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0396 -1.6899 -0.1521  0.8440  5.6513 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 37.694291   2.295821  16.419  6.7e-15 ***
+cars$hp     -0.041250   0.018150  -2.273  0.03190 *  
+cars$disp    0.002113   0.013022   0.162  0.87239    
+cars$wt     -3.758268   1.122810  -3.347  0.00258 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.705 on 25 degrees of freedom
+Multiple R-squared:  0.8333,	Adjusted R-squared:  0.8133 
+F-statistic: 41.66 on 3 and 25 DF,  p-value: 7.103e-10
+```
+
+i) Write down the best fit linear equation relating the mpg to hp, disp and wt using the values from the R output as coefficients. **(5 MARKS)**
+
+    -- Answer here  
+
+
+
+ii) Which, if any, of the covariates included in the model above could be considered significantly associated with NO2 concentration? Justify your answer. **(5 MARKS)**  
+
+    -- Answer here  
+
+
+
+iii) Looking at the plots below (these were generated from the same model using `plot(model)` ):
+
+![Plot1](https://raw.githubusercontent.com/mjshepperd/CS5702-Data/master/CS5802_Q6_1.png
+)
+
+![Plot2](https://raw.githubusercontent.com/mjshepperd/CS5702-Data/master/CS5802_Q6_2.png
+)
+
+Do these plots indicate a problem with the model assumptions? **(5 MARKS)**  
+
+    -- Answer here    
+
+
+
+
+*****END OF EXAM*****
