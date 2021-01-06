@@ -832,6 +832,7 @@ WeightLM = lm(formula = BOSLAACleanWeight ~ BOSLAACleanSalary)
 plot(WeightLM)
 #create model comparing heigth and weright - scatter plot?
 ```
+Looking here, it seems as though there is an ideal height and weight as on th eQ-Q plot, the points are closer to the line towards the middle.
 ```{r}
 step(HeightLM)
 step(WeightLM)
@@ -855,15 +856,12 @@ step(SalaryLM)
 
 *Offer an interpretation of the model characteristics, goodness of fit and graphical diagnostics (5 marks) for the model built in 3.1. Explain any potential weaknesses (5 marks).*
 
-In order to test this model, I will want to see what happens with other teams. How accurate is it then?
-Do I have overfitting?
+The main weakness is that I have not ben able to divide the populations adequately. I need to be able to know which player played in which position, and divide them accordingly. The reason is that different players perform differently based on which position that they are in.
+
+I need training data in order to compare my findings.
+I also need to be able to creat upper and lower confidence limits.
 
 
-```{r}
-##sum of something above a certain limit
-table(mpg$`model year`)
-sum(mpg$`model year`>79)
-```
 ##proportion of something above a certain limit
 ```{r}
 prop.80<-sum(mpg$`model year`>79)/nrow(mpg)
@@ -893,38 +891,10 @@ prop.lcl<-prop.80- qnorm(0.975)*sqrt(vr)
 *Based on the findings in 3.2 articulates possible alternative approaches to address them (5 marks).*
 The easiest and most obvious way to improve the model would be to have even more data to compare to. This will allow one to track chenges over time. Player salary could behave differently according to the player profile over time. Some players would have high salaries over a short period, while others could have high salaries over a long period.
 Luckily, I do have more data. I can compare it with the league as a whole. Not only this, but I could also get a hold of data over time.
-```{r}
 
-
-```
 
 I want to dia little bit deeper and look at the variance as well. This is a way to test my salary model against something larger.
 
-```{r}
-##This whole bit here might e removed, I want to fit it in, but my brain is cloude. this is what the brouillon is for.
-##I can also look at the variance and create a test statistic like in lab35701
-
-var(setosa.flowers$Petal.Length)
-##two of the same type between teams
-var(virginica.flowers$Petal.Length)
-
-
-##The test statistic is obtained by dividing the variances and then using the F - distribution
-
-
-var.setosa<-var(setosa.flowers$Petal.Length)
-var.virginica<-var(virginica.flowers$Petal.Length)
-f.st<-var.setosa/var.virginica
-
-
-##This ratio looks very far from 1 so using the a built in function in R to perform the variance test
-
-var.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length )
-
-##We confirm that the p-value is very small so such a ratio is very unlikely (if we assume $H_0$ of equal variances). We can conclude that the variances are different.
-## If we want to compare the means using the apropriate hypothesis test
-
-t.test(setosa.flowers$Petal.Length,virginica.flowers$Petal.Length)
 ```
 
 # 4. Extension work
