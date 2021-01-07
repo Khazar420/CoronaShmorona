@@ -1,0 +1,193 @@
+---
+title: "Lab 6 part 2 a solution"
+author: "Isabel Sassoon"
+date: "November 2020"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This is a solution to the worksheet for the QDA lab 6 independent practice. 
+Different maximal models can be selected and as such the resulting minimal adequate model will differ. The important part is to justify the approach and the steps taken.
+
+
+
+```{r}
+library(ggplot2)
+```
+
+
+1. Load the *crime-analysis-data.csv* data into an R notebook.
+
+```{r}
+crime<-read.csv("crime-analysis-data.csv")
+```
+
+
+2. Explore the data numerically and graphically. Confirm the variables that are categorical and numerical/continuous and that R has read them in appropriately
+
+```{r}
+summary(crime)
+```
+
+The variable HighYouthUnemploy should be a categorical variable (actually binary as it only has two levels). R has read it in as numerical so this can be fixed by making it into a Factor.
+
+```{r}
+crime$HighYouthUnemploy<-as.factor(crime$HighYouthUnemploy)
+```
+
+Lets look at the distribution of the variables:
+
+```{r}
+ggplot(data = crime, aes(x=Youth)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=Education)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=LabourForce)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=ExpenditureYear0)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=YouthUnemployment)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=MatureUnemployment)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=Wage)) + geom_histogram(bins = 20) + theme_classic()
+ggplot(data = crime, aes(x=StateSize)) + geom_histogram(bins = 20) + theme_classic()
+
+```
+
+The distribution for ExpenditureYear0 seems skewed to the left, other variables look generally symmetric. This does not warrant any transformations at this stage.
+
+
+```{r}
+ggplot(data = crime, aes(x=Youth, y=CrimeRate)) + geom_point() + theme_classic()
+ggplot(data = crime, aes(x=Education, y=CrimeRate)) + geom_point() + theme_classic()
+ggplot(data = crime, aes(x=LabourForce, y=CrimeRate)) + geom_point()  + theme_classic()
+ggplot(data = crime, aes(x=ExpenditureYear0, y=CrimeRate)) + geom_point()  + theme_classic()
+ggplot(data = crime, aes(x=YouthUnemployment, y=CrimeRate)) + geom_point()  + theme_classic()
+ggplot(data = crime, aes(x=MatureUnemployment, y=CrimeRate)) + geom_point()  + theme_classic()
+ggplot(data = crime, aes(x=Wage, y=CrimeRate)) + geom_point()  + theme_classic()
+ggplot(data = crime, aes(x=StateSize, y=CrimeRate)) + geom_point() + theme_classic()
+
+```
+
+The collection of scatter plots do not show that any of the variables is clearly linear, but some show a linear trend.
+
+3. Focusing only on the continuous explanatory variables - check their correlations with the CrimeRate. We want to do this only for the continuous variables, so can look to remove the column that is binary from this plot. (This is done so that the pairs plot is legible and that we can run a corr function on the resulting dataframe)
+
+```{r}
+crime.cont<-subset(crime, select=c("CrimeRate", "Youth", "Education", "ExpenditureYear0", "LabourForce",  "YouthUnemployment", "MatureUnemployment",
+                                   "Wage", "StateSize") )
+pairs(crime.cont)
+```
+
+```{r}
+cor(crime.cont)
+```
+
+There do not seem to be any obvious multi collinearity (highly correlated explanatory variables) and a few of the plots above point to potential for a linear relationships, therefore at this stage I am not going to explore any transformations.
+
+
+4. Using the continuous explanatory variables decide on a maximal model for CrimeRate and run it.
+
+```{r}
+crime.lm<-lm(crime$CrimeRate~crime$Youth+crime$Education+crime$ExpenditureYear0+crime$MatureUnemployment + crime$LabourForce+crime$YouthUnemployment+crime$StateSize + crime$Wage)
+
+summary(crime.lm)
+```
+
+(NOTE: it is possible to start with a model that has interactions, all interactions could be used or a Tree approach can help understand if the relationship between an explanatory variable and the target variable is different based on the value (or range) of the explanatory variable - page 199 Crawley)
+
+5. Use a model selection approach to achieve a minimal adequate model
+
+```{r}
+step(crime.lm)
+```
+
+
+6. Once you have the minimal adequate model, explain its findings and test its residuals
+
+```{r}
+mam.lm<-lm(formula = crime$CrimeRate ~ crime$Youth + crime$ExpenditureYear0 + 
+    crime$MatureUnemployment + crime$LabourForce)
+
+summary(mam.lm)
+```
+
+This model has acceptable goodness of fit, all the coefficients are significant (so there is no need to simplyfy further), $r^2$ is acceptable and the F statistic is significant.
+
+Next the residuals should be scrutinised:
+
+```{r}
+plot(mam.lm)
+```
+In this case the residuals look ok, the variance is quite steady in the first plot - considering the data size.
+QQ plot also looks aligned. 
+
+
+7. OPTIONAL -  model the relationship between the crime rate and the explanatory variables (including the ones that are not continuous).
+
+```{r}
+model.all.lm<-lm(crime$CrimeRate~crime$Youth+crime$Education+crime$ExpenditureYear0
+                 +crime$MatureUnemployment + crime$LabourForce+crime$YouthUnemployment+crime$StateSize + crime$Wage+ crime$HighYouthUnemploy)
+
+summary(model.all.lm)
+```
+
+The $r^2 $is higher but lets see what a step process would acheive in terms of simplifying the model:
+
+```{r}
+step(model.all.lm)
+```
+
+The binary variable we added as part of the explanatory variables does not add much and this is confirmed as the step process proposes a model that does not include it as an explanatory variable.
+
+
+```{r}
+
+ggplot(crime, aes(x=HighYouthUnemploy, y=CrimeRate)) + geom_boxplot()
+```
+
+
+
+8. OPTIONAL - If the average education time in the population is 14 years. Compute the mean education time in this sample of 48 rows of data and test the hypothesis that the education time is significantly lower than the population education time.
+
+
+```{r}
+education.mean<-mean(crime$Education)
+education.mean
+```
+
+We will be testing the following hypotheses: $H_0: \mu=14$ and $H_1: \mu < 14$.
+$n=48$ so we can use the following test statistic:
+
+$\frac{\bar{x}-\mu}{S/\sqrt{n}}$
+
+```{r}
+education.s<-sd(crime$Education)
+n<-length(crime$Education)
+```
+
+Computing the test statistic
+```{r}
+den<-education.s/sqrt(n)
+test.statistic<-(education.mean-14)/den
+test.statistic
+```
+
+Now we should find the probability of such a test statistic or smaller to obtain the p-value:
+
+```{r}
+pnorm(test.statistic)
+```
+
+This is a very small p-value, so we reject the Null hypothsis in this case.
+
+
+***
+
+OPTIONAL - If you want to use a Regression Tree to check for interactions:
+
+```{r}
+library(tree)
+crime.tree<-tree(crime$CrimeRate~crime$Youth+crime$Education+crime$ExpenditureYear0+crime$MatureUnemployment + crime$LabourForce+crime$YouthUnemployment+crime$StateSize + crime$Wage)
+plot(crime.tree)
+text(crime.tree)
+```
+
+From this tree there are no "contradictions" in direction of the estimate. (see page 199 of Crawley for an example), therefore this does not point to the need for interactions in this case.
+

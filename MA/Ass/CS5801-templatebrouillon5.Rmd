@@ -905,8 +905,7 @@ I want to dig little bit deeper and look at the variance as well. This is a way 
 
 This will be done on four levels. The whole set, two teams, and then each of the two teams. This iwll be very similar to how the model for player salary was developed.
 
-Because hit.ind/seasonhit is a binary variable, logistic regression is the best model according to the lectures.
-##use logistic regression here somehow
+One easy way to predict how likely it is that a player scored a hit would be by looking at the mean. since the mean is 0.55 in a binary disctibution, is means that any given player has a more than 50% chance of having scored a hit. This would be too easy, so we are doing to look at things a bit deeper.
 
 ```{r}
 table(BOSLAACleanSeasonHit)
@@ -914,44 +913,59 @@ mean(BOSLAACleanSeasonHit)
 
 ```
 
+What are the chances that someone scored a hit based on the hand that they bat?
+I can use a crosstable for this and a chi squared to see the likelihood of having scored a hit within different populations. Based on this, while right-handed batters have a 50-50 changes of having scored a hit, left handed are more likely. The four ambidextrous players all scored a hit.
 ```{r}
 CrossTable(BOSLAACleanSeasonHit, BOSLAACleanBats, digits=2, prop.r = TRUE, prop.c = TRUE,  prop.chisq = FALSE, 
            chisq = TRUE, fisher = TRUE)
 ```
-##crosstable shows more information - i don't knwo how to use it , however.
+Because the p value is above 0.05, handedness is not a significant determinant.
 ```{r}
 HitsLM = lm(formula = BOSLAACleanSeasonHit ~ BOSLAACleanSalary + BOSLAACleanHits + BOSLAACleanGames + BOSLAACleanRuns +BOSLAACleanHeight + BOSLAACleanWeight)
-plot(HitsLM)
-step(HitsLM)
+summary(HitsLM)
+StepHits = step(HitsLM)
+
+```
+Here I see that the most significant factors are whether somebody played a game, their salary, their height, and the number of hits.
+```{r}
+exp(coef(HitsLM))
+
+
 ```
 
 
-Using 
+Now I will do logistic regression
+hits need to be a factor in this case, though. 
 ```{r}
-LeagueHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary ,data = League, family = "binomial")
-LeagueHitsGLM
-###this gives really low numbers for some reason
+BOSLAAClean$hit.ind = as.factor(BOSLAAClean$hit.ind)
 ```
-```{r}
-step(LeagueHitsGLM)
-
-```
+Now we can start
 
 ```{r}
-BOSLAACleanHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary ,data = BOSLAA, family = "binomial")
+BOSLAACleanHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary ,data = BOSLAAClean, family = "binomial")
 BOSLAACleanHitsGLM
 ###this gives really low numbers for some reason
+summary(BOSLAACleanHitsGLM)
+
 ```
 
 ```{r}
 step(BOSLAACleanHitsGLM)
-summary.lm(BOSLAACleanHitsGLM)
+
 ```
-after this, I can arrive at a minimal model
+after this, I can arrive at a minimal model.
+Here, career legth, heights, and alary are the most significant factors.
 
 use predict function afterwards
 
-The source for using this is lectures 6 and 7
+```{r}
+exp(coef(BOSLAACleanHitsGLM))
+
+#this produces odd values
+```
+
+The source for using this is lectures 6 and 7, also this:
+http://www.sthda.com/english/articles/40-regression-analysis/166-predict-in-r-model-predictions-and-confidence-intervals/
 
 
 # References  
