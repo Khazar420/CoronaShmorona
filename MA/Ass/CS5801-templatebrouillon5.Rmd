@@ -895,7 +895,6 @@ I also need to be able to creat upper and lower confidence limits.
 
 I want to dig little bit deeper and look at the variance as well. This is a way to test my salary model against something larger.
 
-```
 
 # 4. Extension work
 
@@ -933,6 +932,28 @@ LeagueHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary 
 LeagueHitsGLM
 ###this gives really low numbers for some reason
 ```
+```{r}
+step(LeagueHitsGLM)
+
+```
+
+```{r}
+BOSLAACleanHitsGLM<-glm(hit.ind~G+R+H+AB+RBI+weight+height+career.length+bats+salary ,data = BOSLAA, family = "binomial")
+BOSLAACleanHitsGLM
+###this gives really low numbers for some reason
+```
+
+```{r}
+step(BOSLAACleanHitsGLM)
+summary.lm(BOSLAACleanHitsGLM)
+```
+after this, I can arrive at a minimal model
+
+use predict function afterwards
+
+The source for using this is lectures 6 and 7
+
+
 # References  
 
 
